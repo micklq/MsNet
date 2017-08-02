@@ -23,7 +23,7 @@ namespace MSNet.Common
         /// <summary>
         /// 默认密码
         /// </summary>
-        public static readonly string DefaultPassword = "123456";
+        public static readonly string DefaultPassword = "654789";
         
         /// <summary>
         /// 
