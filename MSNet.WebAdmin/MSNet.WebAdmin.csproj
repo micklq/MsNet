@@ -39,7 +39,38 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FredCK.FCKeditorV2">
+      <HintPath>..\libs\FredCK.FCKeditorV2.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\libs\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="M2SA.AppGenome">
+      <HintPath>..\libs\M2SA\M2SA.AppGenome.dll</HintPath>
+    </Reference>
+    <Reference Include="M2SA.AppGenome.Cache">
+      <HintPath>..\libs\M2SA\M2SA.AppGenome.Cache.dll</HintPath>
+    </Reference>
+    <Reference Include="M2SA.AppGenome.Data">
+      <HintPath>..\libs\M2SA\M2SA.AppGenome.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="M2SA.AppGenome.Logging">
+      <HintPath>..\libs\M2SA\M2SA.AppGenome.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="M2SA.AppGenome.Queues">
+      <HintPath>..\libs\M2SA\M2SA.AppGenome.Queues.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\M2SA\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\libs\M2SA\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\libs\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -321,6 +352,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MSNet.Common\MSNet.Common.csproj">
+      <Project>{2bd2de63-afbc-4b8d-b469-b9337bd4b3ee}</Project>
+      <Name>MSNet.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
