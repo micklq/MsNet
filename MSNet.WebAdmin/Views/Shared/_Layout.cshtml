@@ -1,49 +1,230 @@
-﻿<!DOCTYPE html>
-<html lang="zh">
-    <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - 我的 ASP.NET MVC 应用程序</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-    </head>
-    <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("将你的徽标放置在此处", "Index", "Home")</p>
-                </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("主页", "Index", "Home")</li>
-                            <li>@Html.ActionLink("关于", "About", "Home")</li>
-                            <li>@Html.ActionLink("联系方式", "Contact", "Home")</li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
-        </div>
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - 我的 ASP.NET MVC 应用程序</p>
-                </div>
-            </div>
-        </footer>
+﻿@using MSNet.Tools;
+@{
+    int? menuIndex = ViewBag.MenuIndex;
+    var isMobile = (Request.UserAgent.ToLower().Contains("iphone") || Request.UserAgent.ToLower().Contains("ios") || Request.UserAgent.ToLower().Contains("android"));
 
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
-    </body>
+    var navtop = MSNet.Models.Navigation.FindForList(1);
+}
+<!DOCTYPE html>
+<html>
+<head>   
+    <meta charset="utf-8" />   
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.base.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/jquery.ui.theme.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jfn.v2.js")" type="text/javascript"></script>
+    @if (isMobile)
+    {
+        <link href="@Url.Content("~/Content/mobileSite.css")?t=@(DateTime.Now.Ticks)" rel="stylesheet" type="text/css" />
+        <script src="@Url.Content("~/Scripts/jsMobile.js")" type="text/javascript"></script>        
+    }
+    else
+    {
+        <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+       <script src="@Url.Content("~/Scripts/jsWeb.js")" type="text/javascript"></script>
+    }
+   
+</head>
+<body>
+   
+    
+    <div class="page">
+        <div class="header">
+            <div class="logo"><img src="~/Content/IImages/Logo.png" alt="中海外大拇指传媒" title="中海外大拇指传媒" /></div>
+            <div class="navDiv">  
+                     <div id="navDiv">
+@if (navtop != null&& navtop.Count()>0)
+{
+    var tni = 0;
+    var count = navtop.Count()+1;
+    var wdh = "width:{0}%".FormatString((float)100 / (float)count);
+    
+        <ul class="nav">
+        @foreach (var o in navtop)
+        {
+            <li style="@(wdh)"><a href="@(o.LinkUrl)" class="@(menuIndex == tni ? "a2" : "a1")">@(o.Title)</a></li>
+            tni++;
+        }
+
+        </ul>
+}
+else
+{
+        <ul class="nav">
+            <li><a href="/" class="@(menuIndex == 0 ? "a2" : "a1")">首页</a></li>
+            <li><a href="/AboutUs" class="@(menuIndex == 1 ? "a2" : "a1")">关于我们</a></li>
+            <li><a href="/News" class="@(menuIndex == 2 ? "a2" : "a1")">新闻动态</a></li>
+            <li><a href="/Movie" class="@(menuIndex == 3 ? "a2" : "a1")">影视中心</a></li>
+            <li><a href="/Performing" class="@(menuIndex == 4 ? "a2" : "a1")">演艺中心</a></li>
+            <li><a href="/Art" class="@(menuIndex == 5 ? "a2" : "a1")">艺术品中心</a></li>
+            <li><a href="/Ad" class="@(menuIndex == 6 ? "a2" : "a1")">中影广告</a></li>
+            <li><a href="/Works" class="@(menuIndex == 7 ? "a2" : "a1")">作品欣赏</a></li>
+        </ul>
+    }
+                                        </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    @RenderBody()
+    <div class="clear"></div>
+    <div class="pH55"></div>
+    <div class="clear"></div>
+    <div class="page">
+        <div class="footer">
+            <div class="link">
+                <a href="/AboutUs">关于我们</a>
+                <a href="/AboutUs/Group#contactus">联系我们</a>
+                @*<a href="/AboutUs/Join">加入我们</a>
+                <a href="/AboutUs/QA">常见问题</a>*@
+                <a href="javascript:void(0);" id="feedback">意见反馈</a>
+            </div>
+
+            <div class="clear"></div>
+            <div class="link">
+                <p>北京市朝阳区建国路甲92号世茂大厦C座9层</p>
+                <p>Copyright © 2015 damuzhi.com All Rights Reserved<br />网站备案号：京ICP56215123</p>
+            </div>
+        </div>
+    </div>   
+    <div id="feedbackBody" style="display:none;">   
+            <div class="Main">
+                <form id="feedbackForm" action="Pub/MessageAction" enctype="multipart/form-data" method="post">
+                    <table id="EditTable" class="Edit" border="0" cellpadding="0" cellspacing="1">
+                        <tr>
+                            <td>
+                                <input type="text" id="Name" name="Name" class="Etext" maxlength="50" value=""
+                                       data-val="true"
+                                       data-val-required="请输入姓名！"
+                                       placeholder="您的姓名*" />
+                                <span class="field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true" style="font-size:12px; color:#f00;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" id="Phone" name="Phone" class="Etext" maxlength="30" value=""
+                                       data-val="true"
+                                       data-val-mobile="手机格式错误！"
+                                       data-val-required="请输入联系方式！"
+                                       placeholder="联系电话*" />
+                                <span class="field-validation-valid" data-valmsg-for="Phone" data-valmsg-replace="true" style="font-size:12px; color:#f00;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" id="QQ" name="QQ" class="Etext" maxlength="30" value=""
+                                       data-val="true"
+                                       data-val-required="请输入QQ或微信！"
+                                       placeholder="QQ或微信*" />
+                                <span class="field-validation-valid" data-valmsg-for="QQ" data-valmsg-replace="true" style="font-size:12px; color:#f00;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <textarea id="Contents" name="Contents" class="Etextarea" style=" height:80px; "
+                                          data-val="true"
+                                          data-val-required="请输入反馈意见！"
+                                          data-val-textlength="字数超出范围(最多200个中文或400个字符)"
+                                          data-val-textlength-max="400" placeholder="反馈意见*"></textarea>
+                                <span class="field-validation-valid" data-valmsg-for="Contents" data-valmsg-replace="true" style="font-size:12px; color:#f00;"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" id="VCode" name="VCode" class="Ecode" maxlength="4" value=""
+                                       data-val="true"
+                                       data-val-required="请输入验证码！"
+                                       data-val-length-max="50" placeholder="验证码*" />&nbsp;&nbsp;
+                                <img src="/Pub/VCode" style="cursor:pointer; display:inline;" title="点击刷新验证码" alt="点击刷新验证码" id="VcodeImg" class="Login_VcodeImg" onclick="this.src = '/Pub/VCode?t=' + Math.random()" />
+                                <span class="field-validation-valid" data-valmsg-for="VCode" data-valmsg-replace="true" style="font-size:12px; color:#f00;"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="ButtonDiv">
+                        <span id="MessageBox" style="font-size:12px; color:#f00;"></span>
+                    </div>
+                    <div class="ButtonDiv" id="ddDoing" style="display:none;"><img src="@Url.Content("~/Content/Images/ajax_loading.gif")" style="display:inline;" /> 正在提交...</div>
+                    <div class="ButtonDiv" id="ddButton">
+                        <input type="submit" class="inputbutton" title="保存" value="保存" id="Save" />&nbsp;
+                        <input type="button" class="inputbutton" title="取消" value="取消" id="GoBack" />
+                    </div>
+                    
+                </form>
+            </div>       
+    </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $("#feedback").click(function () {
+                            $("#feedbackBody").dialog({
+                                title: "意见反馈",
+                                width: "600",
+                                height: "450",
+                                resizable: false,
+                                modal: true
+                            });
+                        });
+                    });
+                </script>
+                <script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")" type="text/javascript"></script>
+                <script src="@Url.Content("~/Scripts/jquery.form.js")" type="text/javascript"></script>
+                <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+                <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+                <script src="@Url.Content("~/Scripts/jquery.validate.extend.js")" type="text/javascript"></script>
+
+                <script type="text/javascript">
+                    $(function () {
+                        $("#Name,#Phone,#QQ,#Contents").keyup(function () { $("#MessageBox").html(""); });
+                        $("#GoBack").click(function () { $("#feedbackBody").dialog('close'); });
+                        $("#feedbackForm").submit(function () {
+                            var options = {
+                                beforeSubmit: function (formData, jqForm, options) {
+                                    $("#MessageBox").html("");
+                                    var v = jqForm.validate();
+                                    if (!v.form()) {
+                                        return false;
+                                    }
+                                    $("#ddButton").hide();
+                                    $("#ddDoing").show();
+                                    return true;
+                                },
+                                success: function (responseText, statusText) {
+                                    if (statusText == "success") {
+                                        var d = null;
+                                        try {
+                                            d = typeof responseText == 'string' ? responseText.toJsonObj() : responseText; // eval('(' + responseText + ')');
+                                        } catch (ex) {
+                                            d = { success: false, partners: '服务器出现错误' };
+                                        }
+                                        if (d.success) {                                            
+                                            $("#feedbackBody").dialog('close');
+                                            $("#ddButton").show();
+                                            $("#ddDoing").hide();
+                                            $("#MessageBox").html("").html(d.message);
+
+                                        }
+                                        else {
+                                            $("#VcodeImg").click();
+                                            $("#ddButton").show();
+                                            $("#ddDoing").hide();
+                                            $("#MessageBox").html("").html(d.message);
+                                        }
+                                    }
+                                    else {
+                                        $("#VcodeImg").click();
+                                        $("#ddButton").show();
+                                        $("#ddDoing").hide();
+                                        $("#MessageBox").html("").html("提交失败");
+                                    }
+                                }
+                            };
+                            $(this).ajaxSubmit(options);
+                            return false;
+                        });
+                    });
+                    //$(window).bind('resize load', function () {
+                    //    $("body").css("zoom", $(window).width() / 640);
+                    //    $("body").css("display", "block");
+                    //});
+                </script>
+</body>
 </html>

@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "网站后台管理-管理员列表";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+    var list = ViewData["PermissionList"] as IList<MSNet.Common.Passports.Permission>;
+    var user = MSNet.Common.Web.UserAuthentication.CurrentUser;
+}
+<div id="HMain">
+<div class="Main">
+<div class="HTitle"><a href="@Url.Action("permissionlist")">权限列表</a></div>
+<div class="MMain">
+
+    <table class="DataGrid" border="0" cellpadding="0" cellspacing="1">
+    <tr class="Header">
+    @*<td class="W_5"><input type="checkbox" class="ckAll" /></td>*@
+    <td class="W_5">PermissionId</td>
+    <td class="W_10">名称</td>
+    <td class="W_10">ParentId</td>   
+    <td>描述</td> 
+    <td class="W_15">Value</td> 
+    <td class="W_10">添加时间</td>
+    <td class="W_10">修改时间</td>  
+    <td class="W_15">操作</td>
+    </tr>
+    @if(list!=null&&list.Count()>0)
+    {        
+   
+    foreach (var o in list)
+    {        
+         <tr>
+            @*<td class="Tal_C"><input type="checkbox" class="ckThis" value="@(o.PermissionId)" /></td>*@
+            <td class="Tal_C">@(o.PermissionId)</td>
+             <td class="Tal_C">@(o.Name)</td>
+             <td class="Tal_C">@(o.ParentId)</td>
+             <td>@(o.Description.IsNullOrEmpty() ? "无" : o.Description.Sub(10,true))</td>  
+             <td class="Tal_C">@(o.Value)</td>          
+            <td class="Tal_C">@("{0:yyyy-MM-dd}".FormatString(o.CreatedTime))</td>
+            <td class="Tal_C">@("{0:yyyy-MM-dd}".FormatString(o.LastModifiedTime))</td>            
+            <td class="Tal_C">           
+            <img class="DoImg" ids="edit" urls="/admin/PermissionView?id=@(o.PermissionId)" src="/Content/Images/edit.gif" title="编辑" />      
+            <img class="DoImg" ids="sdel" urls="/admin/DelPermission?id=@(o.PermissionId)" src="/Content/Images/del.gif" title="删除" />        
+            </td>
+           </tr>
+    }   
+  }
+  else
+    {
+        <tr><td class="Nodata" colspan="7">暂无相关信息！</td></tr>
+    }
+  </table>
+  <div class="ButonAdd">
+   <span class="add" urls="@Url.Action("PermissionView")"  title="添加">添加</span>   
+  </div>
+</div>
+</div>
+</div>

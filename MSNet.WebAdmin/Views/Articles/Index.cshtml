@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "新闻动态_大拇指控股集团";
+    ViewBag.MenuIndex = 2;   
+    var id = Request["id"].ToInt(16);
+    var toplist = ViewData["TopList"] as IList<MSNet.Models.News>; 
+    var nwlist = ViewData["NewsList"] as IList<MSNet.Models.News>; 
+    
+}
+<div class="page">
+    <div class="pMain">
+        <div class="nNav">
+            <ul class="snNav">
+                <li><a href="/News?id=16" class="@(id==16?" sa2":"sa1")">公司新闻</a></li>
+                <li><a href="/News?id=17" class="@(id==17?" sa2":"sa1")">行业新闻</a></li>
+            </ul>
+        </div>  
+    </div>
+    <div class="clear"></div>
+    <div class="pMain">
+    <div class="tragle">
+        <span class="pre" id="nwPre"></span>
+        <span class="next" id="nwNext"></span>
+    </div>
+    </div>
+</div>
+<div class="page">
+    <div class="pMain">
+        <div class="page-left4">
+            <div class="newIC0">
+                <div class="newsI1">
+                    @if (toplist != null && toplist.Count() > 0)
+                    {
+                        foreach (var o in toplist)
+                        {
+                            if (!o.PictureUrl.IsNullOrEmpty())
+                            {
+                                var picUrl = o.PictureUrl.Contains("/Content/Upload/") ? o.PictureUrl : "/Content/Upload/" + o.PictureUrl;
+
+                                <div class="newIC1"><a href="/News/Show?id=@(o.NewsId)" target="_blank"><img src="@(picUrl)" /></a></div>
+                            }
+                        }
+                    }
+                </div>
+             <span class="pre1" id="topPre"></span>
+             <span class="next1" id="topNext"></span>
+            </div>
+        </div>
+    <div class="page-right4">
+        <div class="newsI2">           
+                @if (nwlist != null && nwlist.Count() > 0)
+                {
+
+
+                    @(new HtmlString("<div class=\"newIC2\">"));
+
+                    for (var i = 0; i < nwlist.Count(); i++)
+                    {
+                        var j = i + 1;
+                        var picUrl = nwlist[i].PictureUrl.Contains("/Content/Upload/") ? nwlist[i].PictureUrl : "/Content/Upload/" + nwlist[i].PictureUrl;
+
+                        <a href="/News/Show?id=@(nwlist[i].NewsId)" target="_blank"><img src="@(picUrl)" /></a>
+
+                        if (((j % 4) == 0))
+                        {
+                            if (j < nwlist.Count())
+                            {
+                              @(new HtmlString("</div><div class=\"newIC2\">"));
+                            }
+                            else
+                            {
+                              @(new HtmlString("</div>"));
+                            }
+                        }
+                       
+                    }
+
+                } 
+            <div class="clear"></div>          
+        </div>
+    </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#topPre").click(function () {   
+            $("div.newsI1").append($("div.newsI1 div.newIC1:not(:last)"));
+        });
+        $("#topNext").click(function ()
+        {           
+            $("div.newsI1").append($("div.newsI1 div.newIC1:first"));            
+            
+        });
+        setInterval(function () { $("#topNext").click();  },3000)
+        $("#nwPre").click(function () {
+            $("div.newsI2").append($("div.newsI2 div.newIC2:not(:last)"));
+        });
+        $("#nwNext").click(function () {
+            $("div.newsI2").append($("div.newsI2 div.newIC2:first"));
+        });
+
+        
+
+    })
+
+</script>

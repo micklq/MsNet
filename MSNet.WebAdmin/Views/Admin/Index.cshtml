@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "网站后台管理";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+<div id="HMain">
+    <div class="Main">
+        <div class="HTitle">系统信息</div>
+        <div class="MMain">
+            <table id="EditTable" class="Edit" border="0" cellpadding="0" cellspacing="1">
+                <tr>
+                    <th>服务器名称:</th>
+                    <td align="left">@(Server.MachineName)</td>
+                </tr>
+                <tr>
+                    <th>服务器操作系统:</th>
+                    <td align="left">@(Environment.OSVersion.ToString())</td>
+                </tr>
+                <tr>
+                    <th>服务器IIS版本:</th>
+                    <td align="left">@(Request.ServerVariables["SERVER_SOFTWARE"])</td>
+                </tr>
+                <tr>
+                    <th>.NET解释引擎版本:</th>
+                    <td align="left">.NET CLR  @(Environment.Version.Major).@(Environment.Version.Minor).@(Environment.Version.Build).@(Environment.Version.Revision)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
