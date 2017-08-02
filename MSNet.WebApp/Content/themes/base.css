@@ -1,0 +1,142 @@
+﻿body{ font-size:12px; color : #000; font-family : tahoma, 宋体, fantasy; text-align : center; margin : 0; background :#fff; }
+.navPoint { CURSOR: hand; }
+td { font-size:12px; }
+a { color: #135294; text-decoration: none; }
+a:hover { color: #ff6600; text-decoration: underline; }
+.top_table { width:100%; background:url("../Images/top_bg.gif"); height:41px; }
+.top_table_leftbg { width:auto; height:41px; }
+.system_logo { width:180px; float:left; text-align:left; }
+div.menu{ margin:0 5px; color:#fff; padding:5px 0px; height:24px; float:right;}
+div.menu a{ color:#fff;text-decoration:none;}
+div.menu a:hover{ color:#fff; text-decoration:underline;}
+body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,tr,th,td,img,div{margin:0;padding:0;border:0;}
+body,form,fieldset,table,td,p,li,select,input,textarea,div{font-size:12px; text-align:left;}
+ul{list-style-type:none;}
+a{ color:#000; text-decoration:none;}
+a:hover{ color:#f00; text-decoration:underline;}
+body{font-size:12px; margin:0; padding:0;background:#ebeff3;}
+.iCTab{width:100%; border:0; margin:0; padding:0;table-layout:fixed; }
+.iCTab td.iCcW181{width:181px; overflow:hidden;background:#ebeff3;}
+.iCTab td.iCsysBar{width:10px;background:#3c508b; overflow:hidden;}
+.iCTab  .leftMenu{width:176px; border:0; margin:0; padding:0;}
+.dCenter{text-align:center;}
+.iCTab  .leftMenu td.TopBorder{border-top:1px solid #666;}
+.Autoiframe{ display:none;}
+#Main__iframe__Loading{display:block; line-height:32px; height:32px; padding:5px 0 5px 50px; margin:10px 0; overflow:hidden;background:url("../Images/ajax_loading.gif") no-repeat 5px 4px;}
+#MainNav{ width:180px;}
+#MainNav ul.Nav{ width:180px; display:block;}
+#MainNav ul.Nav li{width:180px; display:block;}
+#MainNav ul.Nav li div{ display:block;cursor:pointer;font:bold 12px "Microsoft Yahei",sans-serif;color:#fff;height:26px; line-height:26px;padding: 0px 0px 0px 10px;background: transparent url("../Images/TitleBG.gif") 0 0; overflow:hidden;}
+#MainNav ul.Nav li div.hover{ display:block; cursor:pointer; font:bold 12px "Microsoft Yahei",sans-serif;color:#fff;height:26px; line-height:26px;padding: 0px 0px 0px 10px;background: transparent url("../Images/TitleBG.gif") 0 0; overflow:hidden;}
+#MainNav ul.Nav li.open div{ height:26px; line-height:26px; overflow:hidden;}
+#MainNav ul.Nav li.open div a{ height:26px; line-height:26px; overflow:hidden; color:#fff; text-decoration:none;}
+#MainNav ul.Nav li p{ display:none;height:24px; overflow:hidden;}
+#MainNav ul.Nav li.open p{ display:block;padding:2px 0; line-height:24px;height:24px; overflow:hidden;}
+#MainNav ul.Nav li p a{background: #f9f9f9; display:block; width:176px; line-height:24px;color:#333;background:url("../Images/menu_icon.gif") no-repeat 0px 0px;height:24px;padding:0 0 0 20px; text-decoration:none;}
+#MainNav ul.Nav li p a:hover{color: #369; height:24px;display:block;text-decoration:none;background:url("../Images/menu_icon1.gif") #f9f9f9 no-repeat 0px 0px;filter:alpha(opacity=80);border:1px solid #fff; }
+
+/*--------------------表格显示---------------------*/
+#Ajax_Loading{ display:block; line-height:32px; height:32px; padding:5px 0 5px 50px; overflow:hidden;background:url("../Images/ajax_loading.gif") no-repeat 5px 4px;}
+#HMain{ display:block; width:95%;  clear:both; margin:0; padding:0;}
+#HMain .Main{ width:98%; margin:5px auto; clear:both; padding:0; border:solid 1px #ccc;}
+#HMain .Main .HTitle{line-height:26px; height:26px; text-align:left; color:#fff; font-size:12px; font-weight:bold; padding-left:15px; margin:0; background:url("../Images/TitleBG.gif") repeat-x 0px 0px; }
+#HMain .Main .HTitle a{ color:#fff;}
+#HMain .Main .HTitle a:hover{color:#ff7200; text-decoration:none;}
+#HMain .Main .MMain{ display:block;  width:100%;}
+#DataLoading{ line-height:32px; height:32px; padding:5px 0 5px 50px; overflow:hidden;background:url("../Images/ajax_loading.gif") no-repeat 5px 4px;}
+div.NoData{   border-bottom:1px #337ABB solid; margin:0 0 5px 0; border-top:0; padding:20px 0; overflow:hidden; text-align:center; color:#369; font-weight:bold; line-height:3em; clear:both;}
+table.DataGrid{font-size:12px;padding:0; margin:0; border:0; width:100%;background-color:#ccc; }
+table.DataGrid tr{margin:0; padding:0;border:0; overflow:hidden;background-color:#fff;}
+table.DataGrid tr.Header{ background-color:#f2f2f2;}
+table.DataGrid tr.Header td{ text-align:center; font-weight:bold;padding:3px;}
+table.DataGrid td{vertical-align:middle;padding:3px;font-size:12px;color:#369;margin:0; border:0; line-height:26px; vertical-align:middle;border-bottom:solid 1px #ccc;}
+td.W_10{ width:10%;}
+td.W_5{ width:5%;}
+td.W_15{ width:15%;}
+td.W_20{ width:20%;}
+td.W_8{ width:8%;}
+td.W_25{ width:25%;}
+.inputbutton{border:solid 1px #D4B06A; text-align:center;cursor:pointer; padding:3px 3px 0px 3px;height:25px;background-image:url(../Images/buttonbg.jpg);color:#000;letter-spacing:6px;}
+td.Tal_C{ text-align:center;}
+table.DataGrid td a{ color:#333; text-decoration:none; padding:0; margin:0; vertical-align:middle;}
+table.DataGrid td a:hover{ color:#c03; text-decoration:underline;}
+img.DoImg{margin:0 2px; cursor:pointer; vertical-align:middle;}
+img.W17Img{margin:0;vertical-align:middle;}
+img.folderImg{margin:0;}
+table.Search{font-size:12px;padding:0; margin:0; border:0; width:100%; }
+table.Search tr{margin:0; padding:0;border:0; overflow:hidden;background-color:#FFF;}
+table.Search td{vertical-align:middle;padding:3px;font-size:12px;color:#333;margin:0; border:0; line-height:26px; vertical-align:middle;border-bottom:solid 1px #f2f2f2;}
+table.Search .inputbutton{border:solid 1px #D4B06A; text-align:center;cursor:pointer;	padding:3px 3px 0px 3px;height:25px;background-image:url(../Images/buttonbg.jpg);color:#000;letter-spacing:6px;}
+table.Search  td.W_60{ width:60px;}
+table.Search  td.W_80{ width:80px;}
+table.Edit{ background-color:#ccc; width:100%;}
+table.Edit tr{padding:3px 5px;overflow:hidden; line-height:24px;background-color:#fff; margin:0;}
+table.Edit td{padding:2px 5px;overflow:hidden;line-height:24px; margin:0; vertical-align:middle;}
+table.Edit th{padding:2px 5px;text-align:right; font-weight:normal; line-height:24px;width:15%; vertical-align:top; margin:0;}
+
+table.Edit1{ background-color:#ccc; width:100%; }
+table.Edit1 tr{padding:3px 5px;overflow:hidden; line-height:24px;background-color:#fff; margin:0;}
+table.Edit1 td{padding:2px 5px;overflow:hidden;line-height:24px; margin:0; vertical-align:middle;}
+table.Edit1 th{padding:2px 5px 2px 25px;text-align:right; font-weight:normal; line-height:24px;width:15%; vertical-align:top; margin:0;}
+.Etext1{ border:1px #ccc solid; background-color:#fff; padding:2px 2px; overflow:hidden; width:240px; color:#666;}
+
+.Etext{ border:1px #ccc solid; background-color:#fff; padding:2px 2px; overflow:hidden; width:150px; color:#666;}
+.EtextHover{border:1px #f2f2f2 solid; background-color:#ffe; padding:2px 2px; overflow:hidden; width:150px; color:#222;}
+.Etextarea{ border:1px #ccc solid; background-color:#fff; padding:2px 2px; width:98%; overflow:auto; }
+.Echeckbox{ vertical-align:middle;}
+table.PermsTable{overflow:hidden; background-color:#fff; width:100%;}
+table.PermsTable tr{padding:3px 5px;overflow:hidden; line-height:24px;background-color:#fff; margin:0;}
+table.PermsTable td{padding:2px 5px;overflow:hidden;line-height:24px; margin:0; vertical-align:middle;}
+table.PermsTable th{padding:2px 5px;font-weight:bold; line-height:24px;width:20%; text-align:left; vertical-align:top; margin:0;}
+table.PermsTable input{ vertical-align:middle; margin:0 3px;}
+.ButtonDiv{ padding:5px 0; text-align:center; line-height:24px; margin:10px 0;}
+.ButtonDiv .inputbutton{border:solid 1px #D4B06A; text-align:center;cursor:pointer;	padding:3px 3px 0px 3px;height:25px;background-image:url(../Images/buttonbg.jpg);color:#000;letter-spacing:6px;}
+div.ButonAdd{ padding:5px 10px; text-align:left; line-height:24px; overflow:hidden; width:400px; float:left;}
+div.ButonAdd span{ line-height:24px; padding:2px 0 0 20px; margin:0 5px 0 0; cursor:pointer;}
+div.ButonAdd span.add{background:url("../Images/add.gif") no-repeat 0 0;}
+div.ButonAdd span.del{background:url("../Images/del.gif") no-repeat 0 0;}
+div.ButonAdd span.back{background:url("../Images/back.gif") no-repeat 0 0;}
+div.ButonAdd span.out{background:url("../Images/tkdown.gif") no-repeat 0 0;}
+div.ButonAdd span.outlock{background:url("../Images/outline.gif") no-repeat 0 0;}
+div.ButonAdd span.swap{background:url("../Images/repass.gif") no-repeat 0 0;}
+div.ButonAdd a{ text-decoration:none; color:#000;}
+div.ButonAdd a:hover{ text-decoration:none; color:#000;}
+span.Message{ padding:0 5px; vertical-align:middle; color:#aaa; line-height:24px; position:relative; top:-2px;}
+.Selecter{ cursor:pointer;}
+.MTitle{ line-height:24px; height:24px; overflow:hidden;color:#69c; font-size:13px;}
+.Nodata{ border-bottom:1px #337ABB solid; color:#369; font-weight:bold; border-top:0; text-align:center; line-height:3em;}
+.validation-false{ display:inline; margin:0 2px; padding:0 0 0 25px; line-height:18px; background:url("../Images/false.gif") no-repeat 5px center;color:#f30;overflow:hidden;}
+.validation-true{ display:inline; margin:0 2px; padding:0 0 0 25px; line-height:18px;background:url("../Images/true.gif") no-repeat 5px center;color:#f30;overflow:hidden;}
+/*--------------------分页---------------------*/
+.AP_Default_Main{ display:block; height:24px; line-height:24px; width:550px; overflow:hidden; float:right; text-align:right;}
+.AP_Default_Main span{font-weight:normal;margin:0 2px; padding:0 1px; display:inline; border:1px #ccc solid; overflow:hidden;}
+.AP_Default_Main span a{ text-decoration:none; line-height:24px; font-size:12px; padding:0 3px;text-align:center;color:#666;}
+.AP_Default_Main span.more{ color:#ccc; padding:0; overflow:hidden; border:0;}
+.AP_Default_Main span.this{ border:1px #f60 solid;color:#f60;}
+.AP_Default_Main span.this a{color:#f60; cursor:default;}
+.AP_Default_Main span.disabled a{ color:#fff;}
+.AP_Default_Main span.AutoPageS a{color:#f60;}
+.AP_Default_Main span a:hover{color:#f60;}
+.field-validation-valid{ color:#f00; font-size:12px;}
+
+/*--------------------上传图片---------------------*/
+#Ajax_Loading{ display:block; line-height:32px; height:32px; padding:5px 0 5px 50px; overflow:hidden;background:url("../Images/ajax_loading.gif") no-repeat 5px 4px;}
+#DoMain{ width:400px; height:100px; padding:0; margin:0 auto;}
+#DoMain .Main{ display:block; padding:1px;}
+#DoMain .Main .Body{ background-color:#fff; padding:10px; overflow:hidden; height:53px;}
+.ShowBody{ background-color:#fff; padding:10px;}
+#UploadFile,#FileUploadSubmit{ border:1px #999 solid;padding:2px 5px 0 5px; height:20px;}
+#UploadFile{ width:280px;}
+#FileUploadSubmit{ padding:2px 5px 0 5px; text-align:center; height:20px;}
+#DoMain .Main .Body .Message{ color:#999; line-height:24px;}
+
+#AutoUpFile,#AutoUpFile1,#AutoUpFile2,#AutoUpFile3{ display:block;overflow:hidden; float:left; width:380px; height:24px; line-height:24px; overflow:hidden;}
+#AutoUpFile .AutoUpFile_File,#AutoUpFile1 .AutoUpFile_File,#AutoUpFile2 .AutoUpFile_File,#AutoUpFile3 .AutoUpFile_File{ display:none;}
+#AutoUpFile .AutoUpFile_Img,#AutoUpFile1 .AutoUpFile_Img,#AutoUpFile2 .AutoUpFile_Img,#AutoUpFile3 .AutoUpFile_Img{border:0; width:80px; height:22px; padding:4px 0 0 25px; margin:0 5px 0 0; background:Transparent url("../Images/filetype/image.gif") no-repeat 4px 4px; cursor:pointer;}
+#AutoUpFile .AutoUpFile_Button,#AutoUpFile1 .AutoUpFile_Button,#AutoUpFile2 .AutoUpFile_Button,#AutoUpFile3 .AutoUpFile_Button{border:0; width:80px; height:22px; padding:4px 0 0 25px; margin:0 5px 0 0; background:Transparent url("../Images/uploadfile.gif") no-repeat 4px 4px; cursor:pointer;}
+.AutoUpFile_ShowImg{ padding:1px; border:1px #ccc solid;background:Transparent;}
+.AutoUpFile{ display:block;overflow:hidden; float:left; width:220px; height:24px; line-height:24px; overflow:hidden;}
+.AutoUpFile .AutoUpFile_File{ display:none;}
+.AutoUpFile .AutoUpFile_Img{border:0; width:80px; height:22px; padding:4px 0 0 25px; margin:0 5px 0 0; background:Transparent url("../Images/filetype/image.gif") no-repeat 4px 4px; cursor:pointer;}
+.AutoUpFile .AutoUpFile_Button{border:0; width:80px; height:22px; padding:4px 0 0 25px; margin:0 5px 0 0; background:Transparent url("../Images/uploadfile.gif") no-repeat 4px 4px; cursor:pointer;}
+.AutoUpFile .AutoUpFile_Vedio{border:0; width:80px; height:22px; padding:4px 0 0 25px; margin:0 5px 0 0; background:Transparent url("../Images/filetype/vedio.gif") no-repeat 4px 4px; cursor:pointer;}

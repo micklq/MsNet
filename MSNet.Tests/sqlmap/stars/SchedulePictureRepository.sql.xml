@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="SchedulePictureRepository" dbName="Bumeng.Commons">
+    <sqlWrap sqlName="SelectByTrendIds" supportDBType="3">
+      SELECT  *   FROM SchedulePictures
+      WHERE  PictureId in (SELECT MAX(PictureId) FROM TrendPicture WHERE ScheduleId IN (@ScheduleId) GROUP BY ScheduleId )
+    </sqlWrap>
+    <sqlWrap sqlName="Add" supportDBType="SqlServer">
+      Insert Into [SchedulePictures] (  ScheduleId, PictureUrl, PicturePath, CreatedTime, Width, Height )
+      Values (  @ScheduleId, @PictureUrl, @PicturePath, @CreatedTime, @Width, @Height )
+      Select @@Identity
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer">
+      Update [SchedulePictures] Set  ScheduleId=@ScheduleId, PictureUrl=@PictureUrl, PicturePath=@PicturePath, CreatedTime=@CreatedTime
+      Where Picture = @Picture
+    </sqlWrap>
+    <sqlWrap sqlName="Delete" supportDBType="SqlServer">
+      Delete SchedulePictures where PictureId = @PictureId
+    </sqlWrap>
+    <sqlWrap sqlName="DeleteByScheduleId" supportDBType="SqlServer">
+      Delete SchedulePictures where ScheduleId = @ScheduleId
+    </sqlWrap>
+    <sqlWrap sqlName="FindByScheduleId" supportDBType="SqlServer">
+      Select * from SchedulePictures where ScheduleId = @ScheduleId
+      Order by CreatedTime desc
+    </sqlWrap>
+    <sqlWrap sqlName="FindCountByScheduleId" supportDBType="SqlServer">
+      Select count(1) from SchedulePictures where ScheduleId = @ScheduleId
+    </sqlWrap>
+  </module>
+</root>

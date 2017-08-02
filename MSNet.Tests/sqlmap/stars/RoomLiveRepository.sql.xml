@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="RoomLiveRepository" dbName="YooShow">
+    <sqlWrap sqlName="GetLiveVedioInfoByRoomId" supportDBType="SqlServer">
+      SELECT rl.LiveId, rl.RoomId, rl.Title, rl.Description, rl.preview_img, rl.Created, rl.PreStartTime, rl.PreEndTime, rl.LiveStartTime, rl.LiveEndTime, rl.LastActivityTime, rl.ClassId, rl.ClassName, rl.Status, rl.GoldCoin, rl.ZCId, rl.YuYue_Image, rl.YuYue_Content, rl.YuYue_RateKeys, rl.YuYue_BrowseCount,rl.Id AS PeriodId,u.Name FROM Room_Lives rl
+      INNER JOIN Users u
+      ON rl.RoomId = u.RoomId
+      WHERE rl.LiveId = @LiveId
+    </sqlWrap>
+  </module>
+</root>

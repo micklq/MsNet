@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="RedEnvelopeRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectTodyByCircleId" supportDBType="3">
+      SELECT Top 1  *   FROM   RedEnvelope
+      WHERE  (CircleId=@CircleId)  
+      AND  (datediff(day,CreatedTime,getdate())=0)
+      ORDER BY RedEnveId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="StuffedRedEnvelope" supportDBType="2">
+      declare @exist int
+      begin
+      select @exist=count(1) from RedEnvelope  where CircleId=@CircleId and  (datediff(day,CreatedTime,getdate())=0)
+      if(@exist=0)
+      begin
+      INSERT INTO RedEnvelope(CircleId,Income,Pay,CreatedTime)
+      VALUES (@CircleId,@Income,0,getdate())
+      end
+      else
+      begin
+      UPDATE RedEnvelope SET Income=Income+@Income
+      WHERE CircleId=@CircleId  AND (datediff(day,CreatedTime,getdate())=0)
+      end
+      end
+    </sqlWrap>
+    <sqlWrap sqlName="GrabRedEnvelope" supportDBType="2">
+      UPDATE RedEnvelope SET Pay=Pay+@Pay
+      WHERE CircleId=@CircleId  AND (datediff(day,CreatedTime,getdate())=0)
+    </sqlWrap>    
+  </module>
+</root>

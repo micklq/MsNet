@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="BeSpeakVedioRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="GetPassportIdsByVedioId" supportDBType="3">
+      SELECT TOP (@Top) PassportId FROM BeSpeakVedio WHERE
+      VedioId = @VedioId
+    </sqlWrap>
+    
+    <sqlWrap sqlName="GetByPassportId" supportDBType="3">
+      SELECT TOP(@Top) bsv.VedioId,v.Title,v.Banner,bsv.CreatedTime,v.LiveTime,v.EndTime,c.Logo AS CircleLogo FROM BeSpeakVedio bsv
+      INNER JOIN Vedio v ON v.VedioId = bsv.VedioId
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE bsv.PassportId = @PassportId AND v.Status = 1
+      ORDER BY v.LiveTime DESC
+    </sqlWrap>
+
+
+    <sqlWrap sqlName="CheckIsBeSpeak" supportDBType="3">
+      SELECT COUNT(BeSpeakId) FROM BeSpeakVedio
+      WHERE PassportId=@PassportId
+      AND VedioId = @VedioId
+    </sqlWrap>
+    <sqlWrap sqlName="Create" supportDBType="3">
+      INSERT INTO BeSpeakVedio(VedioId,PassportId,CreatedTime,IsSend)
+      VALUES(@VedioId,@PassportId,@CreatedTime,0)
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="Delete" supportDBType="3">
+      DELETE FROM BeSpeakVedio WHERE VedioId = @VedioId AND PassportId = @PassportId
+    </sqlWrap>
+
+    <sqlWrap sqlName="SetIsSend" supportDBType="3">
+      UPDATE BeSpeakVedio SET IsSend = 1 WHERE BeSpeakId = @BeSpeakId
+    </sqlWrap>
+
+    <sqlWrap sqlName="GetSendMessageInfo" supportDBType="3">
+      SELECT bsv.BeSpeakId,v.VedioId,c.Logo,v.Title,v.LiveTime,u.PassportId,u.MobilePhone FROM BeSpeakVedio bsv
+      INNER JOIN Vedio v ON v.VedioId = bsv.VedioId
+      INNER JOIN UserPassport u ON u.PassportId = bsv.PassportId
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE GETDATE() BETWEEN DATEADD(MI,-10,v.LiveTime) AND v.LiveTime AND bsv.IsSend = 0
+    </sqlWrap>
+  </module>
+</root>

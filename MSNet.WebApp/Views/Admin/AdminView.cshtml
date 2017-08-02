@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "添加管理员";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+    var u = ViewData["Users"] as UserPassport;
+    if (u == null) { u = new UserPassport(); }
+}
+<script language="javascript" type="text/javascript" src="@Url.Content("~/Content/My97DatePicker/WdatePicker.js")"></script>
+<div id="HMain">
+<div class="Main">
+<div class="HTitle">添加管理员</div>
+<div class="MMain">
+<form id="form1" method="post" action="@Url.Action("AdminAction")">
+    <table id="EditTable"  class="Edit" border="0" cellpadding="0" cellspacing="1">
+     <tr><th>用户名称</th>
+     <td><input type="text" id="UserName" name="UserName" class="Etext" maxlength="10" value="@(u.UserName)"
+       data-val="true"
+       data-val-length="用户名需要5-16个字符！"
+       data-val-required="用户名不能为空！"
+       data-val-length-max="16"
+       data-val-length-min="5" />
+         <span class="field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+      </td></tr>
+        @if (u.PassportId == 0) 
+        { 
+       
+     <tr><th>用户密码</th>
+     <td><input type="password" id="Password" name="Password" class="Etext" maxlength="16" value="123456789"
+       data-val="true"
+       data-val-length="密码需要6-16个字符！"
+       data-val-length-max="16"
+       data-val-length-min="6"
+       data-val-required="密码不能为空！" />
+     <span class="Message">（默认密码：123456789）</span>
+         <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+     </td></tr>
+     <tr><th>确认密码</th>
+     <td><input type="password" id="rPassword" name="rPassword" class="Etext" maxlength="16" value="123456789"
+       data-val="true"
+       data-val-length="确认密码需要6-16个字符！"
+       data-val-length-max="16"
+       data-val-length-min="6"
+       data-val-required="确认密码不能为空！" />
+         <span class="field-validation-valid" data-valmsg-for="rPassword" data-valmsg-replace="true"></span>
+           </td></tr>
+        }
+        <tr>
+            <th>电子邮箱</th>
+            <td>
+                <input type="text" id="Email" name="Email" class="Etext" maxlength="150" value="@(u.Email)"/>
+                <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>手机号码</th>
+            <td>
+                <input type="text" id="Mobile" name="Mobile" class="Etext" maxlength="11" value="@(u.Mobile)"/>
+                <span class="field-validation-valid" data-valmsg-for="Mobile" data-valmsg-replace="true"></span>
+            </td>
+        </tr>
+     <tr><th>用户状态</th>
+     <td><select id="status" class="Eselect">  
+                 @{
+                 foreach (var o in EnumHelper.GetItems<PassportStatus>())
+                 {
+                    <option value="@(o.Value)" @(((int)u.PassportStatus == o.Value) ? "selected" : "")   select>@(o.Description)</option>
+                 }
+                 }
+            
+         
+
+         </select></td></tr>
+   </table>
+  <div class="ButtonDiv" id="ddDoing" style="display:none;"><img src="@Url.Content("~/Content/Images/ajax_loading.gif")" style="display:inline;" /> 正在提交...</div>
+  <div class="ButtonDiv" id="ddButton">
+  <input type="submit" class="inputbutton" title="添加" value="添加" id="Save" />&nbsp;
+  <input type="button" class="inputbutton" title="取消" value="取消" id="GoBack" />
+  </div>
+  <div class="ButtonDiv">
+  <span id="MessageBox"></span>
+  </div>
+</form>
+</div>
+</div>
+</div>
+<script src="@Url.Content("~/Scripts/jquery.form.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.extend.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#UserName,#Mobile,#Email").keyup(function () { $("#MessageBox").html(""); });
+        $("#Password,#rPassword").keyup(function () { $("#MessageBox").html(""); });
+        $("#GoBack").click(function () { location.href = "/admin/adminlist"; });
+        $("#form1").submit(function () {
+            var options = {
+                beforeSubmit: function (formData, jqForm, options) {
+                    $("#MessageBox").html("");
+                    var v = jqForm.validate();
+                    if (!v.form()) {
+                        return false;
+                    }
+                   
+                     //if ($("#Password").val() != $("#rPassword").val()) {
+                       // $("#MessageBox").html("").html("两次密码输入不一致!");
+                      //  return false;
+                    // }                   
+                    
+                    $("#ddButton").hide();
+                    $("#ddDoing").show();
+                    return true;
+                },
+                success: function (responseText, statusText) {
+                    if (statusText == "success") {
+                        var d = null;
+                        try {
+                            d = typeof responseText == 'string' ? responseText.toJsonObj() : responseText; // eval('(' + responseText + ')');
+                        } catch (ex) {
+                            d = { success: false, message: '服务器出现错误' };
+                        }
+                        if (d.success) {                            
+                            location.href ="/admin/adminlist";
+                        }
+                        else {                           
+                            $("#ddButton").show();
+                            $("#ddDoing").hide();
+                            $("#MessageBox").html("").html(d.message);
+                        }
+                    }
+                    else {                    
+                        $("#ddButton").show();
+                        $("#ddDoing").hide();
+                        $("#MessageBox").html("").html("提交失败");
+                    }
+                }
+            };
+            $(this).ajaxSubmit(options);
+            return false;
+        });
+    });
+</script>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="VedioLikedRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="Create" supportDBType="3">
+      INSERT INTO VedioLiked(VedioId,PassportId)
+      VALUES(@VedioId,@PassportId)
+    </sqlWrap>
+    <sqlWrap sqlName="Delete" supportDBType="3">
+      DELETE FROM VedioLiked WHERE VedioId = @VedioId AND PassportId = @PassportId
+    </sqlWrap>
+
+
+
+    <sqlWrap sqlName="CheckIsLiked" supportDBType="3">
+      SELECT COUNT(LikedId) FROM VedioLiked
+      WHERE VedioId = @VedioId AND PassportId = @PassportId
+    </sqlWrap>
+  </module>
+</root>

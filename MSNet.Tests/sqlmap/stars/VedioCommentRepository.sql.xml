@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="VedioCommentRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="FindByVedioId" supportDBType="SqlServer">
+      SELECT TOP(@Top) * FROM VedioComment
+      WHERE VedioId = @VedioId
+      ORDER BY CreatedTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="FindByCircleId" supportDBType="SqlServer">
+      SELECT TOP(@Top) vc.* FROM VedioComment vc
+      INNER JOIN Vedio v ON vc.VedioId = v.VedioId
+      WHERE v.CircleId = @CircleId
+      ORDER BY CreatedTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="Add" supportDBType="SqlServer">
+      INSERT INTO VedioComment(PassportId,ParentId,ReplyPassportId,VedioId,Contents,Location,CreatedTime)
+      VALUES(@PassportId,0,0,@VedioId,@Contents,@Location,@CreatedTime)
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="Reply" supportDBType="SqlServer">
+      INSERT INTO VedioComment(PassportId,ParentId,ReplyPassportId,VedioId,Contents,Location,CreatedTime)
+      VALUES(@PassportId,@ParentId,@ReplyPassportId,@VedioId,@Contents,@Location,@CreatedTime)
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="FindByCommentId" supportDBType="3">
+      SELECT * FROM VedioComment WHERE (CommentId = @CommentId)
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithParameter" supportDBType="3">
+      SELECT * FROM (
+      SELECT vc.CommentId,c.CircleId,c.CircleName,c.Logo AS CircleLogo,v.VedioId,v.Title AS VedioTitle,rvc.Contents AS ParentContents,vc.PassportId,vc.ReplyPassportId,vc.ParentId,vc.Contents,vc.CreatedTime,
+      (SELECT COUNT(CommentId) FROM VedioComment WHERE ParentId = vc.CommentId) AS ReplyCount
+      FROM VedioComment vc
+      LEFT JOIN VedioComment rvc ON vc.ParentId = rvc.CommentId
+      INNER JOIN Vedio v ON vc.VedioId = v.VedioId
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE ((vc.Contents LIKE @Keyword) OR (v.Title LIKE @Keyword) OR (c.CircleName LIKE @Keyword)) AND vc.ParentId = CASE WHEN @ParentId = 0 THEN vc.ParentId ELSE @ParentId END
+      ) t
+      ORDER BY CreatedTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="RemoveComment" supportDBType="2">
+      DELETE FROM VedioComment WHERE CommentId=@CommentId AND PassportId=@PassportId;
+      DELETE FROM VedioComment WHERE ParentId=@CommentId;
+    </sqlWrap>
+  </module>
+</root>

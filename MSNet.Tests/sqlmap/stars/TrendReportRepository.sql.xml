@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="TrendReportRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectById" supportDBType="3">
+      SELECT * FROM TrendReport WHERE ReportId = @Id
+    </sqlWrap>
+    <sqlWrap sqlName="SelectReportIdsByTrendId" supportDBType="3">
+      SELECT ReportId FROM TrendReport WHERE TrendId = @TrendId AND ReportType = @ReportType
+    </sqlWrap>   
+    <sqlWrap sqlName="DeleteById" supportDBType="3">
+      DELETE FROM TrendReport WHERE ReportId = @Id
+    </sqlWrap>
+
+    <sqlWrap sqlName="SetStatus" supportDBType="3">
+      UPDATE TrendReport SET Status = @Status WHERE ReportId = @ReportId
+    </sqlWrap>
+    <sqlWrap sqlName="SetStatusByIds" supportDBType="3">
+      UPDATE TrendReport SET Status = @Status WHERE ReportId IN (@ReportIds)
+    </sqlWrap>
+    
+    <sqlWrap sqlName="Create" supportDBType="3">
+      INSERT INTO TrendReport(TrendId,PublisherId,PassportId,TrendContents,ReportContents,CreatedTime,Status,ReportType)
+      VALUES (@TrendId,@PublisherId,@PassportId,@TrendContents,@ReportContents,@CreatedTime,1,@ReportType)
+      SELECT @@IDENTITY
+    </sqlWrap>
+
+    <sqlWrap sqlName="SelectWithParameter" supportDBType="3">
+      SELECT * FROM TrendReport
+      WHERE (ReportContents LIKE @Keyword) AND Status = @Status
+      ORDER BY CreatedTime DESC
+    </sqlWrap>
+  </module>
+</root>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="ScheduleLikedRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByPassportId" supportDBType="3">
+      SELECT Top (@Top) *   FROM ScheduleLiked
+      WHERE  (PassportId=@PassportId)
+      ORDER BY LikedId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByScheduleId" supportDBType="3">
+      SELECT Top (@Top) *   FROM ScheduleLiked
+      WHERE  (ScheduleId=@ScheduleId) AND (LikedId > @MaxId)
+      ORDER BY LikedId DESC
+    </sqlWrap>   
+    <sqlWrap sqlName="SelectNextPageByScheduleId" supportDBType="3">
+      SELECT Top (@Top) *   FROM ScheduleLiked
+      WHERE  (ScheduleId=@ScheduleId) AND (LikedId &lt; @MinId)
+      ORDER BY LikedId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByScheduleIds" supportDBType="3">
+      SELECT  *   FROM ScheduleLiked
+      WHERE  ScheduleId IN (@ScheduleIds)
+    </sqlWrap>
+    <sqlWrap sqlName="CountScheduleLiked" supportDBType="3">
+      SELECT Count(1)  FROM ScheduleLiked
+      WHERE  (ScheduleId=@ScheduleId)      
+    </sqlWrap>
+    <sqlWrap sqlName="CheckIsLiked" supportDBType="3">
+      SELECT ScheduleId  FROM ScheduleLiked
+      WHERE  (ScheduleId IN (@ScheduleIds))
+      AND (PassportId=@PassportId)
+    </sqlWrap>
+    <sqlWrap sqlName="Cancel" supportDBType="2">
+      DELETE FROM  ScheduleLiked WHERE ScheduleId=@ScheduleId AND PassportId=@PassportId
+      UPDATE Schedule SET LikedCount=(select count(1) from ScheduleLiked where ScheduleId=@ScheduleId)  WHERE  ScheduleId=@ScheduleId
+    </sqlWrap>
+    <sqlWrap sqlName="Set" supportDBType="2">
+      INSERT INTO ScheduleLiked(ScheduleId,PassportId,CreatedTime)
+      VALUES (@ScheduleId,@PassportId,@CreatedTime)
+      UPDATE Schedule SET LikedCount=(select count(1) from ScheduleLiked where ScheduleId=@ScheduleId)  WHERE  ScheduleId=@ScheduleId
+      SELECT @@IDENTITY
+    </sqlWrap>
+  </module>
+</root>

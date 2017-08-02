@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="UserPassportRepository" dbName="MSNet.SQLServer">
+    <sqlWrap sqlName="Insert" supportDBType="SqlServer, MySql">
+      insert into UserPassport (UserName,Email,Mobile, PassportStatus,CreatedTime, LastModifiedTime)
+      values (@UserName,@Email,@Mobile,@PassportStatus,@CreatedTime, @LastModifiedTime);
+      select @@identity
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer, MySql">
+      update UserPassport set UserName = @UserName, Email=@Email,LastModifiedTime=@LastModifiedTime where PassportId = @Id
+    </sqlWrap>
+    <sqlWrap sqlName="DeleteById" supportDBType="SqlServer, MySql">
+      update UserPassport set PassportStatus=999 where PassportId = @Id
+    </sqlWrap>
+    <sqlWrap  sqlName="ClearRole"  supportDBType="MySql,SqlServer">
+      update UserPassport set RoleId=0  where RoleId = @RoleId;
+    </sqlWrap>
+    
+    <sqlWrap sqlName="SelectById" supportDBType="SqlServer, MySql">
+      select * from UserPassport where PassportId = @Id
+    </sqlWrap>      
+    <sqlWrap sqlName="SelectPassportIdByEmail" supportDBType="SqlServer, MySql">
+      select PassportId from UserPassport where Email = @Email;
+    </sqlWrap>
+    <sqlWrap sqlName="SelectPassportIdByMobile" supportDBType="SqlServer, MySql">
+      select PassportId from UserPassport where Mobile = @Mobile;
+    </sqlWrap>
+    <sqlWrap sqlName="SelectPassportIdByUserName" supportDBType="SqlServer, MySql">
+      select PassportId from UserPassport where UserName = @UserName;
+    </sqlWrap>
+    <sqlWrap sqlName="SelectUserSecurityById" supportDBType="SqlServer, MySql">
+      select * from UserPassport where PassportId = @Id;
+      select * from UserSecurity where PassportId = @Id;
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithAdminPage" supportDBType="SqlServer, MySql">
+      select PassportId, UserName, Email, Mobile, PassportStatus, CreatedTime,LastModifiedTime, RoleId
+      from (select up.PassportId, up.UserName, up.Email, up.Mobile,up.PassportStatus,up.RoleId,up.CreatedTime,up.LastModifiedTime,r.RoleType
+      from UserPassport up  INNER JOIN Role r ON up.RoleId = r.RoleId ) _TTT
+      where RoleType=1 and (Mobile like @Keyword or UserName like @Keyword or Email like @Keyword) and (PassportId not in(@ExceptIds))
+      order by PassportId asc
+    </sqlWrap>
+    <!--<sqlWrap sqlName="SelectWithAdminPage" supportDBType="SqlServer, MySql">
+      select PassportId, UserName, Email, Mobile, PassportStatus, CreatedTime,LastModifiedTime, RoleId,RoleName
+      from (select  up.PassportId, up.UserName, up.Email, up.Mobile,up.PassportStatus, up.CreatedTime,up.LastModifiedTime,r.RoleId, r.RoleType,r.Name as RoleName
+      from UserPassport up  INNER JOIN UserRole ur ON ur.PassportId = up.PassportId  INNER JOIN Role r ON r.RoleId = ur.RoleId) _TTT
+      where RoleType=1 and (Mobile like @Keyword or UserName like @Keyword or Email like @Keyword) and (PassportId not in(@ExceptIds))
+      order by PassportId asc
+    </sqlWrap>-->
+    <sqlWrap sqlName="SelectByKeyword" supportDBType="SqlServer, MySql">
+      select  *  from UserPassport where (Mobile = @Keyword or UserName = @Keyword or Email = @Keyword) order by PassportId desc
+    </sqlWrap>    
+  </module>
+</root>

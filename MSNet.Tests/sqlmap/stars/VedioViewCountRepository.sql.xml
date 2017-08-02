@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="VedioViewCountRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectAll" supportDBType="SqlServer">
+      SELECT * FROM VedioViewCount
+    </sqlWrap>
+    <sqlWrap sqlName="FindVedioCount" supportDBType="3">
+      SELECT * FROM VedioViewCount WHERE VedioId = @VedioId
+    </sqlWrap>
+    <sqlWrap sqlName="Create" supportDBType="3">
+      DECLARE @ViewCount BIGINT,@BeSpeakCount BIGINT,@CommentCount BIGINT,@LikedCount BIGINT
+      SELECT @ViewCount = COUNT(LiveVedioId) FROM LiveVedio WHERE VedioId = @VedioId
+      SELECT @BeSpeakCount = COUNT(BeSpeakId) FROM BeSpeakVedio WHERE VedioId = @VedioId
+      SELECT @CommentCount = COUNT(LikedId) FROM VedioLiked WHERE VedioId = @VedioId
+      SELECT @LikedCount = COUNT(CommentId) FROM VedioComment WHERE VedioId = @VedioId
+      INSERT INTO VedioViewCount(VedioId,ViewCount,BeSpeakCount,CommentCount,LikedCount)
+                  VALUES(@VedioId,@ViewCount,@BeSpeakCount,@CommentCount,@LikedCount)
+    </sqlWrap>
+    <sqlWrap sqlName="SetBeSpeakCount" supportDBType="3">
+      UPDATE VedioViewCount SET BeSpeakCount = BeSpeakCount + @BeSpeakCount
+      WHERE VedioId = @VedioId
+    </sqlWrap>
+    <sqlWrap sqlName="SetViewCount" supportDBType="3">
+      UPDATE VedioViewCount SET ViewCount = ViewCount + @ViewCount
+      WHERE VedioId = @VedioId
+    </sqlWrap>
+    <sqlWrap sqlName="SetLikedCount" supportDBType="3">
+      UPDATE VedioViewCount SET LikedCount = LikedCount + @LikedCount
+      WHERE VedioId = @VedioId
+    </sqlWrap>
+    <sqlWrap sqlName="SetCommentCount" supportDBType="3">
+      UPDATE VedioViewCount SET CommentCount = CommentCount + @CommentCount
+      WHERE VedioId = @VedioId
+    </sqlWrap>
+    <sqlWrap sqlName="SetRandomNum" supportDBType="3">
+      UPDATE VedioViewCount SET RandomNum = @RandomNum
+      WHERE VedioId = @VedioId
+    </sqlWrap>
+    <sqlWrap sqlName="CheckIsExist" supportDBType="3">
+      SELECT COUNT(VedioId) FROM VedioViewCount
+      WHERE VedioId = @VedioId
+    </sqlWrap>
+  </module>
+</root>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="RedEnvelopePayRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByCircleId" supportDBType="3">
+      SELECT Top (@Top) *   FROM RedEnvelopePay
+      WHERE  (CircleId=@CircleId) 
+      ORDER BY RedPayId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectTodayByCircleId" supportDBType="3">
+      SELECT Top (@Top) *   FROM RedEnvelopePay
+      WHERE  (CircleId=@CircleId) 
+      AND  (datediff(day,CreatedTime,getdate())=0)
+      ORDER BY RedPayId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectTodayByPassportId" supportDBType="3">
+      SELECT Count(*)  FROM RedEnvelopePay
+      WHERE  (PassportId=@PassportId)
+      AND  (datediff(day,CreatedTime,getdate())=0)      
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByPassportId" supportDBType="3">
+      SELECT Top (@Top) *   FROM RedEnvelopePay
+      WHERE  (PassportId=@PassportId) 
+      ORDER BY RedPayId DESC
+    </sqlWrap>    
+    <sqlWrap sqlName="Create" supportDBType="3">
+      INSERT INTO RedEnvelopePay(CircleId,PassportId,GoldValue,CreatedTime)
+      VALUES (@CircleId,@PassportId,@GoldValue,@CreatedTime)
+      SELECT @@IDENTITY
+    </sqlWrap>
+  </module>
+</root>

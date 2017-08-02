@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="TrendRewardRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByTrendId" supportDBType="3">
+      SELECT Top (@Top) *   FROM TrendReward
+      WHERE  (TrendId=@TrendId) AND (RewardId > @MaxId)
+      ORDER BY RewardId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByTrendIds" supportDBType="3">
+      SELECT  *   FROM TrendReward
+      WHERE  TrendId IN (@TrendIds)
+      ORDER BY RewardId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageByTrendId" supportDBType="3">
+      SELECT Top (@Top) *   FROM TrendReward
+      WHERE  (TrendId=@TrendId) AND (RewardId &lt; @MinId)
+      ORDER BY RewardId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithPay" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM TrendReward
+      WHERE  (PassportId=@PassportId) AND (RewardId > @MaxId)
+      ORDER BY RewardId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageWithPay" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM TrendReward
+      WHERE  (PassportId=@PassportId) AND (RewardId &lt; @MinId)
+      ORDER BY RewardId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithIncome" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM TrendReward
+      WHERE  (PublisherId=@PassportId) AND (RewardId > @MaxId)
+      ORDER BY RewardId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageWithIncome" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM TrendReward
+      WHERE  (PublisherId=@PassportId) AND (RewardId &lt; @MinId)
+      ORDER BY RewardId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="CountPayByPassportId" supportDBType="SqlServer">
+      SELECT ISNULL(Sum(GoldValue),0) as GoldValue
+      FROM TrendReward
+      Where (PassportId = @PassportId)
+    </sqlWrap>
+    <sqlWrap sqlName="CountIncomeByPassportId" supportDBType="SqlServer">
+      SELECT ISNULL(Sum(GoldValue),0) as GoldValue
+      FROM TrendReward
+      Where (PublisherId=@PassportId)
+    </sqlWrap>
+    <sqlWrap sqlName="Set" supportDBType="SqlServer">
+      INSERT INTO TrendReward(TrendId,PassportId,PublisherId,GoldValue,CreatedTime)
+      VALUES (@TrendId,@PassportId,@PublisherId,@GoldValue,@CreatedTime);
+      UPDATE TrendCount SET RewardCount=(select isnull(Sum(GoldValue),0) from TrendReward where TrendId=@TrendId) WHERE  TrendId=@TrendId;
+      SELECT @@IDENTITY;
+    </sqlWrap>
+  </module>
+</root>

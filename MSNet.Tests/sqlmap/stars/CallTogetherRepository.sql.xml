@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="CallTogetherRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByPassportId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CallTogether
+      WHERE   (PassportId = @PassportId) AND (Status IN(1,2))
+      ORDER BY OrderId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByOrderIds" supportDBType="SqlServer">
+      SELECT  *   FROM CallTogether
+      WHERE   OrderId IN(@OrderIds)
+      ORDER BY OrderId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithNew" supportDBType="SqlServer">
+      SELECT Top (@Top) ct.*   FROM CallTogether ct inner join Circle c on ct.CircleId= c.CircleId
+      WHERE   (ct.OrderId > @MaxId) AND (ct.Status=1) AND (c.Status=1)
+      ORDER BY ct.OrderId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageWithNew" supportDBType="SqlServer">
+      SELECT Top (@Top) ct.*   FROM CallTogether ct inner join Circle c on ct.CircleId= c.CircleId
+      WHERE  (ct.OrderId &lt; @MinId) AND (ct.Status=1) AND (c.Status=1)
+      ORDER BY ct.OrderId DESC
+    </sqlWrap>  
+    <sqlWrap sqlName="SelectById" supportDBType="SqlServer">
+      SELECT Top 1 *   FROM CallTogether
+      WHERE  (OrderId=@Id) AND (Status=1)
+      ORDER BY OrderId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="ApplyForRemove" supportDBType="SqlServer">
+      Update CallTogether SET Status=2 WHERE PassportId=@PassportId AND OrderId=@OrderId
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer">
+      Update CallTogether
+      SET BannerUrl=@BannerUrl,Title = @Title,Contents=@Contents,ExpectNumber=@ExpectNumber,LimitedNumber=@LimitedNumber,Address=@Address,EndTime=@EndTime,ActivityTime=@ActivityTime,RMBPrice = @RMBPrice
+      WHERE PassportId=@PassportId AND OrderId=@OrderId
+    </sqlWrap>
+    <sqlWrap sqlName="Create" supportDBType="SqlServer">
+      INSERT INTO CallTogether(CircleId,BannerUrl,Title,Contents,ExpectNumber,LimitedNumber,Address,PassportId,EndTime,ActivityTime,CreatedTime,JoinCount,Status,RMBPrice)
+      VALUES (@CircleId,@BannerUrl,@Title,@Contents,@ExpectNumber,@LimitedNumber,@Address,@PassportId,@EndTime,@ActivityTime,@CreatedTime,@JoinCount,@Status,@RMBPrice)
+      SELECT @@IDENTITY
+    </sqlWrap>
+
+
+    <sqlWrap sqlName="GetByCircleId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CallTogether
+      WHERE  (CircleId = @CircleId) and  (OrderId > @MaxId) AND (Status=1)
+      ORDER BY OrderId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="GetNextPageByCircleId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CallTogether
+      WHERE (CircleId = @CircleId) and (OrderId &lt; @MinId) AND (Status=1)
+      ORDER BY OrderId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SetStatus" supportDBType="SqlServer">
+      Update CallTogether Set Status = @Status WHERE (OrderId = @OrderId) 
+    </sqlWrap>
+  </module>
+</root>

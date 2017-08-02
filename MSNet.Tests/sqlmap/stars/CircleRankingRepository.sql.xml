@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="CircleRankingRepository" dbName="Bumeng.Stars">  
+     <sqlWrap sqlName="SelectByCircleId" supportDBType="SqlServer">
+       SELECT  *   FROM CircleRanking
+       WHERE  (CircleId=@CircleId)      
+     </sqlWrap>
+    <sqlWrap sqlName="SelectByCircleIds" supportDBType="SqlServer">
+      SELECT  *   FROM CircleRanking
+      WHERE  (CircleId IN (@CircleIds))
+    </sqlWrap>
+    <sqlWrap sqlName="ReRanking" supportDBType="SqlServer">
+      delete from CircleRanking
+      insert into CircleRanking(CircleId,Ranking,Number)
+      select CircleId,Ranking,Number
+      from (
+      select CircleId,  ROW_NUMBER() OVER (ORDER BY Number DESC) AS Ranking, Number
+      from (select   Count(*) as Number , CircleId   from [FollowedCircle]  group by [CircleId]) tab1
+      ) tab2
+      order by CircleId
+    </sqlWrap>
+  </module>
+</root>

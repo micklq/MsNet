@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="CrowdfundingCommentRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByPassportId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CrowdfundingComment
+      WHERE  (PassportId=@PassportId) And ParentId=0
+      ORDER BY CommentId DESC
+    </sqlWrap>   
+    <sqlWrap sqlName="SelectReplyByPassportId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CrowdfundingComment
+      WHERE  (PassportId=@PassportId)  And ParentId>0
+      ORDER BY CommentId DESC
+    </sqlWrap>   
+    <sqlWrap sqlName="SelectByCommentId" supportDBType="3">
+      SELECT  *   FROM CrowdfundingComment
+      WHERE  (CommentId=@CommentId)
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByCrowdfundingId" supportDBType="3">
+      SELECT Top (@Top) *   FROM CrowdfundingComment
+      WHERE  (CrowdfundingId=@CrowdfundingId) 
+      ORDER BY CommentId DESC
+    </sqlWrap>  
+    <sqlWrap sqlName="RemoveComment" supportDBType="2">
+      DELETE FROM  CrowdfundingComment WHERE CommentId=@CommentId AND PassportId=@PassportId
+      DELETE FROM  CrowdfundingComment WHERE ParentId=@CommentId
+      UPDATE CrowdfundingCount SET CommentCount=(select count(1) from CrowdfundingComment where CrowdfundingId=@CrowdfundingId)  WHERE  CrowdfundingId=@CrowdfundingId
+    </sqlWrap>
+    <sqlWrap sqlName="Add" supportDBType="2">
+      declare @exist int
+      declare @cid bigint
+
+      INSERT INTO CrowdfundingComment(CrowdfundingId,PassportId,UserId,Contents,Location,CreatedTime,ReplyPassportId,ReplyUserId,ParentId)
+      VALUES (@CrowdfundingId,@PassportId,@UserId,@Contents,@Location,@CreatedTime,0,@ReplyUserId,0)
+      select @cid = @@IDENTITY
+
+      begin
+      select @exist=count(1) from CrowdfundingCount  where CrowdfundingId=@CrowdfundingId
+      if(@exist=0)
+      begin
+      insert CrowdfundingCount(CrowdfundingId,SupportCount,LikedCount,CommentCount,LastModifiedTime,CreatedTime)
+      values(@CrowdfundingId,0,0,1,getdate(),getdate())
+      end
+      else
+      begin
+      update CrowdfundingCount set CommentCount=(select count(1) from CrowdfundingComment where CrowdfundingId=@CrowdfundingId),LastModifiedTime=getdate()
+      where CrowdfundingId=@CrowdfundingId
+      end
+      end
+
+      select @cid
+    </sqlWrap>
+    <sqlWrap sqlName="Reply" supportDBType="2">
+      INSERT INTO CrowdfundingComment(CrowdfundingId,PassportId,UserId,ReplyPassportId,ReplyUserId,ParentId,Contents,Location,CreatedTime)
+      VALUES (@CrowdfundingId,@PassportId,@UserId,@ReplyPassportId,@ReplyUserId,@ParentId,@Contents,@Location,@CreatedTime)
+      UPDATE CrowdfundingCount SET CommentCount=(select count(1) from CrowdfundingComment where CrowdfundingId=@CrowdfundingId)  WHERE  CrowdfundingId=@CrowdfundingId
+      SELECT @@IDENTITY
+    </sqlWrap>  
+   </module>
+</root>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="StarRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="Insert" supportDBType="2">
+      INSERT INTO Star(StarName,StarProfile,CreatedTime,LastModifiedTime,StarCareer)
+      VALUES (@StarName,@StarProfile,@CreatedTime,@CreatedTime,@StarCareer)
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="2">
+      UPDATE Star SET StarName=@StarName,StarProfile=@StarProfile,LastModifiedTime=@LastModifiedTime
+      WHERE  StarId=@StarId
+    </sqlWrap>
+    <sqlWrap sqlName="SetStarCareer" supportDBType="2">
+      UPDATE Star SET StarCareer = @StarCareer
+      WHERE  StarId = @StarId
+    </sqlWrap>
+    <sqlWrap sqlName="CheckWithName" supportDBType="2">
+      SELECT Count(1)  FROM Star
+      WHERE  (StarName=@StarName)
+    </sqlWrap>
+    <sqlWrap sqlName="SelectById" supportDBType="SqlServer">
+      SELECT * FROM Star WHERE StarId = @Id
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByStarName" supportDBType="2">
+      SELECT *
+      FROM   Star
+      WHERE StarName = @StarName
+    </sqlWrap>
+    <sqlWrap sqlName="Create" supportDBType="SqlServer">
+      INSERT INTO Star(StarName,StarProfile,CreatedTime,LastModifiedTime)
+      values(@StarName,@StarProfile,@CreatedTime,@LastModifiedTime)
+      SELECT @@IDENTITY
+    </sqlWrap>
+  </module>
+</root>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="VedioRelationRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectAll" supportDBType="SqlServer">
+      SELECT * FROM VedioRelation
+    </sqlWrap>
+    <sqlWrap sqlName="Exist" supportDBType="SqlServer">
+      SELECT COUNT(RelationId) FROM VedioRelation WHERE ModuleId = @ModuleId AND ForId = @ForId
+    </sqlWrap>
+    <sqlWrap sqlName="Insert" supportDBType="SqlServer">
+      INSERT INTO VedioRelation(ModuleId,ForId,ShowBanner,ShowTitle,OrderId) VALUES(@ModuleId,@ForId,@ShowBanner,@ShowTitle,@OrderId)
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer">
+      UPDATE VedioRelation SET ShowBanner = @ShowBanner, ShowTitle = @ShowTitle WHERE RelationId = @RelationId
+    </sqlWrap>
+    <sqlWrap sqlName="DeleteById" supportDBType="SqlServer">
+      UPDATE VedioRelation SET OrderId = OrderId - 1 WHERE OrderId > (SELECT TOP 1 OrderId FROM VedioRelation WHERE RelationId = @Id)
+      DELETE VedioRelation WHERE RelationId = @Id
+    </sqlWrap>
+    <sqlWrap sqlName="SetOrderId" supportDBType="SqlServer">
+      UPDATE VedioRelation SET OrderId = @OId1 WHERE RelationId = @Id1
+      UPDATE VedioRelation SET OrderId = @OId2 WHERE RelationId = @Id2
+    </sqlWrap>
+    <sqlWrap sqlName="SetOrderIdById" supportDBType="SqlServer">
+      UPDATE VedioRelation SET OrderId = @OId WHERE RelationId = @Id
+    </sqlWrap>
+  </module>
+</root>

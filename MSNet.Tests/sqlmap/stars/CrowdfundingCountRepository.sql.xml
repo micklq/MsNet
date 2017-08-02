@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="CrowdfundingCountRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByCrowdfundingId" supportDBType="3">
+      SELECT Top 1  *   FROM CrowdfundingCount
+      WHERE  (CrowdfundingId=@CrowdfundingId)
+      ORDER BY Id DESC
+    </sqlWrap>    
+    <sqlWrap sqlName="SelectByCrowdfundingIds" supportDBType="3">
+      SELECT  *   FROM CrowdfundingCount
+      WHERE  CrowdfundingId IN (@CrowdfundingIds)
+      ORDER BY Id DESC
+    </sqlWrap>
+  </module>
+</root>

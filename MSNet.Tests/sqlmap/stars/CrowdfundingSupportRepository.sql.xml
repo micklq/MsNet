@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="CrowdfundingSupportRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectPayByPassportId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CrowdfundingSupport
+      WHERE  (PassportId=@PassportId)  And IsPay=1
+      ORDER BY SupportId DESC
+    </sqlWrap>   
+    <sqlWrap sqlName="SelectNoPayByPassportId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CrowdfundingSupport
+      WHERE  (PassportId=@PassportId) And IsPay=0
+      ORDER BY SupportId DESC
+    </sqlWrap>   
+    <sqlWrap sqlName="SelectByCrowdfundingId" supportDBType="3">
+      SELECT  *   FROM CrowdfundingSupport
+      WHERE  (CrowdfundingId=@CrowdfundingId)
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByTradeId" supportDBType="3">
+      SELECT  *   FROM CrowdfundingSupport
+      WHERE  (TradeId=@TradeId)
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByCrowdfundingIds" supportDBType="3">
+      SELECT  *   FROM CrowdfundingSupport
+      WHERE  (CrowdfundingId IN (@CrowdfundingIds))  And IsPay=1
+    </sqlWrap>
+    <sqlWrap sqlName="Create" supportDBType="2">
+      declare @exist int
+      INSERT INTO CrowdfundingSupport(TradeId,CrowdfundingId,CrowdfundingItemId,PassportId,UserId,IsPay,CreatedTime)
+      VALUES (@TradeId,@CrowdfundingId,@CrowdfundingItemId,@PassportId,@UserId,@IsPay,@CreatedTime)
+      begin
+      select @exist=count(1) from CrowdfundingCount  where CrowdfundingId=@CrowdfundingId
+      if(@exist=0)
+      begin
+      insert CrowdfundingCount(CrowdfundingId,SupportCount,LikedCount,CommentCount,LastModifiedTime,CreatedTime)
+      values(@CrowdfundingId,0,0,0,getdate(),getdate())
+      end
+      --else
+      --begin
+      --update CrowdfundingCount set SupportCount=SupportCount+1,LastModifiedTime=getdate()
+      --where CrowdfundingId=@CrowdfundingId
+      --end
+      end
+    </sqlWrap>  
+   </module>
+</root>

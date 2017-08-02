@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="CircleRepository" dbName="Bumeng.Stars">    
+    <sqlWrap sqlName="SelectRecentlyCirclesByTrend" supportDBType="3">
+      SELECT c.* ,t1.CreatedTime as oTime
+      FROM Circle c INNER JOIN
+      (SELECT Top 5 CircleId,CreatedTime  FROM Trend WHERE PassportId =@PassportId ORDER BY CreatedTime DESC) as t1
+      ON  c.CircleId = t1.CircleId
+      WHERE (c.Status=1)
+      ORDER BY oTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectRecentlyCirclesByFollowed" supportDBType="3">
+      SELECT c1.*  ,t2.CreatedTime  as oTime
+      FROM Circle c1 INNER JOIN
+      (SELECT Top 5 CircleId,CreatedTime  FROM FollowedCircle WHERE PassportId =@PassportId ORDER BY CreatedTime DESC) as t2
+      ON  c1.CircleId = t2.CircleId
+      WHERE (c1.Status=1)
+      ORDER BY oTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectRandomCircles" supportDBType="3">
+      SELECT Top (@Top) *   FROM Circle
+      WHERE (Status=1)
+      ORDER BY NEWID() DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SearchCircles" supportDBType="3">
+      SELECT Top (@Top)  c.*,s.StarName
+      FROM   Circle c INNER JOIN  Star  s
+      ON c.StarId = s.StarId
+      WHERE  (c.Status=1)
+      AND (c.CircleId &lt; (case when @MinId>0 then @MinId  else (select (max(TrendId)+1) from Trend) end))      
+      ORDER BY c.CircleId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SearchCirclesWithKey" supportDBType="3">
+      SELECT Top (@Top)  c.*,s.StarName
+      FROM   Circle c INNER JOIN  Star  s
+      ON c.StarId = s.StarId
+      WHERE  (c.Status=1)
+      AND (c.CircleId &lt; (case when @MinId>0 then @MinId  else (select (max(TrendId)+1) from Trend) end))
+      AND  (c.CircleName like '%'+@Keys+'%')
+      ORDER BY c.CircleId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByCircleId" supportDBType="3">
+      SELECT c.*,s.StarName,s.StarCareer
+      FROM   Circle c INNER JOIN  Star  s
+      ON c.StarId = s.StarId
+      WHERE c.CircleId = @CircleId  AND (c.Status=1)
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithAdminByCircleId" supportDBType="3">
+      SELECT c.*,s.StarName
+      FROM   Circle c INNER JOIN  Star  s
+      ON c.StarId = s.StarId
+      WHERE c.CircleId = @CircleId  
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithHot" supportDBType="3">
+      SELECT Top (@Top)  c.*,s.StarName
+      FROM   Circle c INNER JOIN  Star  s
+      ON c.StarId = s.StarId
+      WHERE   (c.Status=1) AND (c.IsHot=1) and c.oId>0
+      ORDER BY c.oId ,c.CircleId
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByKeys" supportDBType="3">
+      SELECT Top (@Top)  c.*,s.StarName
+      FROM   Circle c INNER JOIN  Star  s
+      ON c.StarId = s.StarId
+      WHERE   ((c.CircleName like '%'+@Keys+'%') OR (s.StarName like '%'+@Keys+'%'))
+      AND (c.CircleId > @MaxId)  AND  (c.Status=1)
+      ORDER BY c.CircleId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageByKeys" supportDBType="3">
+      SELECT Top (@Top)  c.*,s.StarName
+      FROM   Circle c INNER JOIN  Star  s
+      ON c.StarId = s.StarId
+      WHERE  ((c.CircleName like '%'+@Keys+'%') OR (s.StarName like '%'+@Keys+'%'))
+      AND (c.CircleId &lt; @MinId)  AND  (c.Status=1)
+      ORDER BY c.CircleId DESC
+    </sqlWrap>    
+    <sqlWrap sqlName="SelectByPassportId" supportDBType="3">
+      SELECT *   FROM Circle
+      WHERE (PassportId=@PassportId) AND (Status=1)
+      ORDER BY CircleId DESC
+    </sqlWrap>   
+    <sqlWrap sqlName="SelectByCircleIds" supportDBType="3">
+      SELECT *   FROM Circle
+      WHERE (CircleId IN(@CircleIds)) 
+      ORDER BY CircleId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="CheckExistCircle" supportDBType="3">
+      SELECT Count(1)  FROM Circle
+      WHERE (PassportId = @PassportId) AND (Status=1)
+    </sqlWrap>
+    <sqlWrap sqlName="CheckWithName" supportDBType="3">
+      SELECT Count(1)  FROM Circle
+      WHERE  (CircleName=@CircleName) AND (Status=1)
+    </sqlWrap>
+    <sqlWrap sqlName="Insert" supportDBType="2">
+      INSERT INTO Circle(PassportId,StarId,CircleName,Summary,Logo,Banner,FollowedCount,Status,CreatedTime,LastModifiedTime)
+      VALUES (@PassportId,@StarId,@CircleName,@Summary,@Logo,@Banner,0,@Status,@CreatedTime,@CreatedTime)
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="2">
+      UPDATE Circle SET CircleName=@CircleName,Summary=@Summary,Logo=@Logo,Banner=@Banner,LastModifiedTime=@LastModifiedTime
+      WHERE  CircleId=@CircleId
+    </sqlWrap>
+    <sqlWrap sqlName="SetIndexViewUpdate" supportDBType="2">
+      UPDATE Circle SET Summary=@Summary,Logo=@Logo,Banner=@Banner,LastModifiedTime=@LastModifiedTime
+      WHERE  CircleId=@CircleId AND PassportId=@PassportId
+    </sqlWrap>
+    <sqlWrap sqlName="SetHot" supportDBType="2">
+      UPDATE Circle SET IsHot=@IsHot,oId=@oId,LastModifiedTime=@LastModifiedTime
+      WHERE  CircleId=@CircleId AND PassportId=@PassportId
+    </sqlWrap>
+    <sqlWrap sqlName="SetLogo" supportDBType="2">
+      UPDATE Circle SET Logo=@Logo,LastModifiedTime=@LastModifiedTime
+      WHERE  CircleId=@CircleId AND PassportId=@PassportId
+    </sqlWrap>
+    <sqlWrap sqlName="SetBanner" supportDBType="2">
+      UPDATE Circle SET Banner=@Banner,LastModifiedTime=@LastModifiedTime
+      WHERE  CircleId=@CircleId AND PassportId=@PassportId
+    </sqlWrap>
+    <sqlWrap sqlName="SetPassportId" supportDBType="2">
+      UPDATE Circle SET PassportId=@PassportId,LastModifiedTime=@LastModifiedTime
+      WHERE  CircleId=@CircleId
+    </sqlWrap>
+    <sqlWrap sqlName="SetStatus" supportDBType="2">
+      UPDATE Circle SET Status=@Status,LastModifiedTime=getdate()
+      WHERE  CircleId=@CircleId
+      IF @Status=-100
+      Begin
+      UPDATE Trend SET Status=@Status  WHERE  CircleId=@CircleId
+      DELETE FROM FollowedCircle  WHERE  CircleId=@CircleId
+      UPDATE CallTogether SET Status=@Status  WHERE  CircleId=@CircleId
+      End
+    </sqlWrap>
+  </module>
+</root>

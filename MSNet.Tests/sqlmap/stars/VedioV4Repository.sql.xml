@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="VedioV4Repository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectAll" supportDBType="SqlServer">
+      SELECT VedioId,Title,Banner,LocationId FROM Vedio
+    </sqlWrap>
+    <sqlWrap sqlName="FindVedioByModule" supportDBType="SqlServer">
+      SELECT v.VedioId,vr.RelationId,vr.OrderId,vr.ModuleId,vr.ShowBanner,vr.ShowTitle,v.Title,v.CircleId,c.CircleName,v.LocationId,v.Banner,v.LiveTime,v.EndTime,
+      v.RoomId,v.LiveNumber
+      FROM VedioRelation vr
+      INNER JOIN Vedio v ON v.VedioId = vr.ForId
+      INNER JOIN VedioModule vm ON vm.ModuleId = vr.ModuleId
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE v.Status = 1 AND vm.FillType IN (@FillType)
+    </sqlWrap>
+
+    <sqlWrap sqlName="FindVedioByCategoryId" supportDBType="SqlServer">
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.LocationId,v.CircleId,c.Logo AS CircleLogo,c.CircleName,LiveTime,EndTime,
+      v.RoomId,LiveNumber,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      VedioOrderBy = CASE
+        WHEN v.LiveTime BETWEEN GETDATE() AND v.LiveTime
+          THEN 2000000000000 - ABS(
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), v.LiveTime, 112) + REPLACE(CONVERT(VARCHAR(5), v.LiveTime, 8),':','')) - 
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), GETDATE(), 112) + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 8),':','')))
+        WHEN GETDATE() BETWEEN v.LiveTime AND v.EndTime
+          THEN 3000000000000 - ABS(
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), v.LiveTime, 112) + REPLACE(CONVERT(VARCHAR(5), v.LiveTime, 8),':','')) - 
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), GETDATE(), 112) + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 8),':','')))
+        WHEN GETDATE() BETWEEN v.EndTime AND GETDATE()
+          THEN 1000000000000 - ABS(
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), v.LiveTime, 112) + REPLACE(CONVERT(VARCHAR(5), v.LiveTime, 8),':','')) - 
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), GETDATE(), 112) + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 8),':','')))
+      END
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE v.CategoryId = @CategoryId AND v.Status = 1
+      ORDER BY VedioOrderBy DESC
+    </sqlWrap>
+    
+    <sqlWrap sqlName="FindVedioByLocationId" supportDBType="SqlServer">
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.LocationId,v.CircleId,c.Logo AS CircleLogo,c.CircleName,v.CreatedTime,LiveTime,EndTime,
+      v.RoomId,LiveNumber,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      VedioOrderBy = CASE
+        WHEN v.LiveTime BETWEEN GETDATE() AND v.LiveTime
+          THEN 2000000000000 - ABS(
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), v.LiveTime, 112) + REPLACE(CONVERT(VARCHAR(5), v.LiveTime, 8),':','')) - 
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), GETDATE(), 112) + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 8),':','')))
+        WHEN GETDATE() BETWEEN v.LiveTime AND v.EndTime
+          THEN 3000000000000 - ABS(
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), v.LiveTime, 112) + REPLACE(CONVERT(VARCHAR(5), v.LiveTime, 8),':','')) - 
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), GETDATE(), 112) + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 8),':','')))
+        WHEN GETDATE() BETWEEN v.EndTime AND GETDATE()
+          THEN 1000000000000 - ABS(
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), v.LiveTime, 112) + REPLACE(CONVERT(VARCHAR(5), v.LiveTime, 8),':','')) - 
+		           CONVERT(BIGINT,CONVERT(VARCHAR(8), GETDATE(), 112) + REPLACE(CONVERT(VARCHAR(5), GETDATE(), 8),':','')))
+      END
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      INNER JOIN VedioLocation  vl ON v.LocationId = vl.LocationId
+      WHERE vl.LocationId = @LocationId AND v.Status = 1
+      ORDER BY VedioOrderBy DESC
+    </sqlWrap>
+
+    <sqlWrap sqlName="FindVedioByCircleId" supportDBType="SqlServer">
+      SELECT TOP (@Top) v.VedioId,v.Banner,v.Title,v.LiveTime,v.EndTime,VedioFileUrl,v.VedioFileUrl_High,
+      v.RoomId,LiveNumber
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE v.CircleId = @CircleId AND v.Status = 1
+    </sqlWrap>
+
+    <sqlWrap sqlName="FindBespeakVedio" supportDBType="SqlServer">
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.CategoryId,v.CircleId,c.Logo AS CircleLogo,v.LiveTime
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE v.LiveTime BETWEEN GETDATE() AND v.LiveTime AND v.Status = 1
+      ORDER BY v.LiveTime
+    </sqlWrap>
+
+    <sqlWrap sqlName="VedioSelection" supportDBType="SqlServer">
+
+      IF @BestOrder = 1
+      BEGIN
+      if @VedioType = 1
+      begin
+
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.Summary,v.CreatedTime,v.LiveTime,v.EndTime, v.RoomId, LiveNumber,v.CircleId,c.Logo AS CircleLogo
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      LEFT JOIN VedioViewCount vvc ON v.VedioId = vvc.VedioId
+      WHERE v.Status = 1
+      and v.CategoryId = CASE WHEN @CategoryId = 0 THEN v.CategoryId ELSE @CategoryId END
+      AND v.LocationId = CASE WHEN @LocationId = 0 THEN v.LocationId ELSE @LocationId END
+      AND @VedioType = CASE WHEN @VedioType = 0 THEN @VedioType ELSE (CASE WHEN v.LiveTime BETWEEN GETDATE() AND v.LiveTime THEN 1
+      WHEN GETDATE() BETWEEN v.LiveTime AND v.EndTime  THEN 2
+      WHEN GETDATE() BETWEEN v.EndTime AND GETDATE()   THEN 3 END) END
+      ORDER BY v.LiveTime asc
+      end
+      else
+      begin
+
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.Summary,v.CreatedTime,v.LiveTime,v.EndTime, v.RoomId, LiveNumber,v.CircleId,c.Logo AS CircleLogo
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      LEFT JOIN VedioViewCount vvc ON v.VedioId = vvc.VedioId
+      WHERE v.Status = 1
+      and v.CategoryId = CASE WHEN @CategoryId = 0 THEN v.CategoryId ELSE @CategoryId END
+      AND v.LocationId = CASE WHEN @LocationId = 0 THEN v.LocationId ELSE @LocationId END
+      AND @VedioType = CASE WHEN @VedioType = 0 THEN @VedioType ELSE (CASE WHEN v.LiveTime BETWEEN GETDATE() AND v.LiveTime THEN 1
+      WHEN GETDATE() BETWEEN v.LiveTime AND v.EndTime  THEN 2
+      WHEN GETDATE() BETWEEN v.EndTime AND GETDATE()   THEN 3 END) END
+      ORDER BY v.LiveTime DESC
+      end
+
+      END
+      ELSE IF @BestOrder = 2
+      BEGIN
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.Summary,v.CreatedTime,v.LiveTime,v.EndTime, v.RoomId,LiveNumber,
+      Hot = (vvc.LikedCount*0.7+vvc.CommentCount*0.3)*1000/POWER((DATEDIFF(HOUR,v.CreatedTime,GETDATE())+2),1.2),v.CircleId,c.Logo AS CircleLogo
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      LEFT JOIN VedioViewCount vvc ON v.VedioId = vvc.VedioId
+      WHERE v.Status = 1
+      and v.CategoryId = CASE WHEN @CategoryId = 0 THEN v.CategoryId ELSE @CategoryId END
+      AND v.LocationId = CASE WHEN @LocationId = 0 THEN v.LocationId ELSE @LocationId END
+      AND @VedioType = CASE WHEN @VedioType = 0 THEN @VedioType ELSE (CASE WHEN v.LiveTime BETWEEN GETDATE() AND v.LiveTime THEN 1
+      WHEN GETDATE() BETWEEN v.LiveTime AND v.EndTime  THEN 2
+      WHEN GETDATE() BETWEEN v.EndTime AND GETDATE()   THEN 3 END) END
+      ORDER BY Hot DESC
+      END
+    </sqlWrap>
+
+    <sqlWrap sqlName="FindBeSpeakDetails" supportDBType="SqlServer">
+      SELECT TOP (1) v.VedioId,v.LiveTime,v.EndTime,v.Banner,v.Title,v.Summary,v.CircleId,c.CircleName,c.Logo AS CircleLogo,c.FollowedCount,
+      v.RoomId,LiveNumber,
+      (SELECT StarCareer FROM Star WHERE StarId = c.StarId) AS StarCareer
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE VedioId = @VedioId AND v.Status = 1
+    </sqlWrap>
+    
+    <sqlWrap sqlName="FindVedioPlay" supportDBType="SqlServer">
+      SELECT TOP(1) v.VedioId,v.LiveId,VedioFileUrl,v.VedioFileUrl_High,v.Title,v.CategoryId,v.LocationId,c.Summary,v.Banner,v.LiveTime,v.EndTime,v.CircleId,c.CircleName,c.Logo AS CircleLogo,c.FollowedCount,
+      v.RoomId,LiveNumber,
+      (SELECT StarCareer FROM Star WHERE StarId = c.StarId) AS StarCareer
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE VedioId = @VedioId AND v.Status = 1
+    </sqlWrap>
+  
+    <sqlWrap sqlName="FindViewCountByCircle" supportDBType="SqlServer">
+      SELECT v.VedioId,v.RoomId,v.LiveNumber,vvc.ViewCount,vvc.CommentCount FROM Vedio v
+      LEFT JOIN VedioViewCount vvc ON v.VedioId = vvc.VedioId
+      WHERE CircleId = @CircleId AND v.Status = 1
+    </sqlWrap>
+  </module>
+</root>

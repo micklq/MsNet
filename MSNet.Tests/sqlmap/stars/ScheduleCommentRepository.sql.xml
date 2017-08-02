@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="ScheduleCommentRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="FindById" supportDBType="3">
+      SELECT  *   FROM ScheduleComment
+      WHERE  (CommentId=@CommentId)
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByScheduleId" supportDBType="3">
+      SELECT Top (@Top) *   FROM ScheduleComment
+      WHERE  (ScheduleId=@ScheduleId) AND (CommentId > @MaxId)
+      ORDER BY CommentId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageByScheduleId" supportDBType="3">
+      SELECT Top (@Top) *   FROM ScheduleComment
+      WHERE  (ScheduleId=@ScheduleId) AND (CommentId &lt; @MinId)
+      ORDER BY CommentId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="RemoveComment" supportDBType="2">
+      DELETE FROM  ScheduleComment WHERE CommentId=@CommentId AND PassportId=@PassportId
+      DELETE FROM  ScheduleComment WHERE ParentId=@CommentId
+      UPDATE Schedule SET CommentCount=(select count(1) from ScheduleComment where ScheduleId=@ScheduleId)  WHERE  ScheduleId=@ScheduleId
+    </sqlWrap>
+    <sqlWrap sqlName="Add" supportDBType="2">
+      INSERT INTO ScheduleComment(ScheduleId,PassportId,Contents,CreatedTime,ReplyPassportId,ParentId)
+      VALUES (@ScheduleId,@PassportId,@Contents,@CreatedTime,0,0)
+      UPDATE Schedule SET CommentCount=(select count(1) from ScheduleComment where ScheduleId=@ScheduleId) WHERE  ScheduleId=@ScheduleId
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="Reply" supportDBType="2">
+      INSERT INTO ScheduleComment(ScheduleId,PassportId,ReplyPassportId,ParentId,Contents,CreatedTime)
+      VALUES (@ScheduleId,@PassportId,@ReplyPassportId,@ParentId,@Contents,@CreatedTime)
+      UPDATE Schedule SET CommentCount=(select count(1) from ScheduleComment where ScheduleId=@ScheduleId) WHERE  ScheduleId=@ScheduleId
+      SELECT @@IDENTITY
+    </sqlWrap>
+  </module>
+</root>

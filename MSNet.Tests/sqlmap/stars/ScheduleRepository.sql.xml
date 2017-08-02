@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="ScheduleRepository" dbName="Bumeng.Commons">
+    <sqlWrap sqlName="Add"  supportDBType="SqlServer">
+      Insert Into [Schedules] (  CircleId, ScheduleTime, CreatedTime, ModifiedTime, Contents, Location, Latitude, Longitude, LBSLocId, IPLocId, PublisherId, Status,ToUploadImageCount, ShowTime )
+      Values (  @CircleId, @ScheduleTime, @CreatedTime, @ModifiedTime, @Contents, @Location, @Latitude, @Longitude, @LBSLocId, @IPLocId, @PublisherId, @Status, @ToUploadImageCount, @ShowTime )
+      Select @@Identity
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer">
+      Update [Schedules] Set  CircleId=@CircleId, ScheduleTime=@ScheduleTime, CreatedTime=@CreatedTime, ModifiedTime=@ModifiedTime, Contents=@Contents, Location=@Location, Latitude=@Latitude, Longitude=@Longitude, LBSLocId=@LBSLocId, IPLocId=@IPLocId, PublisherId=@PublisherId, Status=@Status, ShowTime=@ShowTime
+      Where ScheduleId = @ScheduleId
+    </sqlWrap>
+    <sqlWrap sqlName="SetStatus" supportDBType="SqlServer">
+      Update Schedules set Status = @Status where ScheduleId = @ScheduleId
+    </sqlWrap>
+    <sqlWrap sqlName="Delete" supportDBType="SqlServer">
+      Update Schedules set Status = -1 where ScheduleId = @ScheduleId
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithParameter" supportDBType="3">
+      SELECT * FROM (
+        SELECT s.ScheduleId,s.CircleId,c.Logo AS CircleLogo,c.CircleName,s.Contents,s.Location,s.Status,s.ScheduleTime
+        FROM Schedules s
+        INNER JOIN Circle c ON s.CircleId = c.CircleId
+        WHERE (s.Contents LIKE @Keyword OR c.CircleName LIKE @Keyword) AND s.Status = @Status
+      ) t
+      ORDER BY ScheduleTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="FindById" supportDBType="SqlServer">
+      Select s.*,c.CircleName from Schedules s
+      INNER JOIN Circle c ON s.CircleId = c.CircleId
+      where ScheduleId = @ScheduleId
+    </sqlWrap>
+    <sqlWrap sqlName="FindByCircleId" supportDBType="SqlServer">
+      Select top( @Top ) * from Schedules where CircleId = @CircleId and (ScheduleTime >
+      CASE WHEN @MaxId = 0 THEN 0 ELSE (SELECT ScheduleTime FROM Schedules WHERE ScheduleId = @MaxId) END
+      ) and ShowTime &lt; getdate() and status = 1
+      order by ScheduleTime desc
+    </sqlWrap>
+    <sqlWrap sqlName="FindNextByCircleId" supportDBType="SqlServer">
+      Select top( @Top ) * from Schedules where CircleId = @CircleId and (ScheduleTime  &lt;
+      CASE WHEN @MinId = 0 THEN 0 ELSE (SELECT ScheduleTime FROM Schedules WHERE ScheduleId = @MinId) END
+      ) and ShowTime &lt; getdate() and status = 1
+      order by ScheduleTime desc
+    </sqlWrap>
+     <sqlWrap sqlName="FindByScheduleTime" supportDBType="SqlServer">
+       Select * from Schedules where CircleId = @CircleId and (datediff(day,@ScheduleTime,ScheduleTime)=0) and ShowTime &lt; getdate() and status = 1
+       order by ScheduleTime desc
+     </sqlWrap>
+    <sqlWrap sqlName="SetShowTime" supportDBType="SqlServer">
+      Update Schedules set ShowTime = getdate(),ToUploadImageCount = 0 where ScheduleId = @ScheduleId
+    </sqlWrap>
+  </module>
+</root>

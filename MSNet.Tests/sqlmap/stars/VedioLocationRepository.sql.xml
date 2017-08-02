@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="VedioLocationRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectAll" supportDBType="SqlServer">
+      SELECT * FROM VedioLocation
+      ORDER BY OrderId
+    </sqlWrap>
+    <sqlWrap sqlName="FindLocationByModule" supportDBType="SqlServer">
+      SELECT vr.RelationId,vr.OrderId,vr.ModuleId,vl.LocationId,vl.Name,vr.ShowTitle
+      FROM VedioRelation vr
+      INNER JOIN VedioLocation vl ON vl.LocationId = vr.ForId
+      INNER JOIN VedioModule vm ON vm.ModuleId = vr.ModuleId
+      WHERE vl.Status = 1 AND vm.FillType = @FillType
+    </sqlWrap>
+    <sqlWrap sqlName="Insert" supportDBType="SqlServer">
+      INSERT INTO VedioLocation(Name,Logo,OrderId,Status) VALUES(@Name,@Logo,@OrderId,@Status)
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="SelectById" supportDBType="SqlServer">
+      SELECT * FROM VedioLocation WHERE LocationId = @Id
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer">
+      UPDATE VedioLocation SET Name=@Name,Logo=@Logo,OrderId=@OrderId,Status=@Status WHERE LocationId = @Id
+    </sqlWrap>
+  </module>
+</root>

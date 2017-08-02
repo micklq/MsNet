@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="TrendTopRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="CheckIsTop" supportDBType="3">
+      SELECT COUNT(TopId) FROM TrendTop WHERE Status = 1 AND TrendId = @TrendId
+    </sqlWrap>
+    <sqlWrap sqlName="Set" supportDBType="3">
+      INSERT INTO TrendTop(TrendId,CircleId,OPPassportId,Status,CreatedTime)
+      VALUES(@TrendId,@CircleId,@OPPassportId,@Status,@CreatedTime)
+    </sqlWrap>
+    <sqlWrap sqlName="Cancel" supportDBType="3">
+      UPDATE TrendTop SET Status = @Status WHERE TrendId = @TrendId
+    </sqlWrap>
+  </module>
+</root>

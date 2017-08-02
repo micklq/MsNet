@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <!--添加置顶,(SELECT COUNT(TopId) FROM TrendTop WHERE TrendId = Trend.TrendId) AS IsTop-->
+  <module moduleName="TrendsRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SearchTrends" supportDBType="3">
+      SELECT Top (@Top) t.* ,c.CircleName
+      FROM Trend t  INNER JOIN Circle c
+      ON t.CircleId = c.CircleId
+      WHERE  t.Status = 1
+      and t.TrendId &lt; (case when @MinId>0 then @MinId  else (select (max(TrendId)+1) from Trend) end)
+      ORDER BY t.TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SearchTrendsWithKey" supportDBType="3">
+      SELECT Top (@Top) t.* ,c.CircleName
+      FROM Trend t  INNER JOIN Circle c
+      ON t.CircleId = c.CircleId
+      WHERE  t.Status = 1
+      and t.TrendId &lt; (case when @MinId>0 then @MinId  else (select (max(TrendId)+1) from Trend) end)
+      and ((c.CircleName like @Keys) OR (t.Contents like @Keys))
+      ORDER BY t.TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByTrendIds" supportDBType="SqlServer">
+      SELECT  *   FROM Trend
+      WHERE  TrendId IN (@TrendIds)   
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByCircleId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend
+      WHERE  (CircleId=@CircleId) AND (TrendId > @MaxId) and  Status = 1
+      ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageByCircleId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend
+      WHERE  (CircleId=@CircleId) AND (TrendId &lt; @MinId) and  Status = 1
+      ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWihtReward" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend  
+      where  Status = 1
+      ORDER BY  RewardCount DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWihtNew" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend
+      WHERE   (TrendId > @MaxId) and  Status = 1
+      ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWihtVicinity" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend
+      WHERE   (Latitude >= (@Latitude - 0.5)) AND (Latitude &lt;= (@Latitude+0.5)) 
+      AND (Longitude >= (@Longitude-0.5)) AND (Longitude &lt;= (@Longitude+0.5))
+      ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageWithNew" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend
+      WHERE  (TrendId  &lt; @MinId) and  Status = 1
+      ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWihtFanNew" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend
+      WHERE   (TrendId > @MaxId) and  Status = 1 and CircleId in(SELECT CircleId  FROM FollowedCircle  WHERE  PassportId=@PassportId)
+      ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageWihtFanNew" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend
+      WHERE  (TrendId &lt; @MinId) and  Status = 1 and CircleId in(SELECT CircleId  FROM FollowedCircle  WHERE  PassportId=@PassportId)
+      ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWihtHot" supportDBType="SqlServer">
+      SELECT Top (@Top) t.*
+      FROM Trend t inner join TrendCount tc on t.TrendId = tc.TrendId
+      WHERE  Status = 1 and datediff(day,t.CreatedTime,getdate())&lt;45
+      ORDER BY tc.CommentCount DESC,t.TrendId DESC      
+      --SELECT Top (@Top) *   FROM Trend
+      --WHERE  (IsHot=1) AND (TrendId > @MaxId)
+      --ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageWithHot" supportDBType="SqlServer">
+      declare @rn int = 0;
+      if( @MinId > 0 )
+      begin
+      select @rn = rn from (
+      SELECT  *,Row_Number() over ( ORDER BY CommentCount DESC,TrendId desc ) rn FROM Trend WHERE  Status = 1
+      ) a
+      where a.TrendId = @MinId
+      end
+
+      select top(@Top) * from (
+      SELECT  *,Row_Number() over ( ORDER BY CommentCount DESC,TrendId desc ) rn FROM Trend WHERE  Status = 1
+      ) a
+      where a.rn > @rn
+
+      --SELECT Top (@Top) *   FROM Trend
+      --WHERE  (IsHot=1) AND (TrendId &lt; @MinId)
+      --ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByPassportId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend
+      WHERE  (PassportId=@PassportId) AND (TrendId > @MaxId) and Status >=0
+      ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageByPassportId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend
+      WHERE  (PassportId = @PassportId) AND (TrendId &lt; @MinId) and Status >=0
+      ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectById" supportDBType="SqlServer">
+      SELECT Top 1 *   FROM Trend
+      WHERE  (TrendId=@Id)
+      ORDER BY TrendId DESC
+    </sqlWrap>
+     <sqlWrap sqlName="RemoveTrend" supportDBType="SqlServer">
+       --Update Trend Set Status = -100 Where TrendId = @TrendId and PassportId=@PassportId
+       DELETE FROM Trend WHERE TrendId=@TrendId  and PassportId=@PassportId
+       --DELETE FROM TrendPicture WHERE TrendId=@TrendId
+       --DELETE FROM TrendLiked WHERE TrendId=@TrendId
+       --DELETE FROM TrendComment WHERE TrendId=@TrendId
+     </sqlWrap> 
+    <sqlWrap sqlName="Create" supportDBType="SqlServer">
+      INSERT INTO Trend(CircleId,Contents,PassportId,Location,Latitude,Longitude,IsHot,CreatedTime,Status,LBSLocId,IPLocId)
+      VALUES (@CircleId,@Contents,@PassportId,@Location,@Latitude,@Longitude,@IsHot,@CreatedTime,@Status,@LBSLocId,@IPLocId);
+      SELECT @TrendId=@@IDENTITY;
+      INSERT INTO TrendCount(TrendId,LikedCount,CommentCount,RewardCount)
+      VALUES (@TrendId,@LikedCount,@CommentCount,@RewardCount);
+      SELECT @TrendId;
+    </sqlWrap>   
+    <sqlWrap sqlName="SetStatus" supportDBType="SqlServer">
+      Update Trend Set Status = @Status Where TrendId = @TrendId
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer">
+      Update Trend Set Contents = @Contents Where TrendId = @TrendId
+    </sqlWrap>
+
+    <sqlWrap sqlName="FindCircleIdByTrendId" supportDBType="SqlServer">
+      SELECT CircleId FROM Trend WHERE TrendId = @TrendId
+    </sqlWrap>
+
+
+
+    <sqlWrap sqlName="FindTop" supportDBType="SqlServer">
+      SELECT TOP 3 t.*,1 AS IsTop FROM Trend t
+      INNER JOIN TrendTop tt ON t.TrendId = tt.TrendId
+      WHERE tt.Status = 1 ORDER BY tt.TopId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="FindFanTop" supportDBType="SqlServer">
+      SELECT TOP 3 t.*,1 AS IsTop FROM Trend t
+      INNER JOIN TrendTop tt ON t.TrendId = tt.TrendId
+      WHERE tt.Status = 1 AND t.CircleId IN (SELECT CircleId FROM FollowedCircle WHERE PassportId = @PassportId) ORDER BY tt.TopId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="FindCircleTop" supportDBType="SqlServer">
+      SELECT TOP 3 t.*,1 AS IsTop FROM Trend t
+      INNER JOIN TrendTop tt ON t.TrendId = tt.TrendId
+      WHERE tt.Status = 1 AND t.CircleId = @CircleId ORDER BY tt.TopId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="FindWithDigest" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend
+      WHERE   (TrendId > @MaxId) and  Status = 1 and IsDigest = 1
+      ORDER BY TrendId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="FindNextPageWithDigest" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM Trend
+      WHERE  (TrendId  &lt; @MinId) and  Status = 1 and IsDigest = 1
+      ORDER BY TrendId DESC
+    </sqlWrap>
+  </module>
+</root>

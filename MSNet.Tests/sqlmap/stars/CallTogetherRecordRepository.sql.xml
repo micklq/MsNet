@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="CallTogetherRecordRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByPassportId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CallTogetherRecord
+      WHERE   (PassportId = @PassportId)
+      ORDER BY TogetherId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByOrderId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CallTogetherRecord
+      WHERE  (OrderId=@OrderId) 
+      ORDER BY TogetherId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByTogetherId" supportDBType="SqlServer">
+      SELECT  *   FROM CallTogetherRecord
+      WHERE  (TogetherId=@TogetherId)
+    </sqlWrap>
+    <sqlWrap sqlName="CheckIsJoin" supportDBType="3">
+      SELECT Count(1)  FROM CallTogetherRecord
+      WHERE  (OrderId=@OrderId)
+      AND (PassportId = @PassportId)
+    </sqlWrap>
+    <sqlWrap sqlName="Create" supportDBType="SqlServer">
+      INSERT INTO CallTogetherRecord(OrderId,PassportId,Number,Name,Mobile,Email,Gender,Voucher,CreatedTime)
+      VALUES (@OrderId,@PassportId,@Number,@Name,@Mobile,@Email,@Gender,@Voucher,@CreatedTime)
+      Update CallTogether Set JoinCount =IsNull(JoinCount,0)+1 WHERE (OrderId = @OrderId)
+      SELECT @@IDENTITY
+    </sqlWrap>
+  </module>
+</root>

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="CircleGiftCountRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectIncomeWithAll" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleGiftCount
+      WHERE CircleId=@CircleId and (
+      ( PassportId not in(select PassportId from Circle where  CircleId=@CircleId ) ) or
+      ( PassportId in(select PassportId from Circle where  CircleId=@CircleId ) and AllPay>0 )
+      )
+      ORDER BY AllPay DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectIncomeWithYear" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleGiftCount
+      WHERE CircleId=@CircleId and PassportId not in(select PassportId from Circle where  CircleId=@CircleId )
+      ORDER BY YearPay DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectIncomeWithMonth" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleGiftCount
+      WHERE CircleId=@CircleId and PassportId not in(select PassportId from Circle where  CircleId=@CircleId )
+      ORDER BY MonthPay DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectIncomeWithWeek" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleGiftCount
+      WHERE CircleId=@CircleId and PassportId not in(select PassportId from Circle where  CircleId=@CircleId )
+      ORDER BY WeekPay DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectIncomeWithDay" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleGiftCount
+      WHERE CircleId=@CircleId and PassportId not in(select PassportId from Circle where  CircleId=@CircleId )
+      ORDER BY DayPay DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByPassportId" supportDBType="SqlServer">
+      SELECT Top 1 *   FROM CircleGiftCount
+      WHERE PassportId=@PassportId
+    </sqlWrap>
+    <sqlWrap sqlName="UpdatePay" supportDBType="SqlServer">
+      declare @exist int
+      declare @AllPay int,@YearPay int, @MonthPay int,  @WeekPay int ,@DayPay int
+      select @AllPay=isnull(sum(TatalPrice),0) from CircleGift where PassportId=@PassportId and CircleId=@CircleId
+      select @YearPay=isnull(sum(TatalPrice),0) from CircleGift where datediff(year, CreatedTime, getdate())=0 and PassportId=@PassportId and CircleId=@CircleId
+      select @MonthPay=isnull(sum(TatalPrice),0) from CircleGift where datediff(day, CreatedTime, getdate())&lt;31  and PassportId=@PassportId and CircleId=@CircleId
+      select @WeekPay=isnull(sum(TatalPrice),0) from CircleGift where datediff(day, CreatedTime, getdate())&lt;8 and  PassportId=@PassportId and CircleId=@CircleId
+      select @DayPay=isnull(sum(TatalPrice),0) from CircleGift where datediff(day, CreatedTime, getdate())=0 and PassportId=@PassportId and CircleId=@CircleId
+      begin
+      select @exist=count(1) from CircleGiftCount   where PassportId=@PassportId and  CircleId=@CircleId
+      if(@exist=0)
+      begin
+      insert CircleGiftCount(PassportId,CircleId,AllPay,YearPay,MonthPay,WeekPay,DayPay,AllIncome,YearIncome,MonthIncome,WeekIncome,DayIncome,LastModifiedTime,CreatedTime)
+      values(@PassportId,@CircleId,@AllPay,@YearPay,@MonthPay,@WeekPay,@DayPay,0,0,0,0,0,getdate(),getdate())
+      end
+      else
+      begin
+      update CircleGiftCount set AllPay=@AllPay,YearPay=@YearPay,MonthPay=@MonthPay,WeekPay=@WeekPay,DayPay=@DayPay,LastModifiedTime=getdate()
+      where PassportId=@PassportId and CircleId=@CircleId
+      end
+      end
+    </sqlWrap>
+    <sqlWrap sqlName="UpdateIncome" supportDBType="SqlServer">
+      declare @exist int
+      declare @AllIncome int,@YearIncome int,@MonthIncome int,@WeekIncome int,@DayIncome int
+      select @AllIncome=isnull(sum(TatalPrice),0) from CircleGift where AdminPassportId=@PassportId and CircleId=@CircleId
+      select @YearIncome=isnull(sum(TatalPrice),0) from CircleGift where datediff(year, CreatedTime, getdate())=0 and AdminPassportId=@PassportId and CircleId=@CircleId
+      select @MonthIncome=isnull(sum(TatalPrice),0) from CircleGift where datediff(day, CreatedTime, getdate())&lt;31 and AdminPassportId=@PassportId and CircleId=@CircleId
+      select @WeekIncome=isnull(sum(TatalPrice),0) from CircleGift where datediff(day, CreatedTime, getdate())&lt;8  and AdminPassportId=@PassportId and CircleId=@CircleId
+      select @DayIncome=isnull(sum(TatalPrice),0) from CircleGift where datediff(day, CreatedTime, getdate())=0  and AdminPassportId=@PassportId and CircleId=@CircleId
+      begin
+      select @exist=count(1) from CircleGiftCount  where PassportId=@PassportId and CircleId=@CircleId
+      if(@exist=0)
+      begin
+      insert CircleGiftCount(PassportId,CircleId,AllPay,YearPay,MonthPay,WeekPay,DayPay,AllIncome,YearIncome,MonthIncome,WeekIncome,DayIncome,LastModifiedTime,CreatedTime)
+      values(@PassportId,@CircleId,0,0,0,0,0,@AllIncome,@YearIncome,@MonthIncome,@WeekIncome,@DayIncome,getdate(),getdate())
+      end
+      else
+      begin
+      update CircleGiftCount set AllIncome=@AllIncome,YearIncome=@YearIncome,MonthIncome=@MonthIncome,WeekIncome=@WeekIncome,DayIncome=@DayIncome,LastModifiedTime=getdate()
+      where PassportId=@PassportId and CircleId=@CircleId
+      end
+      end
+    </sqlWrap>
+  </module>
+</root>

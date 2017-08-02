@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="VedioRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SearchVedios" supportDBType="3">
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.CircleId,v.VedioFileUrl,v.VedioFileUrl_High,c.CircleName,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      LiveTime,EndTime,
+      v.RoomId,LiveNumber FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE v.Status = 1
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SearchVediosWithKey" supportDBType="3">
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.CircleId,v.VedioFileUrl,v.VedioFileUrl_High,c.CircleName,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      v.LiveTime,v.EndTime,
+      v.RoomId,LiveNumber FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE v.Status = 1
+      AND  (v.Title like @Keys)
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="GetBespeakVedio" supportDBType="SqlServer">
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.LiveTime,c.CircleName FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (v.LiveTime BETWEEN GETDATE() AND v.LiveTime) AND v.Status = 1
+      ORDER BY v.LiveTime ASC
+    </sqlWrap>
+    <sqlWrap sqlName="GetVedioList" supportDBType="SqlServer">
+      SELECT TOP (@Top) VedioId,Title,v.Banner,c.CircleId,c.CircleName,VedioFileUrl,v.RoomId,v.LiveId,v.LiveNumber,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      LiveTime,EndTime FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (GETDATE() BETWEEN LiveTime AND Getdate()) AND v.Status = 1 AND VedioFileUrl != (CASE WHEN GETDATE() BETWEEN LiveTime AND EndTime THEN 'VedioFileUrl' ELSE '' END)
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="GetLiveVedio" supportDBType="SqlServer">
+      SELECT TOP (@Top) VedioId,Title,v.Banner,c.CircleName,v.RoomId,v.LiveId,v.LiveNumber,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      LiveTime,EndTime FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (GETDATE() BETWEEN LiveTime AND EndTime) AND v.Status = 1
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="GetRecordVedio" supportDBType="SqlServer">
+      SELECT TOP (@Top) VedioId,Title,v.Banner,c.CircleName,v.RoomId,v.LiveId,v.LiveNumber,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      LiveTime,EndTime FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (GETDATE() BETWEEN EndTime AND GETDATE()) AND v.Status = 1
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="GetBespeakVedioByCircleId" supportDBType="SqlServer">
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.LiveTime,c.CircleName,v.RoomId,v.LiveId,v.LiveNumber FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (v.LiveTime BETWEEN GETDATE() AND v.LiveTime) AND v.CircleId = @CircleId AND v.Status = 1
+      ORDER BY v.LiveTime ASC
+    </sqlWrap>
+    <sqlWrap sqlName="GetVedioListByCircleId" supportDBType="SqlServer">
+      SELECT TOP (@Top) VedioId,Title,v.Banner,c.CircleId,c.CircleName,VedioFileUrl,v.RoomId,v.LiveId,v.LiveNumber,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      LiveTime,EndTime FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (GETDATE() BETWEEN LiveTime AND Getdate()) AND V.CircleId = @CircleId AND v.Status = 1 AND VedioFileUrl != (CASE WHEN GETDATE() BETWEEN LiveTime AND EndTime THEN 'VedioFileUrl' ELSE '' END)
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="GetLiveVedioByCircleId" supportDBType="SqlServer">
+      SELECT TOP (@Top) VedioId,Title,v.Banner,c.CircleName,v.RoomId,v.LiveId,v.LiveNumber,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      LiveTime,EndTime FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (GETDATE() BETWEEN LiveTime AND EndTime) AND V.CircleId = @CircleId AND v.Status = 1
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+    <sqlWrap sqlName="GetRecordVedioByCircleId" supportDBType="SqlServer">
+      SELECT TOP (@Top) VedioId,Title,v.Banner,c.CircleName,v.RoomId,v.LiveId,v.LiveNumber,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      LiveTime,EndTime FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (GETDATE() BETWEEN EndTime AND GETDATE()) AND V.CircleId = @CircleId AND v.Status = 1
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+
+    <sqlWrap sqlName="GetViewVedioRecord" supportDBType="SqlServer">
+      SELECT TOP(@TOP) lv.LiveVedioId,lv.PassportId,lv.VedioId,lv.ViewTime,v.VedioFileUrl,v.VedioFileUrl_High,v.Title,v.Banner,v.LiveTime,v.EndTime,c.CircleId,c.Logo AS CircleLogo,c.CircleName,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      (SELECT COUNT(CommentId) FROM VedioComment WHERE VedioId = lv.VedioId) AS CommentCount
+      FROM (SELECT LiveVedioId,VedioId,PassportId,LastViewTime AS ViewTime FROM LiveVedio WHERE Status = @Status) lv
+      INNER JOIN Vedio v ON lv.VedioId = v.VedioId
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE lv.PassportId = @PassportId AND v.Status = 1
+      ORDER BY lv.ViewTime DESC
+    </sqlWrap>
+    
+    <sqlWrap sqlName="GetRelationByVedioId" supportDBType="SqlServer">
+      SELECT * FROM(
+      SELECT TOP (@Top) VedioId,Title,v.Banner,c.CircleId,c.Logo AS CircleLogo,c.CircleName,v.VedioFileUrl,v.VedioFileUrl_High,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      (SELECT COUNT(CommentId) FROM VedioComment WHERE VedioId = v.VedioId) AS CommentCount,
+      LiveTime,EndTime,v.RoomId,v.LiveNumber FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (GETDATE() BETWEEN EndTime AND GETDATE()) AND v.Status = 1 and (v.VedioId not in(@VedioId)) AND v.VedioFileUrl IS NOT NULL AND v.VedioFileUrl != ''
+      ORDER BY NEWID()
+      ) t
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+
+
+    
+    <sqlWrap sqlName="GetById" supportDBType="SqlServer">
+      SELECT TOP(1) v.VedioId,v.CircleId,v.RoomId,VedioFileUrl,v.Title,v.Summary,v.Banner,v.LiveTime,v.LiveId,v.VedioFileUrl_High,v.RoomUserId,
+      c.CircleName,
+      (SELECT StarCareer FROM Star WHERE StarId = c.StarId) AS StarCareer,
+      (SELECT StarProfile FROM Star WHERE StarId = c.StarId) AS StarProfile,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      c.Logo AS CircleLogo,c.FollowedCount,
+      (SELECT COUNT(BeSpeakId) FROM BeSpeakVedio WHERE VedioId = v.VedioId) AS BeSpeakCount,
+      (SELECT COUNT(CommentId) FROM VedioComment WHERE VedioId = v.VedioId) AS CommentCount,
+      v.LiveNumber,
+      v.RoomUserId,
+      v.LivePlayUrl
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE VedioId = @VedioId AND v.Status = 1
+    </sqlWrap>
+    <sqlWrap sqlName="GetWithPaly" supportDBType="SqlServer">
+      SELECT TOP(1) v.VedioId,v.CircleId,v.RoomId,VedioFileUrl,v.Title,v.Summary,v.Banner,v.VedioFileUrl_High,
+      c.CircleName,
+      (SELECT StarCareer FROM Star WHERE StarId = c.StarId) AS StarCareer,
+      (SELECT StarProfile FROM Star WHERE StarId = c.StarId) AS StarProfile,
+      c.Logo AS CircleLogo,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      c.FollowedCount,
+      v.RoomId,LiveNumber
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE VedioId = @VedioId AND v.Status = 1
+    </sqlWrap>
+    <sqlWrap sqlName="GetWithBeSpeak" supportDBType="SqlServer">
+      SELECT TOP(1) v.VedioId,v.Title,v.Summary,v.Banner,v.LiveTime,v.EndTime,v.VedioFileUrl_High,
+      (SELECT CreatedTime FROM BeSpeakVedio WHERE VedioId = @VedioId AND PassportId = @PassportId) AS BeSpeakTime,
+      c.CircleName,
+      (SELECT StarCareer FROM Star WHERE StarId = c.StarId) AS StarCareer,
+      (SELECT StarProfile FROM Star WHERE StarId = c.StarId) AS StarProfile,
+      c.Logo AS CircleLogo,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      c.FollowedCount,
+      (SELECT Number FROM CircleRanking cr WHERE cr.CircleId = v.CircleID) as Ranking,
+      (SELECT COUNT(BeSpeakId) FROM BeSpeakVedio WHERE VedioId = v.VedioId) AS BeSpeakCount,
+      (SELECT COUNT(CommentId) FROM VedioComment WHERE VedioId = v.VedioId) AS CommentCount
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE VedioId = @VedioId AND v.Status = 1
+    </sqlWrap>
+    
+    
+    
+    <sqlWrap sqlName="Create" supportDBType="SqlServer">
+      INSERT INTO Vedio(StarId,CircleId,LiveId,RoomId,VedioFileUrl,Title,Summary,Banner,EndTime,LiveTime,CreatedTime,Status,VedioFileUrl_High,RoomUserId,LiveNumber,CategoryId,LocationId)
+      VALUES(@StarId,@CircleId,@LiveId,@RoomId,@VedioFileUrl,@Title,@Summary,@Banner,@EndTime,@LiveTime,@CreatedTime,@Status,@VedioFileUrl_High,@RoomUserId,@LiveNumber,@CategoryId,@LocationId)
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer">
+      UPDATE Vedio SET LiveId = @LiveId, RoomId = @RoomId,VedioFileUrl = @VedioFileUrl,Title = @Title,Summary = @Summary,Banner = @Banner,EndTime = @EndTime,LiveTime = @LiveTime,VedioFileUrl_High = @VedioFileUrl_High,Status = @Status,RoomUserId = @RoomUserId,LiveNumber=@LiveNumber,CategoryId=@CategoryId,LocationId=@LocationId WHERE VedioId = @VedioId
+    </sqlWrap>
+    <sqlWrap sqlName="FindByVedioId" supportDBType="SqlServer">
+      SELECT *,(SELECT TOP 1 CircleName FROM Circle WHERE CircleId = v.CircleId) AS CircleName FROM Vedio v WHERE VedioId = @VedioId
+    </sqlWrap>
+  </module>
+</root>

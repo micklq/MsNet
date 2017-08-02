@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="CrowdfundingRepository" dbName="Bumeng.Crowdfunding">
+    <sqlWrap sqlName="SelectWihtNew" supportDBType="3">
+      SELECT Top (@Top)  zc.ZCId,zc.ShopUserId,zc.ShopTitle,zc.Title,zc.DateFrom,zc.DateTo,zc.app_preview_img,
+      u.LogoUrl as ShopUserLogoUrl,zc.[Description]
+      FROM  ZhongChous zc INNER JOIN  Users u ON zc.ShopUserId = u.UserId
+      where zc.status = 1
+      ORDER BY zc.Created DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWihtNew_IOSAuthing" supportDBType="3">
+      SELECT Top (@Top)  zc.ZCId,zc.ShopUserId,zc.ShopTitle,zc.Title,zc.DateFrom,zc.DateTo,zc.app_preview_img,
+      u.LogoUrl as ShopUserLogoUrl,zc.[Description]
+      FROM  ZhongChous zc INNER JOIN  Users u ON zc.ShopUserId = u.UserId
+      where zc.iosTemp = 1
+      ORDER BY zc.Created DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByCrowdfundingIds" supportDBType="3">
+      SELECT zc.ZCId,zc.ShopUserId,zc.ShopTitle,zc.Title,zc.DateFrom,zc.DateTo,zc.app_preview_img,zc.Description,
+      u.LogoUrl as ShopUserLogoUrl  ,zc.[Description]
+      FROM  ZhongChous zc INNER JOIN  Users u ON zc.ShopUserId = u.UserId
+      where zc.ZCId in(@CrowdfundingIds)
+      SELECT  zcp.Id,zcp.ZCId,zcp.Title,zcp.Content,zcp.Price,zcp.Qty,zcp.Created
+      FROM  ZhongChouPackages zcp
+      where zcp.ZCId in(@CrowdfundingIdsForItem)
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByCrowdfundingId" supportDBType="3">
+      SELECT zc.ZCId,zc.ShopUserId,zc.ShopTitle,zc.Title,zc.Description,zc.DateFrom,zc.DateTo,zc.ToGetMoney,zc.app_preview_img,
+      u.LogoUrl as ShopUserLogoUrl,zc.[Description]
+      FROM  ZhongChous zc INNER JOIN  Users u ON zc.ShopUserId = u.UserId
+      where zc.ZCId =@CrowdfundingId
+      SELECT  zcp.Id,zcp.ZCId,zcp.Title,zcp.Content,zcp.Price,zcp.Qty,zcp.ShowIdx,zcp.Created
+      FROM  ZhongChouPackages zcp
+      where zcp.ZCId=@CrowdfundingIdForItem
+      order by zcp.ShowIdx
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByCrowdfundingItemId" supportDBType="3">
+      SELECT zp.*,zc.Title as ZCTitle
+      FROM  ZhongChouPackages zp  INNER JOIN  ZhongChous zc ON zc.ZCId = zp.ZCId
+      where zp.Id=@CrowdfundingItemId     
+    </sqlWrap>
+    <sqlWrap sqlName="SelectSupportByZCId" supportDBType="3">
+      select UserId as SupportUserId,LogoUrl as SupportLogoUrl
+      from Users    where UserId in(select distinct BuyUserId
+      from  Trade_Items
+      where GoodId in(select Id from ZhongChouPackages where ZCId=@ZCId)
+      and Status=40)
+    </sqlWrap>
+    <sqlWrap sqlName="CountSupportByZCId" supportDBType="3">
+      select count(distinct BuyUserId )
+      from  Trade_Items
+      where  GoodId in((select Id from ZhongChouPackages where ZCId=@ZCId))
+    </sqlWrap>   
+    <sqlWrap sqlName="CountHasGetMoneyByZCId" supportDBType="3">
+      select isnull(Sum(TatalPrice),0)
+      from Trade_Items
+      where  GoodId in (select Id from ZhongChouPackages  where ZCId=@ZCId)
+      and Status=40 
+    </sqlWrap>   
+  </module>
+</root>

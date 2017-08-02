@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="TrendPictureRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByTrendIds" supportDBType="3">
+      SELECT  *   FROM TrendPicture
+      WHERE  TrendId IN (@TrendIds)
+      ORDER BY UploadIndex, PictureId
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByTrendId" supportDBType="3">
+      SELECT  *   FROM TrendPicture
+      WHERE  (TrendId=@TrendId)
+      ORDER BY UploadIndex, PictureId
+    </sqlWrap>
+    <sqlWrap sqlName="RemoveTrend" supportDBType="2">
+      DELETE FROM  TrendPicture WHERE PictureId=@PictureId and PublisherId=@PublisherId
+    </sqlWrap>
+    <sqlWrap sqlName="Add" supportDBType="2">
+      INSERT INTO TrendPicture(TrendId,PassportId,PictureUrl,PicturePath,CreatedTime,Width,Height,UploadIndex)
+      VALUES (@TrendId,@PassportId,@PictureUrl,@PicturePath,@CreatedTime,@Width,@Height,@UploadIndex)
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="SetSize" supportDBType="2">
+      Update TrendPicture Set Width = @Width,Height = @Height WHERE PictureId=@PictureId
+    </sqlWrap>
+  </module>
+</root>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="UserProfileRepository" dbName="MSNet.SQLServer"> 
+    <sqlWrap sqlName="Insert" supportDBType="SqlServer, MySql">
+      insert into UserProfile (PassportId,RealName,Gender,Avatar,MobilePhone,ProfileType,LastSignInTime,CreatedTime,LastModifiedTime)
+      values (@PassportId,@RealName,@Gender,@Avatar,@MobilePhone,@ProfileType,@LastSignInTime,@CreatedTime,@LastModifiedTime);
+      select @PassportId;
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer, MySql">
+      update UserProfile set RealName=@RealName,Gender=@Gender,Avatar=@Avatar,MobilePhone=@MobilePhone,ProfileType=@ProfileType,LastSignInTime=@LastSignInTime,LastModifiedTime=@LastModifiedTime
+      where PassportId = @Id;
+    </sqlWrap>  
+    <sqlWrap sqlName="SelectById" supportDBType="SqlServer, MySql">
+      select * from UserProfile where PassportId = @Id
+    </sqlWrap>
+    <sqlWrap sqlName="SelectPassportIdByMobilePhone" supportDBType="SqlServer, MySql">
+      select PassportId from UserProfile where MobilePhone = @MobilePhone
+    </sqlWrap>
+  </module>
+</root>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="TrendUGCRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByTrendIds" supportDBType="MySql,SqlServer">
+      SELECT  *   FROM TrendUGC
+      WHERE  TrendId IN (@TrendIds)
+      ORDER BY  UGCId desc
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByTrendId" supportDBType="MySql,SqlServer">
+      SELECT  *   FROM TrendUGC
+      WHERE  (TrendId=@TrendId)
+      ORDER BY  UGCId desc
+    </sqlWrap>
+    <sqlWrap sqlName="SelectById" supportDBType="MySql,SqlServer">
+      SELECT  *   FROM TrendUGC   WHERE  (UGCId=@Id)      
+    </sqlWrap>
+    <sqlWrap sqlName="RemoveById" supportDBType="MySql,SqlServer">
+      DELETE FROM  TrendUGC WHERE UGCId=@UGCId and PassportId=@PassportId
+    </sqlWrap>
+    <sqlWrap sqlName="Insert" supportDBType="MySql,SqlServer">
+      INSERT INTO TrendUGC(TrendId,PassportId,AccessUrl,BucketName,CreatedTime,ThumbnailUrl,LowUrl,SDUrl,HDUrl)
+      VALUES (@TrendId,@PassportId,@AccessUrl,@BucketName,@CreatedTime,@ThumbnailUrl,@LowUrl,@SDUrl,@HDUrl);
+      SELECT @@IDENTITY;
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="MySql,SqlServer">
+      Update TrendUGC
+      Set TrendId = @TrendId,PassportId = @PassportId ,AccessUrl = @AccessUrl,BucketName = @BucketName,ThumbnailUrl = @ThumbnailUrl,LowUrl = @LowUrl,SDUrl = @SDUrl,HDUrl = @HDUrl
+      WHERE UGCId=@UGCId
+    </sqlWrap>
+    <sqlWrap sqlName="Add" supportDBType="MySql,SqlServer">
+      INSERT INTO TrendUGC(AccessUrl,BucketName,CreatedTime,ThumbnailUrl,LowUrl,SDUrl,HDUrl)
+      VALUES (@AccessUrl,@BucketName,@CreatedTime,@ThumbnailUrl,@LowUrl,@SDUrl,@HDUrl);
+      SELECT @@IDENTITY;
+    </sqlWrap>
+  </module>
+</root>

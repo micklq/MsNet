@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="CircleGiftRepository" dbName="Bumeng.Stars">  
+     <sqlWrap sqlName="SelectByCircleId" supportDBType="SqlServer">
+       SELECT Top (@Top) *   FROM CircleGift
+       WHERE  (CircleId=@CircleId) AND (GiftId > @MaxId)
+       ORDER BY GiftId DESC
+     </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageByCircleId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleGift
+      WHERE  (CircleId=@CircleId) AND (GiftId &lt; @MinId)
+      ORDER BY GiftId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithPay" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleGift
+      WHERE  (PassportId=@PassportId) 
+      ORDER BY GiftId DESC
+    </sqlWrap> 
+    <sqlWrap sqlName="SelectWithIncome" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleGift
+      WHERE  (AdminPassportId=@PassportId) 
+      ORDER BY GiftId DESC
+    </sqlWrap>   
+    <sqlWrap sqlName="Set" supportDBType="SqlServer">
+      INSERT INTO CircleGift(GiftTypeId,GiftName,CircleId,PassportId,AdminPassportId,Quantity,Price,TatalPrice,CreatedTime)
+      VALUES (@GiftTypeId,@GiftName,@CircleId,@PassportId,@AdminPassportId,@Quantity,@Price,@TatalPrice,@CreatedTime)
+      UPDATE Circle SET GiftCount=GiftCount+(@Quantity) WHERE  CircleId=@CircleId
+      SELECT @@IDENTITY
+    </sqlWrap>
+  </module>
+</root>

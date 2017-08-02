@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="VedioV3Repository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="GetAllLive" supportDBType="SqlServer">
+      SELECT v.RoomId,v.Title,v.Banner,v.LiveTime,v.EndTime,v.CreatedTime,v.LiveId,v.LiveNumber,v.RoomId FROM Vedio v
+      WHERE (GETDATE() BETWEEN GETDATE() AND v.EndTime) AND v.Status = 1
+      ORDER BY v.LiveTime ASC
+    </sqlWrap>
+    <sqlWrap sqlName="GetBespeakVedio" supportDBType="SqlServer">
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.LiveTime FROM Vedio v
+      WHERE (v.LiveTime BETWEEN GETDATE() AND v.LiveTime) AND v.Status = 1
+      ORDER BY v.LiveTime ASC
+    </sqlWrap>
+    <sqlWrap sqlName="GetVedioList" supportDBType="SqlServer">
+      SELECT TOP (@Top) VedioId,v.RoomId,Title,v.Banner,c.CircleId,c.CircleName,VedioFileUrl,VedioFileUrl_High,LiveTime,EndTime,
+      v.LiveNumber,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount
+      FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (GETDATE() BETWEEN LiveTime AND Getdate()) 
+      AND v.Status = 1 
+      AND VedioFileUrl != (CASE WHEN GETDATE() BETWEEN LiveTime AND EndTime THEN 'VedioFileUrl' ELSE '' END)
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+
+    <sqlWrap sqlName="GetBespeakVedioByCircleId" supportDBType="SqlServer">
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.LiveTime,v.LiveNumber,v.RoomId FROM Vedio v
+      WHERE (v.LiveTime BETWEEN GETDATE() AND v.LiveTime) AND v.Status = 1 AND v.CircleId = @CircleId
+      ORDER BY v.LiveTime ASC
+    </sqlWrap>
+    <sqlWrap sqlName="GetVedioListByCircleId" supportDBType="SqlServer">
+      SELECT TOP (@Top) VedioId,v.RoomId,Title,v.Banner,c.CircleId,c.CircleName,VedioFileUrl,VedioFileUrl_High,LiveTime,EndTime,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,v.LiveNumber
+      FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (GETDATE() BETWEEN LiveTime AND Getdate())
+      AND v.Status = 1
+      AND VedioFileUrl != (CASE WHEN GETDATE() BETWEEN LiveTime AND EndTime THEN 'VedioFileUrl' ELSE '' END)
+      AND v.CircleId = @CircleId
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+    
+    <sqlWrap sqlName="GetViewVedioRecord" supportDBType="SqlServer">
+      SELECT TOP (@Top) lv.LiveVedioId,lv.VedioId,v.RoomId,v.LiveNumber,lv.LastViewTime AS ViewTime,v.VedioFileUrl,v.VedioFileUrl_High,v.Title,v.Banner,v.LiveTime,v.EndTime,c.CircleId,c.Logo AS CircleLogo,c.CircleName,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      (SELECT COUNT(CommentId) FROM VedioComment WHERE VedioId = lv.VedioId) AS CommentCount
+      FROM LiveVedio lv
+      INNER JOIN Vedio v ON lv.VedioId = v.VedioId
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE lv.PassportId = @PassportId AND v.Status = 1 AND lv.Status = 1
+      ORDER BY lv.LastViewTime DESC
+    </sqlWrap>
+    
+    <sqlWrap sqlName="GetRelationByVedioId" supportDBType="SqlServer">
+      SELECT * FROM(
+      SELECT TOP (@Top) v.VedioId,v.Title,v.Banner,v.VedioFileUrl,v.VedioFileUrl_High,v.LiveTime,v.EndTime,c.CircleId,c.Logo AS CircleLogo,c.CircleName,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      (SELECT COUNT(CommentId) FROM VedioComment WHERE VedioId = v.VedioId) AS CommentCount,v.RoomId,v.LiveNumber
+      FROM Vedio v
+      INNER JOIN Circle c ON c.CircleId = v.CircleId
+      WHERE (GETDATE() BETWEEN EndTime AND GETDATE()) AND v.Status = 1 and (v.VedioId not in(@VedioId)) AND v.VedioFileUrl IS NOT NULL AND v.VedioFileUrl != ''
+      ORDER BY NEWID()
+      ) t
+      ORDER BY LiveTime DESC
+    </sqlWrap>
+
+
+    
+    <sqlWrap sqlName="GetById" supportDBType="SqlServer">
+      SELECT TOP(1) v.VedioId,VedioFileUrl,v.Title,v.Summary,v.Banner,v.LiveTime,v.LiveId,v.VedioFileUrl_High,v.CircleId,c.CircleName,c.Logo AS CircleLogo,c.FollowedCount,
+      (SELECT StarCareer FROM Star WHERE StarId = c.StarId) AS StarCareer,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      (SELECT COUNT(BeSpeakId) FROM BeSpeakVedio WHERE VedioId = v.VedioId) AS BeSpeakCount,
+      (SELECT COUNT(CommentId) FROM VedioComment WHERE VedioId = v.VedioId) AS CommentCount,v.RoomId,v.LiveNumber
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE VedioId = @VedioId AND v.Status = 1
+    </sqlWrap>
+    <sqlWrap sqlName="GetWithPaly" supportDBType="SqlServer">
+      SELECT TOP(1) v.VedioId,v.VedioFileUrl,v.VedioFileUrl_High,v.Title,v.Summary,v.Banner,v.LiveTime,
+      v.CircleId,c.CircleName,c.Logo AS CircleLogo,c.FollowedCount,
+      (SELECT StarCareer FROM Star WHERE StarId = c.StarId) AS StarCareer,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      (SELECT COUNT(CommentId) FROM VedioComment WHERE VedioId = v.VedioId) AS CommentCount,
+      (SELECT COUNT(LikedId) FROM VedioLiked WHERE VedioId = v.VedioId) AS LikedCount,v.RoomId,v.LiveNumber
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE VedioId = @VedioId AND v.Status = 1
+    </sqlWrap>
+    <sqlWrap sqlName="GetWithBeSpeak" supportDBType="SqlServer">
+      SELECT TOP(1) v.VedioId,v.Title,v.Summary,v.Banner,v.LiveTime,v.EndTime,
+      (SELECT CreatedTime FROM BeSpeakVedio WHERE VedioId = @VedioId AND PassportId = @PassportId) AS BeSpeakTime,
+      v.CircleId,c.CircleName,c.Logo AS CircleLogo,c.FollowedCount,
+      (SELECT StarCareer FROM Star WHERE StarId = c.StarId) AS StarCareer,
+      (SELECT ViewCount FROM VedioViewCount WHERE VedioId = v.VedioId) AS ViewCount,
+      (SELECT COUNT(BeSpeakId) FROM BeSpeakVedio WHERE VedioId = v.VedioId) AS BeSpeakCount,
+      (SELECT COUNT(CommentId) FROM VedioComment WHERE VedioId = v.VedioId) AS CommentCount,v.RoomId,v.LiveNumber
+      FROM Vedio v
+      INNER JOIN Circle c ON v.CircleId = c.CircleId
+      WHERE VedioId = @VedioId AND v.Status = 1
+    </sqlWrap>
+    
+  </module>
+</root>

@@ -1,0 +1,95 @@
+﻿@using MSNet.Models;
+@{   
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+    var clist = ViewData["CategoryList"] as IList<Category>;
+    var category = ViewData["Category"] as Category;
+    ViewBag.Title = (category.CategoryName.IsNullOrEmpty()) ? "添加栏目" : "修改栏目";  
+  
+}
+<div id="HMain">
+<div class="Main">
+<div class="HTitle">@((category.CategoryName.IsNullOrEmpty()) ? "添加栏目" : "修改栏目")</div>
+<div class="MMain">
+<form id="form1" method="post" action="@Url.Action("CategoryAction")">
+<input type="hidden" id="CategoryId" name="CategoryId"  value="@(category.CategoryId)"  />
+<input type="hidden" id="CategoryCode" name="CategoryCode"  value="@(category.CategoryCode)"  />
+    <table id="EditTable"  class="Edit" border="0" cellpadding="0" cellspacing="1">   
+     <tr><th>所属栏目</th>
+     <td>
+     <select id="ParentId" name="ParentId" class="Eselect" title="所属栏目">
+     <option value="0">0级根栏目</option>
+     @foreach (var ls in clist.Where(p => p.Depth == 0 && p.CategoryId != category.CategoryId))
+     {
+         //去除当前栏目
+         
+         
+      <option value="@ls.CategoryId" @(category.ParentId == ls.CategoryId ? "selected='selected'" : "")>@ls.CategoryName</option>               
+     }   
+     </select>   
+     </td></tr>
+     <tr><th>栏目名称</th>
+     <td><input type="text" id="CategoryName" name="CategoryName" class="Etext" maxlength="50" value="@(category.CategoryName)" 
+            data-val="true"            
+            data-val-required="请输入栏目名称！"/></td></tr>
+   </table>
+  <div class="ButtonDiv" id="ddDoing" style="display:none;"><img src="@Url.Content("~/Content/Images/ajax_loading.gif")" style="display:inline;" /> 正在提交...</div>
+  <div class="ButtonDiv" id="ddButton">
+  <input type="submit" class="inputbutton" title="保存" value="保存" id="Save" />&nbsp;
+  <input type="button" class="inputbutton" title="取消" value="取消" id="GoBack" />
+  </div>
+  <div class="ButtonDiv">
+  <span id="MessageBox"></span>
+  </div>
+</form>
+<script src="@Url.Content("~/Scripts/jquery.form.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.extend.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#CategoryName,#ParentId").keyup(function () { $("#MessageBox").html(""); });
+        $("#GoBack").click(function () { location.href = "/admin/categorylist?code=@(category.CategoryCode)"; });
+        $("#form1").submit(function () {
+            var options = {
+                beforeSubmit: function (formData, jqForm, options) {
+                    $("#MessageBox").html("");
+                    var v = jqForm.validate();
+                    if (!v.form()) {
+                        return false;
+                    }
+                    $("#ddButton").hide();
+                    $("#ddDoing").show();
+                    return true;
+                },
+                success: function (responseText, statusText) {
+                    if (statusText == "success") {
+                        var d = null;
+                        try {
+                            d = typeof responseText == 'string' ? responseText.toJsonObj() : responseText; // eval('(' + responseText + ')');
+                        } catch (ex) {
+                            d = { success: false, message: '服务器出现错误' };
+                        }
+                        if (d.success) {
+                            location.href = "/admin/categorylist?code=@(category.CategoryCode)";
+                        }
+                        else {
+                            $("#ddButton").show();
+                            $("#ddDoing").hide();
+                            $("#MessageBox").html("").html(d.message);
+                        }
+                    }
+                    else {
+                        $("#ddButton").show();
+                        $("#ddDoing").hide();
+                        $("#MessageBox").html("").html("提交失败");
+                    }
+                }
+            };
+            $(this).ajaxSubmit(options);
+            return false;
+        });
+    });
+</script>
+</div>
+</div>
+</div>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="RewardTypeRepository" dbName="Bumeng.Stars">  
+    <sqlWrap sqlName="SelectWithAll" supportDBType="SqlServer">
+      SELECT  *   FROM RewardType
+      ORDER BY Id 
+    </sqlWrap>   
+  </module>
+</root>

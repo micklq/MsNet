@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="CircleSignRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByCircleId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleSign
+      WHERE  (CircleId=@CircleId) AND (SignId > @MaxId)
+      ORDER BY SignId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageByCircleId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleSign
+      WHERE  (CircleId=@CircleId) AND (SignId &lt; @MinId)
+      ORDER BY SignId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByPassportId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleSign
+      WHERE  (PassportId=@PassportId) AND (SignId > @MaxId)
+      ORDER BY SignId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageByPassportId" supportDBType="SqlServer">
+      SELECT Top (@Top) *   FROM CircleSign
+      WHERE  (PassportId = @PassportId) AND (SignId &lt; @MinId)
+      ORDER BY SignId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithContinue" supportDBType="3">
+      SELECT Top 1 *
+      FROM  CircleSign
+      where CircleId=@CircleId  and PassportId=@PassportId and datediff(day,CreatedTime,getdate())=1
+      ORDER BY SignId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="CheckTodayIsSign" supportDBType="3">
+      SELECT Count(1) FROM  CircleSign
+      where CircleId=@CircleId  
+      and PassportId=@PassportId 
+      and datediff(day,CreatedTime,getdate())=0     
+    </sqlWrap>
+    <sqlWrap sqlName="Set" supportDBType="3">      
+      insert into CircleSign(CircleId,PassportId,ContinueDay,CreatedTime)
+      values(@CircleId,@PassportId,@ContinueDay,@CreatedTime)
+      select @@IDENTITY
+    </sqlWrap>
+  </module>
+</root>

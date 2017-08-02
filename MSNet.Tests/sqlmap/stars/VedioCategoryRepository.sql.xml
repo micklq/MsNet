@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="VedioCategoryRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectAll" supportDBType="SqlServer">
+      SELECT * FROM VedioCategory
+      ORDER BY OrderId
+    </sqlWrap>
+    <sqlWrap sqlName="SelectById" supportDBType="SqlServer">
+      SELECT * FROM VedioCategory WHERE CategoryId = @Id
+    </sqlWrap>
+    <sqlWrap sqlName="Insert" supportDBType="SqlServer">
+      INSERT INTO VedioCategory(OrderId,Name,Status) VALUES(@OrderId,@Name,@Status)
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer">
+      UPDATE VedioCategory SET Name=@Name,OrderId=@OrderId,Status=@Status WHERE CategoryId = @Id
+    </sqlWrap>
+  </module>
+</root>

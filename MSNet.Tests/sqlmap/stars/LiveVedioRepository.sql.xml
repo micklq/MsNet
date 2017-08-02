@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="LiveVedioRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="GetTopPayByRoomId" supportDBType="3">
+      SELECT TOP(@Top) lv.PassportId,u.Avatar,u.NickName,lv.ContributionValue FROM LiveVedio lv
+      INNER JOIN UserProfile u
+      ON lv.PassportId = u.PassportId
+      WHERE RoomId = @RoomId AND ContributionValue > 0
+      ORDER BY ContributionValue DESC
+    </sqlWrap>
+
+
+
+    <sqlWrap sqlName="SelectById" supportDBType="3">
+      SELECT * FROM LiveVedio WHERE LiveVedioId = @Id
+    </sqlWrap>
+    <sqlWrap sqlName="DeleteRecord" supportDBType="3">
+      UPDATE LiveVedio SET Status = @Status
+      WHERE PassportId = @PassportId
+    </sqlWrap>
+    <sqlWrap sqlName="SetContribution" supportDBType="3">
+      UPDATE LiveVedio SET ContributionValue = @ContributionValue
+      WHERE PassportId = @PassportId AND VedioId = @VedioId
+    </sqlWrap>
+    <sqlWrap sqlName="CheckIsExist" supportDBType="3">
+      SELECT COUNT(LiveVedioId) FROM LiveVedio
+      WHERE PassportId = @PassportId AND VedioId = @VedioId
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer">
+      UPDATE LiveVedio SET Status = @Status, ViewCount = ViewCount + @ViewCount,LastViewTime = @LastViewTime
+      WHERE PassportId = @PassportId AND VedioId = @VedioId
+    </sqlWrap>
+    <sqlWrap sqlName="DeleteById" supportDBType="3">
+      UPDATE LiveVedio SET Status = 0 WHERE LiveVedioId = @Id
+    </sqlWrap>
+    <sqlWrap sqlName="Create" supportDBType="3">
+      INSERT INTO LiveVedio(RoomId,VedioId,PassportId,ContributionValue,Status,CreatedTime,ViewCount,LastViewTime)
+      VALUES(@RoomId,@VedioId,@PassportId,0,@Status,@CreatedTime,@ViewCount,@LastViewTime)
+      SELECT @@IDENTITY
+    </sqlWrap>
+    <sqlWrap sqlName="CheckHasRecord" supportDBType="3">
+      SELECT COUNT(LiveVedioId) FROM LiveVedio
+      WHERE PassportId = @PassportId AND Status = 1
+    </sqlWrap>
+  </module>
+</root>

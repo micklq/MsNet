@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="TrendLikedRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByPassportId" supportDBType="3">
+      SELECT Top (@Top) *   FROM TrendLiked
+      WHERE  (PassportId=@PassportId)
+      ORDER BY LikedId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByTrendId" supportDBType="3">
+      SELECT Top (@Top) *   FROM TrendLiked
+      WHERE  (TrendId=@TrendId) AND (LikedId > @MaxId)
+      ORDER BY LikedId DESC
+    </sqlWrap>   
+    <sqlWrap sqlName="SelectNextPageByTrendId" supportDBType="3">
+      SELECT Top (@Top) *   FROM TrendLiked
+      WHERE  (TrendId=@TrendId) AND (LikedId &lt; @MinId)
+      ORDER BY LikedId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByTrendIds" supportDBType="3">
+      SELECT  *   FROM TrendLiked
+      WHERE  TrendId IN (@TrendIds)
+      ORDER BY LikedId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="CountTrendLiked" supportDBType="3">
+      SELECT Count(1)  FROM TrendLiked
+      WHERE  (TrendId=@TrendId)      
+    </sqlWrap>
+    <sqlWrap sqlName="CheckIsLiked" supportDBType="3">
+      SELECT TrendId  FROM TrendLiked
+      WHERE  (PassportId=@PassportId) AND (TrendId IN (@TrendIds))
+    </sqlWrap>
+    <sqlWrap sqlName="Cancel" supportDBType="2">
+      DELETE FROM  TrendLiked WHERE TrendId=@TrendId AND PassportId=@PassportId;
+      UPDATE TrendCount SET LikedCount=(select count(1) from TrendLiked where TrendId=@TrendId)   WHERE  TrendId=@TrendId;
+    </sqlWrap>
+    <sqlWrap sqlName="Set" supportDBType="2">
+      INSERT INTO TrendLiked(TrendId,PassportId,CreatedTime)
+      VALUES (@TrendId,@PassportId,@CreatedTime);
+      UPDATE TrendCount SET LikedCount=(select count(1) from TrendLiked where TrendId=@TrendId)  WHERE  TrendId=@TrendId;
+      SELECT @@IDENTITY;
+    </sqlWrap>
+  </module>
+</root>

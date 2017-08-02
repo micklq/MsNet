@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+  <module moduleName="TrendCommentRepository" dbName="Bumeng.Stars">
+    <sqlWrap sqlName="SelectByPassportId" supportDBType="3">
+      SELECT Top (@Top) *   FROM TrendComment
+      WHERE  (PassportId=@PassportId) AND (ParentId=0)
+      ORDER BY CommentId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectReplyByPassportId" supportDBType="3">
+      SELECT Top (@Top) *   FROM TrendComment
+      WHERE  (PassportId=@PassportId) AND (ParentId >0)
+      ORDER BY CommentId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByCommentId" supportDBType="3">
+      SELECT *   FROM TrendComment
+      WHERE  (CommentId=@CommentId)
+    </sqlWrap>
+    <sqlWrap sqlName="SelectByTrendId" supportDBType="3">
+      SELECT Top (@Top) *   FROM TrendComment
+      WHERE  (TrendId=@TrendId) AND (CommentId > @MaxId)
+      ORDER BY CommentId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="SelectNextPageByTrendId" supportDBType="3">
+      SELECT Top (@Top) *   FROM TrendComment
+      WHERE  (TrendId=@TrendId) AND (CommentId &lt; @MinId)
+      ORDER BY CommentId DESC
+    </sqlWrap>
+    <sqlWrap sqlName="RemoveComment" supportDBType="2">
+      DELETE FROM  TrendComment WHERE CommentId=@CommentId AND PassportId=@PassportId;
+      DELETE FROM  TrendComment WHERE ParentId=@CommentId;
+      UPDATE TrendCount SET CommentCount=(select count(1) from TrendComment where TrendId=@TrendId)  WHERE  TrendId=@TrendId;
+    </sqlWrap>
+    <sqlWrap sqlName="Add" supportDBType="2">
+      INSERT INTO TrendComment(TrendId,PassportId,Contents,Location,CreatedTime,ReplyPassportId,ParentId)
+      VALUES (@TrendId,@PassportId,@Contents,@Location,@CreatedTime,0,0);
+      UPDATE TrendCount SET CommentCount=(select count(1) from TrendComment where TrendId=@TrendId)   WHERE  TrendId=@TrendId;
+      SELECT @@IDENTITY;
+    </sqlWrap>
+    <sqlWrap sqlName="Reply" supportDBType="2">
+      INSERT INTO TrendComment(TrendId,PassportId,ReplyPassportId,ParentId,Contents,Location,CreatedTime)
+      VALUES (@TrendId,@PassportId,@ReplyPassportId,@ParentId,@Contents,@Location,@CreatedTime);
+      UPDATE TrendCount SET CommentCount=(select count(1) from TrendComment where TrendId=@TrendId)  WHERE  TrendId=@TrendId;
+      SELECT @@IDENTITY;
+    </sqlWrap>
+    <sqlWrap sqlName="CheckIsExist" supportDBType="3">
+      SELECT COUNT(CommentId) FROM TrendComment WHERE TrendId = @TrendId
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithParameter" supportDBType="3">
+      SELECT * FROM (
+      SELECT tc.CommentId,c.CircleId,c.CircleName,c.Logo AS CircleLogo,t.TrendId,t.Contents AS TrendContents,rtc.Contents AS ParentContents,tc.PassportId,tc.ReplyPassportId,tc.ParentId,tc.Contents,tc.CreatedTime,
+      (SELECT COUNT(CommentId) FROM TrendComment WHERE ParentId = tc.CommentId) AS ReplyCount
+      FROM TrendComment tc
+      LEFT JOIN TrendComment rtc ON tc.ParentId = rtc.CommentId
+      INNER JOIN Trend t ON tc.TrendId = t.TrendId
+      INNER JOIN Circle c ON t.CircleId = c.CircleId
+      WHERE ((tc.Contents LIKE @Keyword) OR (c.CircleName LIKE @Keyword) OR (t.Contents LIKE @Keyword)) AND tc.ParentId = CASE WHEN @ParentId = 0 THEN tc.ParentId ELSE @ParentId END
+      ) t
+      ORDER BY CreatedTime DESC
+    </sqlWrap>
+  </module>
+</root>
