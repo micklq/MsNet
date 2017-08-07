@@ -23,7 +23,7 @@ namespace MSNet.WebApp.Controllers
         }
         public ActionResult VCode()
         {
-            return Content(VerifyCodeHelper.Create(new VerifyCodeHelper.VerifyCodeImageArg() { SessionName = "_Message_SecurityCode_" }));
+            return Content(VerifyCodeHelper.Create(new VerifyCodeHelper.VerifyCodeImageArg() { SessionName = "_Admin_VCode_SecurityCode_" }));
         }
 
         //[ValidateInput(false)]

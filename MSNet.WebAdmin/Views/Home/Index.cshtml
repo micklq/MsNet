@@ -1,20 +1,6 @@
-﻿@{
-    Layout = null;
-     var isMobile =  Request.UserAgent.ToLower().Contains("android");  
-    }
-
-<!DOCTYPE html>
-
-<html style=" overflow:hidden;">
-<head>   
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">        
-    @*<meta name="viewport" content="width=device-width, initial-scale=1 " />*@  
-    <title>管理首页</title>  
-    <link rel="stylesheet" type="text/css" href="/Content/style.css" />
-    <script src="/Scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
-    <script src="/Scripts/jfn.v2.js" type="text/javascript"></script>
-</head>
-<body>
-   <div class="page">管理首页</div>  
-</body>
-</html>
+﻿@{   
+    ViewBag.Title = "网站后台管理-首页";   
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+    string currentUrl = ViewBag.CurrentUrl == null ? "/Home/Welcome" : ViewBag.CurrentUrl;
+ }
+<iframe scrolling="yes" frameborder="0" src="@(currentUrl)"></iframe>

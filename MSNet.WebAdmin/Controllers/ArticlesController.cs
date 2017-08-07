@@ -19,23 +19,23 @@ namespace MSNet.WebApp.Controllers
 
         public ActionResult Index()
         {          
-            ViewData["TopList"] = Articles.FindWithPage(new Pagination
-            {
-                PageIndex = 1,
-                PageSize = 5
-            });
-            ViewData["NewsList"] = Articles.FindWithPage(new Pagination
-            {
-                PageIndex = 1,
-                PageSize = 12
-            });
+            //ViewData["TopList"] = Articles.FindWithPage(new Pagination
+            //{
+            //    PageIndex = 1,
+            //    PageSize = 5
+            //});
+            //ViewData["NewsList"] = Articles.FindWithPage(new Pagination
+            //{
+            //    PageIndex = 1,
+            //    PageSize = 12
+            //});
             return View();
         }
         public ActionResult Show()
         {
-           var Id = Request["id"].ToInt();
-           var news = Articles.FindById(Id);
-           ViewData["News"] = news ?? new Articles();
+           //var Id = Request["id"].ToInt();
+           //var news = Articles.FindById(Id);
+           //ViewData["News"] = news ?? new Articles();
           return View();
         }
     }
