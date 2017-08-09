@@ -10,7 +10,7 @@ using MSNet.Common.Util;
 using MSNet.Common.Web;
 using MSNet.Common.Web.Pager;
 
-namespace MSNet.WebApp.Controllers
+namespace MSNet.WebAdmin.Controllers
 {
     public class PubController : Controller
     {

@@ -9,19 +9,27 @@ using M2SA.AppGenome.Data;
 using MSNet.Common.Web;
 using MSNet.Common.Util;
 using MSNet.Common.Web.Pager;
-namespace MSNet.WebApp.Controllers
+namespace MSNet.WebAdmin.Controllers
 {
-    public partial class AdminController : AuthBaseController
+    public partial class AdminController : Controller //AuthBaseController
     {
         //
         // GET: /Admin/
 
-        public ActionResult Index()
+        public ActionResult List()
         {   
             return View();
         }
-               
-       
+
+        public ActionResult Permissions()
+        {
+            return View();
+        }
+
+        public ActionResult Roles()
+        {
+            return View();
+        }
 
     }
 }

@@ -7,7 +7,7 @@ using MSNet.Common;
 using MSNet.Common.Util;
 using MSNet.Common.Web;
 using MSNet.Common.Passports;
-namespace MSNet.WebApp.Controllers
+namespace MSNet.WebAdmin.Controllers
 {
     public class AuthController : Controller
     {

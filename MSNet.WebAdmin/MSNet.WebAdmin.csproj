@@ -214,15 +214,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\AdminController_Articles.cs" />
-    <Compile Include="Controllers\AdminController_Permission.cs" />
-    <Compile Include="Controllers\AdminController_Role.cs" />
-    <Compile Include="Controllers\AdminController_User.cs" />
+    <Compile Include="Controllers\ChartsControlle.cs" />
+    <Compile Include="Controllers\SystemControlle.cs" />
+    <Compile Include="Controllers\MembersControlle.cs" />
+    <Compile Include="Controllers\CommentControlle.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\PicturesController.cs" />
+    <Compile Include="Controllers\FeedbackControlle.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PubController.cs" />
-    <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1360,20 +1362,11 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Admin\AdminList.cshtml" />
-    <Content Include="Views\Admin\AdminView.cshtml" />
-    <Content Include="Views\Admin\Category.cshtml" />
-    <Content Include="Views\Admin\CategoryList.cshtml" />
-    <Content Include="Views\Admin\Contact.cshtml" />
-    <Content Include="Views\Admin\EditUsers.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\ModifyPassword.cshtml" />
-    <Content Include="Views\Admin\News.cshtml" />
-    <Content Include="Views\Admin\NewsList.cshtml" />
-    <Content Include="Views\Admin\PermissionList.cshtml" />
-    <Content Include="Views\Admin\RoleList.cshtml" />
-    <Content Include="Views\Articles\Index.cshtml" />
-    <Content Include="Views\Articles\Show.cshtml" />
+    <Content Include="Views\Admin\List.cshtml" />
+    <Content Include="Views\Admin\Permissions.cshtml" />
+    <Content Include="Views\Admin\Roles.cshtml" />
+    <Content Include="Views\Articles\List.cshtml" />
+    <Content Include="Views\Articles\Add.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Home\Index.cshtml">
       <SubType>
@@ -1436,16 +1429,94 @@
     <Content Include="Views\Home\Welcome.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_Admin_Style.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_Admin_Left.cshtml" />
+    <Content Include="Views\Shared\_Admin_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Admin_Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Admin_Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Admin_Meta.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Feedback\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Admin_Style.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Pictures\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Products\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Products\Brand.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Products\Category.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Comment\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Members\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Members\Del.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Members\ScoreOperation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Members\RecordDownload.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Members\RecordBrowse.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Members\Level.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Members\RecordShare.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\System\Logs.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\System\Shielding.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\System\Base.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\System\Category.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\System\Data.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Charts\Charts1.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Charts\Charts2.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Charts\Charts7.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Charts\Charts6.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Charts\Charts5.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Charts\Charts4.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Charts\Charts3.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

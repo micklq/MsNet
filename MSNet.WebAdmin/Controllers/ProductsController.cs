@@ -13,22 +13,25 @@ using MSNet.Common.Articles;
 
 namespace MSNet.WebAdmin.Controllers
 {
-    public class ArticlesController : Controller
-    {       
-        
+    public class ProductsController : Controller
+    {
+
+
+        public ActionResult Brand()
+        {          
+           
+            return View();
+        }
+
+        public ActionResult Category()
+        {
+
+            return View();
+        }
 
         public ActionResult List()
-        {          
-            //ViewData["TopList"] = Articles.FindWithPage(new Pagination
-            //{
-            //    PageIndex = 1,
-            //    PageSize = 5
-            //});
-            //ViewData["NewsList"] = Articles.FindWithPage(new Pagination
-            //{
-            //    PageIndex = 1,
-            //    PageSize = 12
-            //});
+        {
+
             return View();
         }
 
