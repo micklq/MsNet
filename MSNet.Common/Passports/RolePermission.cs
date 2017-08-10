@@ -18,7 +18,7 @@ namespace MSNet.Common.Passports
         /// <summary>
         /// 读权限=1  读写权限=1+3=4  读写删权限=1+3+5=9  读删权限=1+5=6
         /// </summary>
-        public int PermissionLevel { get; set; }
+        public String PermissionLevel { get; set; }
 
         #endregion
         

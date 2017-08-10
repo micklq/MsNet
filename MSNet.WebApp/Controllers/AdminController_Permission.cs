@@ -25,7 +25,8 @@ namespace MSNet.WebApp.Controllers
 
         public ActionResult PermissionView()
         {
-            long id = Request["id"].ToLong();            
+            long id = Request["id"].ToLong(); 
+           
             ViewData["Permission"] = Permission.FindById(id); ;
 
             return View();
@@ -43,7 +44,7 @@ namespace MSNet.WebApp.Controllers
                     message = "请输入名称！"
                 }, JsonRequestBehavior.AllowGet);
             }
-            if (model.Value.IsNullOrEmpty())
+            if (model.Url.IsNullOrEmpty())
             {
                 return Json(new
                 {

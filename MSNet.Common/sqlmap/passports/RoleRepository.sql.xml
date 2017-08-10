@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root xmlns="http://m2sa.net/Schema/SqlMapping">
-	<module moduleName="RoleRepository" dbName="MSNet.SQLServer">
+	<module moduleName="RoleRepository" dbName="MSNet.MySql">
     <sqlWrap  sqlName="Insert"  supportDBType="MySql,SqlServer">
       insert into Role(Name,Description,RoleType,CreatedTime,LastModifiedTime)
       values(@Name,@Description,@RoleType,@CreatedTime,@LastModifiedTime);

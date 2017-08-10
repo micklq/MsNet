@@ -1,0 +1,111 @@
+﻿@{
+    Layout = null;
+    var roots = ViewData["PermissionRoot"] as List<Permission>;
+    var p = ViewData["Permission"] as Permission;
+    if (p == null) { p = new Permission(); }
+}
+<!DOCTYPE html>
+<html>
+<head>
+@Html.Partial("_Admin_Meta")
+<title>维护权限</title>
+</head>
+<body>
+    <div class="page-container">
+        <form action="/Admin/PermissionAction" method="post" class="form form-horizontal" id="form-submit">
+            <input type="hidden" id="PermissionId" name="PermissionId" value="@(p.PermissionId)">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">
+                    <span class="c-red">*</span>
+                    菜单名称：
+                </label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <input type="text" class="input-text" id="Name" name="Name" value="@(p.Name)" placeholder="">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">
+                    <span class="c-red">*</span>
+                    上级菜单：
+                </label>
+                <div class="formControls col-xs-8 col-sm-6">
+                    <span class="select-box">
+                        <select class="select" id="ParentId" name="ParentId">
+                            <option value="0" @(p.ParentId == 0 ? "selected" : "")>顶级分类</option>
+                            @if (roots != null && roots.Count > 0)
+                            {
+                                foreach (var o in roots)
+                                {
+                                    <option value="@(o.PermissionId)" @(p.ParentId == o.PermissionId ? "selected" : "")>@(o.Name)</option>
+                                }
+                            }
+                        </select>
+                    </span>
+                </div>
+                <div class="col-3">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">
+                    <span class="c-red">*</span>
+                    访问地址：
+                </label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <input type="text" class="input-text" id="Url" name="Url" value="@(p.Url) " placeholder="">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">
+                    <span class="c-red">*</span>
+                    排序：
+                </label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <input type="text" class="input-text" id="Sort" name="Sort" value="@(p.Sort)" placeholder="">
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-9 col-offset-2">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--_footer 作为公共模版分离出去-->
+      @Html.Partial("_Admin_Footer") <!--/_footer 作为公共模版分离出去-->
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="/Hui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="/Hui/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+    <script type="text/javascript" src="/Hui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+    <script type="text/javascript">
+        $(function () { 
+            $("#form-submit").validate({
+                rules: {
+                    Name: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 16
+                    },
+                    ParentId: {
+                        required: true,
+                        number: true,
+                    },                    
+                    Sort: {
+                        required: true,
+                        number: true,
+                    },                    
+
+                },
+                onkeyup: false,
+                focusCleanup: true,
+                success: "valid",
+                submitHandler: function (form) {
+                    $(form).ajaxSubmit();
+                    var index = parent.layer.getFrameIndex(window.name);
+                    //parent.$('.btn-refresh').click();
+                    parent.layer.close(index);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

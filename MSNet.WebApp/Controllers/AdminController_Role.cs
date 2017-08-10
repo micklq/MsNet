@@ -58,7 +58,7 @@ namespace MSNet.WebApp.Controllers
                         var oo = o.Trim('_').Split('_').ToList().ToLongList();
                         if (oo.Count == 2)
                         {
-                            rbool = rbool && new RolePermission() { RoleId = model.RoleId, PermissionId = oo[0], PermissionLevel = (int)oo[1] }.Save();
+                            rbool = rbool && new RolePermission() { RoleId = model.RoleId, PermissionId = oo[0], PermissionLevel = "" }.Save();
                         }
                     }
                 }                                

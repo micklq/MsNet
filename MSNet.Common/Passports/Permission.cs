@@ -24,8 +24,8 @@ namespace MSNet.Common.Passports
             set { this.Id = value; }
         }  
      
-        public int Sort { get; set; }    
-        public string Value { get; set; }        
+        public int Sort { get; set; }
+        public string Url { get; set; }        
   		       
         #endregion
 
@@ -75,7 +75,7 @@ namespace MSNet.Common.Passports
         {
             var repository = RepositoryManager.GetRepository<IPermissionRepository>(ModuleEnvironment.ModuleName);
             bool result = repository.Remove(this);
-            //删除权限下角色
+            //删除权限下关联角色
             result = result &&(RolePermission.RemoveByPermissionId(this.Id));    
        
             return result;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root xmlns="http://m2sa.net/Schema/SqlMapping">
-  <module moduleName="UserPassportRepository" dbName="MSNet.SQLServer">
+  <module moduleName="UserPassportRepository" dbName="MSNet.MySql">
     <sqlWrap sqlName="Insert" supportDBType="SqlServer, MySql">
       insert into UserPassport (UserName,Email,Mobile, PassportStatus,CreatedTime, LastModifiedTime)
       values (@UserName,@Email,@Mobile,@PassportStatus,@CreatedTime, @LastModifiedTime);
