@@ -13,37 +13,44 @@ using MSNet.Common.Articles;
 
 namespace MSNet.WebAdmin.Controllers
 {
-    public class SystemControlle : Controller
+    public class MembersController : Controller
     {    
-        public ActionResult Base()
+        public ActionResult List()
         {          
            
             return View();
         }
-
-        public ActionResult Category()
+        public ActionResult Del()
         {
 
             return View();
         }
-
-        public ActionResult Data()
+        public ActionResult Level()
         {
 
             return View();
         }
-
-        public ActionResult Shielding()
+        public ActionResult ScoreOperation()
         {
 
             return View();
         }
-
-        public ActionResult Logs()
+        public ActionResult RecordBrowse()
         {
 
             return View();
-        }     
+        }
+        public ActionResult RecordDownload()
+        {
+
+            return View();
+        }
+        public ActionResult RecordShare()
+        {
+
+            return View();
+        }
+       
       
     }
 }

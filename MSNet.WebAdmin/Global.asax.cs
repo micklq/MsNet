@@ -6,7 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-
+using M2SA.AppGenome;
 namespace MSNet.WebAdmin
 {
     // 注意: 有关启用 IIS6 或 IIS7 经典模式的说明，
@@ -22,7 +22,7 @@ namespace MSNet.WebAdmin
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AuthConfig.RegisterAuth();
+            ApplicationHost.GetInstance().Start();       
         }
     }
 }

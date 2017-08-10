@@ -13,7 +13,7 @@ using MSNet.Common.Articles;
 
 namespace MSNet.WebAdmin.Controllers
 {
-    public class CommentControlle : Controller
+    public class CommentController : Controller
     {    
         public ActionResult List()
         {          

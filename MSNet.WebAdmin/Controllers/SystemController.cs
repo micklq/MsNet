@@ -13,43 +13,37 @@ using MSNet.Common.Articles;
 
 namespace MSNet.WebAdmin.Controllers
 {
-    public class ChartsControlle : Controller
-    {
-        public ActionResult Charts1()
+    public class SystemController : Controller
+    {    
+        public ActionResult Base()
         {          
            
             return View();
         }
-        public ActionResult Charts2()
+
+        public ActionResult Category()
         {
 
             return View();
         }
-        public ActionResult Charts3()
+
+        public ActionResult Data()
         {
 
             return View();
         }
-        public ActionResult Charts4()
+
+        public ActionResult Shielding()
         {
 
             return View();
         }
-        public ActionResult Charts5()
+
+        public ActionResult Logs()
         {
 
             return View();
-        }
-        public ActionResult Charts6()
-        {
-
-            return View();
-        }
-        public ActionResult Charts7()
-        {
-
-            return View();
-        }
+        }     
       
     }
 }

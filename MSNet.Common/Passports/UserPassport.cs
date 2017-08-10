@@ -172,28 +172,6 @@ namespace MSNet.Common.Passports
             set;
         }
 
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public DateTime CreatedTime
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public DateTime LastModifiedTime
-        {
-            get;
-            set;
-        }
-
-        
-
         #endregion //Instance Properties
 
         #region Extends Properties

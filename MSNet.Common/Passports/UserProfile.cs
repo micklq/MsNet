@@ -86,18 +86,7 @@ namespace MSNet.Common.Passports
         /// 用户头像
         /// </summary>
         public string Avatar { get; set; }      
-
-        /// <summary>
-        /// 创建时间
-        /// </summary>
-        public DateTime CreatedTime { get; set; }
-        
-
-        /// <summary>
-        /// 最后修改时间
-        /// </summary>
-        public DateTime LastModifiedTime { get; set; }
-       
+               
         /// <summary>
         /// 
         /// </summary>
