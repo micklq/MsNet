@@ -2,9 +2,15 @@
 <root xmlns="http://m2sa.net/Schema/SqlMapping">
 	<module moduleName="RolePermissionRepository" dbName="MSNet.MySql">
     <sqlWrap  sqlName="Insert"  supportDBType="MySql,SqlServer">
-      insert into RolePermission(RoleId,PermissionId,PermissionLevel)
-      values(@RoleId,@PermissionId,@PermissionLevel);
-    </sqlWrap> 
+      insert into RolePermission(RoleId,PermissionId,ParentPermId,PermissionLevel)
+      values(@RoleId,@PermissionId,@ParentPermId,@PermissionLevel);
+    </sqlWrap>
+    <sqlWrap  sqlName="PermissionLevelExist"  supportDBType="MySql,SqlServer">
+      select count(*) from RolePermission where RoleId=@RoleId and PermissionId=@PermissionId and PermissionLevel=@PermissionLevel;
+    </sqlWrap>
+    <sqlWrap  sqlName="RolePermissionExist"  supportDBType="MySql,SqlServer">
+      select count(*) from RolePermission where RoleId=@RoleId and ParentPermId=@ParentPermId;
+    </sqlWrap>
     <sqlWrap  sqlName="DeleteByRoleId"  supportDBType="MySql,SqlServer">
       delete from RolePermission where RoleId = @RoleId;
     </sqlWrap>

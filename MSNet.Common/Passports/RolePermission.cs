@@ -15,15 +15,31 @@ namespace MSNet.Common.Passports
         #region Instance Properties        
         public long RoleId { get; set; } 
         public long PermissionId { get; set; }
+
+        public long ParentPermId { get; set; }
         /// <summary>
         /// 读权限=1  读写权限=1+3=4  读写删权限=1+3+5=9  读删权限=1+5=6
         /// </summary>
-        public String PermissionLevel { get; set; }
+        public long PermissionLevel { get; set; }
 
         #endregion
         
 
         #region Static Methods          
+
+        public static bool PermissionLevelExist(long roleId, long permissionId, long permissionLevel)
+        {
+            var repository = RepositoryManager.GetRepository<IRolePermissionRepository>(ModuleEnvironment.ModuleName);
+            var results = repository.PermissionLevelExist(roleId, permissionId, permissionLevel);
+            return results;
+        }
+
+        public static bool RolePermissionExist(long roleId, long parentPermId)
+        {
+            var repository = RepositoryManager.GetRepository<IRolePermissionRepository>(ModuleEnvironment.ModuleName);
+            var results = repository.RolePermissionExist(roleId, parentPermId);
+            return results;
+        }
 
 
         public static IList<RolePermission> FindByRoleId(long roleId)

@@ -11,7 +11,10 @@ namespace MSNet.Common.Passports.DataRepositories
     {
         
         IList<RolePermission> FindByRoleId(long roleId);
-        
+
+        bool PermissionLevelExist(long roleId, long permissionId, long permissionLevel);
+        bool RolePermissionExist(long roleId, long parentPermId);
+
         /// <summary>
         /// °´È¨ÏÞIdÉ¾³ý
         /// </summary>

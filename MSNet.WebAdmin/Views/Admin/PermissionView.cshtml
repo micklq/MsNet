@@ -8,7 +8,7 @@
 <html>
 <head>
 @Html.Partial("_Admin_Meta")
-<title>维护权限</title>
+<title>菜单维护</title>
 </head>
 <body>
     <div class="page-container">
@@ -101,7 +101,7 @@
                 submitHandler: function (form) {
                     $(form).ajaxSubmit();
                     var index = parent.layer.getFrameIndex(window.name);
-                    //parent.$('.btn-refresh').click();
+                    parent.location.reload();
                     parent.layer.close(index);
                 }
             });

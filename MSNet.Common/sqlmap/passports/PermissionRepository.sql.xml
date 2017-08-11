@@ -21,7 +21,7 @@
       select *  from Permission;
     </sqlWrap>
     <sqlWrap  sqlName="SelectRoot"  supportDBType="MySql,SqlServer">
-      select *  from Permission where ParentId = 0;
+      select *  from Permission where ParentId = 0 order by Sort;
     </sqlWrap>
     <sqlWrap  sqlName="SelectByParentId"  supportDBType="MySql,SqlServer">
       select *  from Permission  where  ParentId = @ParentId;

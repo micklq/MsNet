@@ -38,7 +38,7 @@ namespace MSNet.WebApp.Controllers
         public ActionResult RoleAction(Role model)
         {
 
-            var rolePermissions = model.RolePermissions.Trim(',').Split(',').ToList();
+            var rolePermissions = model.PermissionLevel.Trim(',').Split(',').ToList();
             if (model.Name.IsNullOrEmpty())
             {
                 return Json(new
@@ -51,17 +51,17 @@ namespace MSNet.WebApp.Controllers
             var rbool = model.Save();            
             if (rbool)   //添加权限
             {
-                if (rolePermissions.Count > 0) {
-                    RolePermission.RemoveByRoleId(model.RoleId);
-                    foreach (var o in rolePermissions)
-                    {
-                        var oo = o.Trim('_').Split('_').ToList().ToLongList();
-                        if (oo.Count == 2)
-                        {
-                            rbool = rbool && new RolePermission() { RoleId = model.RoleId, PermissionId = oo[0], PermissionLevel = "" }.Save();
-                        }
-                    }
-                }                                
+                //if (rolePermissions.Count > 0) {
+                //    RolePermission.RemoveByRoleId(model.RoleId);
+                //    foreach (var o in rolePermissions)
+                //    {
+                //        var oo = o.Trim('_').Split('_').ToList().ToLongList();
+                //        if (oo.Count == 2)
+                //        {
+                //            rbool = rbool && new RolePermission() { RoleId = model.RoleId, PermissionId = oo[0], PermissionLevel = "" }.Save();
+                //        }
+                //    }
+                //}                                
             }
             if (rbool) 
             {

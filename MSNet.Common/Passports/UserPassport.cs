@@ -163,6 +163,12 @@ namespace MSNet.Common.Passports
             get;
             set;
         }
+
+        public long RoleType
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// 
         /// </summary>

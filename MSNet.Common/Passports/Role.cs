@@ -21,15 +21,11 @@ namespace MSNet.Common.Passports
         }
 
         public string Name { get; set; } 
-        public string Description { get; set; } 
-        /// <summary>
-        /// 系统管理员1  普通用户0
-        /// </summary>
-        public int RoleType { get; set; }          
+        public string Description { get; set; }         
   		       
         #endregion
 
-        public string RolePermissions { get; set; } 
+        public string PermissionLevel { get; set; } 
 
         #region Static Methods
         public static IList<Role> FindWithAll()

@@ -164,6 +164,13 @@ namespace MSNet.Common.Util
 
             return o.Value;
         }
+
+        public static int GetValue<TEnum>(string fieldName)
+        {
+            Type enumType = typeof(TEnum);
+            return GetValue(enumType, fieldName, 0);
+        }
+
         public static int GetValue(Type enumType, string fieldName)
         {
             return GetValue(enumType, fieldName, 0);

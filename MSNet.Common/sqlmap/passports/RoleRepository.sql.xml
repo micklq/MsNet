@@ -2,12 +2,12 @@
 <root xmlns="http://m2sa.net/Schema/SqlMapping">
 	<module moduleName="RoleRepository" dbName="MSNet.MySql">
     <sqlWrap  sqlName="Insert"  supportDBType="MySql,SqlServer">
-      insert into Role(Name,Description,RoleType,CreatedTime,LastModifiedTime)
-      values(@Name,@Description,@RoleType,@CreatedTime,@LastModifiedTime);
+      insert into Role(Name,Description,CreatedTime,LastModifiedTime)
+      values(@Name,@Description,@CreatedTime,@LastModifiedTime);
       select @@IDENTITY;
     </sqlWrap>
     <sqlWrap  sqlName="Update"  supportDBType="MySql,SqlServer">
-      update Role  set Name=@Name,Description=@Description,RoleType=@RoleType,LastModifiedTime=@LastModifiedTime
+      update Role  set Name=@Name,Description=@Description,LastModifiedTime=@LastModifiedTime
       where RoleId = @Id;
     </sqlWrap>
     <sqlWrap  sqlName="DeleteById"  supportDBType="MySql,SqlServer">

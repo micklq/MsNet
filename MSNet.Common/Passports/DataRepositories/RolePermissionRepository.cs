@@ -33,6 +33,26 @@ namespace MSNet.Common.Passports.DataRepositories
             }
             return list;
         }
+
+        public bool PermissionLevelExist(long roleId, long permissionId, long permissionLevel)
+        {
+            var sqlName = this.FormatSqlName("PermissionLevelExist");
+            var pValues = new Dictionary<string, object>(1);
+            pValues.Add("RoleId", roleId);
+            pValues.Add("PermissionId", permissionId);
+            pValues.Add("PermissionLevel", permissionLevel);
+            return ((int)SqlHelper.ExecuteScalar(sqlName, pValues)) > 0;
+         
+        }
+
+        public bool RolePermissionExist(long roleId, long parentPermId)
+        {
+            var sqlName = this.FormatSqlName("RolePermissionExist");
+            var pValues = new Dictionary<string, object>(1);
+            pValues.Add("RoleId", roleId);
+            pValues.Add("ParentPermId", parentPermId);
+            return ((int)SqlHelper.ExecuteScalar(sqlName, pValues)) > 0;
+        }
         public bool Insert(RolePermission model)
         {
             var result = false;
