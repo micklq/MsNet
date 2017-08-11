@@ -77,6 +77,7 @@ namespace MSNet.WebAdmin.Controllers
         {
             long id = Request["id"].ToLong();
             ViewData["Permissions"] = Permission.FindWithAll();
+            ViewData["RolePermission"] = RolePermission.FindByRoleId(id);
             ViewData["Role"] = Role.FindById(id);    
             return View();
         }

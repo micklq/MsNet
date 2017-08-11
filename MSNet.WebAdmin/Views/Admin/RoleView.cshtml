@@ -1,8 +1,11 @@
 ﻿@{
     Layout = null;
     var list = ViewData["Permissions"] as List<Permission>;
+    var rlist = ViewData["RolePermission"] as List<RolePermission>;
+    if (rlist == null) { rlist = new List<RolePermission>(); }
     var p = ViewData["Role"] as Role;
     if (p == null) { p = new Role(); }
+    
 }
 <!DOCTYPE html>
 <html>
@@ -35,25 +38,25 @@
                         {
                             <dl class="permission-list">
                                 <dt>
-                                    <label>
-                                        <input type="checkbox" value="" name="Root-PermissionId" id="Root-PermissionId-@(o.PermissionId)">
-                                        @(o.Name)
-                                    </label>
+                                    <label>@(o.Name)</label>
                                 </dt>
                                 <dd>
                                     @foreach (var oo in list.Where(so => so.ParentId == o.PermissionId).OrderBy(ob => ob.Sort))
                                     {
+                                        bool ck0 = rlist.Where(e => e.PermissionId.Equals(oo.PermissionId)).Count() > 0;
                                     <dl class="cl permission-list2">
                                         <dt>
                                             <label class="">
-                                                <input type="checkbox" value="" name="PermissionId" id="PermissionId-@(oo.PermissionId)">
+                                                <input type="checkbox" @(ck0 ? "checked" : "") value="" name="PermissionId" id="PermissionId-@(oo.PermissionId)">
                                                 @(oo.Name)
                                             </label>
                                         </dt>
                                         <dd>
                                             @foreach (var po in EnumHelper.GetItems<PermissionType>())
                                             {
-                                              <label><input type="checkbox" value="@(o.PermissionId)-@(oo.PermissionId)-@(EnumHelper.GetValue<PermissionType>(po.Name))" name="PermissionLevel" id="PermissionLevel-@(oo.PermissionId)">@(po.Description)</label>
+                                                bool ck = rlist.Where(e => e.PermissionId.Equals(oo.PermissionId) && e.PermissionLevel.Equals(EnumHelper.GetValue<PermissionType>(po.Name))).Count() > 0;
+                                                
+                                              <label><input type="checkbox"  @(ck?"checked":"") value="@(o.PermissionId)-@(oo.PermissionId)-@(EnumHelper.GetValue<PermissionType>(po.Name))" name="PermissionLevel" id="PermissionLevel-@(oo.PermissionId)">@(po.Description)</label>
                                             }
                                                                                        
                                         </dd>
