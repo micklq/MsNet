@@ -33,19 +33,12 @@
       select * from UserSecurity where PassportId = @Id;
     </sqlWrap>
     <sqlWrap sqlName="SelectWithAdminPage" supportDBType="SqlServer, MySql">
-      select PassportId, UserName, Email, Mobile, PassportStatus, CreatedTime,LastModifiedTime, RoleId
-      from (select up.PassportId, up.UserName, up.Email, up.Mobile,up.PassportStatus,up.RoleId,up.CreatedTime,up.LastModifiedTime,r.RoleType
+      select PassportId, UserName, Email, Mobile, PassportStatus, CreatedTime,LastModifiedTime, RoleId,RoleName
+      from (select up.PassportId, up.UserName, up.Email, up.Mobile,up.PassportStatus,up.RoleId,up.CreatedTime,up.LastModifiedTime,r.Name as RoleName
       from UserPassport up  INNER JOIN Role r ON up.RoleId = r.RoleId ) _TTT
       where RoleType=1 and (Mobile like @Keyword or UserName like @Keyword or Email like @Keyword) and (PassportId not in(@ExceptIds))
       order by PassportId asc
-    </sqlWrap>
-    <!--<sqlWrap sqlName="SelectWithAdminPage" supportDBType="SqlServer, MySql">
-      select PassportId, UserName, Email, Mobile, PassportStatus, CreatedTime,LastModifiedTime, RoleId,RoleName
-      from (select  up.PassportId, up.UserName, up.Email, up.Mobile,up.PassportStatus, up.CreatedTime,up.LastModifiedTime,r.RoleId, r.RoleType,r.Name as RoleName
-      from UserPassport up  INNER JOIN UserRole ur ON ur.PassportId = up.PassportId  INNER JOIN Role r ON r.RoleId = ur.RoleId) _TTT
-      where RoleType=1 and (Mobile like @Keyword or UserName like @Keyword or Email like @Keyword) and (PassportId not in(@ExceptIds))
-      order by PassportId asc
-    </sqlWrap>-->
+    </sqlWrap>    
     <sqlWrap sqlName="SelectByKeyword" supportDBType="SqlServer, MySql">
       select  *  from UserPassport where (Mobile = @Keyword or UserName = @Keyword or Email = @Keyword) order by PassportId desc
     </sqlWrap>    

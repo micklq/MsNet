@@ -8,12 +8,10 @@
 <div style=" margin:0 auto; height:150px; text-align:center;">
     <br /><br />
     <h2 style=" color:#f00;">
-        抱歉，您的请求出错，5秒钟后将自动跳转到网站首页。
+        抱歉，您的请求出错，@(second)秒钟后将自动跳转到网站首页。
     </h2>
 </div>
 <script type="text/javascript">
-
-
         var returnUrl = '@returnUrl';
         var second = @(second);
         var t = { tick: 0, timer: null };
