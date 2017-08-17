@@ -2,7 +2,7 @@
 using M2SA.AppGenome;
 using M2SA.AppGenome.Data;
 using M2SA.AppGenome.Reflection;
-namespace MSNet.Common.Data
+namespace MSNet.Common
 {
     /// <summary>
     /// 

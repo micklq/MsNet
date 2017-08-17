@@ -8,8 +8,9 @@ using M2SA.AppGenome.Reflection;
 using M2SA.AppGenome.Data;
 using M2SA.AppGenome;
 using System.Text.RegularExpressions;
-using MSNet.Common.Articles;
+using MSNet.Common.DataRepositories;
 using MSNet.Common.Web;
+using MSNet.Common;
 using MSNet.Common.Util;
 namespace MSNet.Tests
 {

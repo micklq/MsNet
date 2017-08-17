@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MSNet.Common.Passports.DataRepositories
+namespace MSNet.Common.DataRepositories
 {
     /// <summary>
     /// 

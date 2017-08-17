@@ -8,7 +8,7 @@ using M2SA.AppGenome.Reflection;
 using M2SA.AppGenome.Data;
 using M2SA.AppGenome;
 using System.Text.RegularExpressions;
-using MSNet.Common.Passports;
+using MSNet.Common;
 using MSNet.Common.Web;
 namespace MSNet.Tests
 {
@@ -33,9 +33,7 @@ namespace MSNet.Tests
             var list =  PermissionMenu.FindWithAll();
             //long id = 0;
             foreach(var o in list){
-            //    if(id==0){
-            //      id = o.PermissionId;
-            //    }
+           
              Console.WriteLine("all==>>"+o.PermissionId + ":"+o.Name +":" + o.ParentId);
             }
             //FindById

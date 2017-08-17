@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using M2SA.AppGenome;
 
-namespace MSNet.Common.Passports.Security
+namespace MSNet.Common.Security
 {
     class BCryptSecurityStrategy : IPassportSecurityStrategy
     {

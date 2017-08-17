@@ -2,7 +2,7 @@
 using M2SA.AppGenome.Data;
 using M2SA.AppGenome.Reflection;
 using MSNet.Common;
-namespace MSNet.Common.Passports.DataRepositories
+namespace MSNet.Common.DataRepositories
 {
     /// <summary>
     /// 

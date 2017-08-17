@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
-using MSNet.Common.Passports.Security;
+using MSNet.Common.Security;
 using M2SA.AppGenome;
 using M2SA.AppGenome.Data;
-using MSNet.Common.Passports.DataRepositories;
+using MSNet.Common.DataRepositories;
 using System.Data.SqlClient;
 
 
-namespace MSNet.Common.Passports
+namespace MSNet.Common
 {
     /// <summary>
     /// 

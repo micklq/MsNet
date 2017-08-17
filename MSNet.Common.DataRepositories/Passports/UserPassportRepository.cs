@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using M2SA.AppGenome;
 using M2SA.AppGenome.Data;
 using M2SA.AppGenome.Reflection;
-using MSNet.Common.Passports;
-namespace MSNet.Common.Passports.DataRepositories
+using MSNet.Common.Security;
+namespace MSNet.Common.DataRepositories
 {
     /// <summary>
     /// 

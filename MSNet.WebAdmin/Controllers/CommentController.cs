@@ -9,7 +9,7 @@ using M2SA.AppGenome.Data;
 using MSNet.Common;
 using MSNet.Common.Web;
 using MSNet.Common.Util;
-using MSNet.Common.Articles;
+using MSNet.Common.DataRepositories;
 
 namespace MSNet.WebAdmin.Controllers
 {

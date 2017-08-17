@@ -8,7 +8,7 @@ using M2SA.AppGenome.Data;
 using M2SA.AppGenome.Data.SqlMap;
 using M2SA.AppGenome.Reflection;
 
-namespace MSNet.Common.BaseCategory
+namespace MSNet.Common
 {
     /// <summary>
     /// 

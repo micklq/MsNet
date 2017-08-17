@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using MSNet.Common;
 using MSNet.Common.Util;
 using MSNet.Common.Web;
-using MSNet.Common.Passports;
+using MSNet.Common;
 namespace MSNet.WebApp.Controllers
 {
     public class AuthController : Controller
@@ -76,8 +76,8 @@ namespace MSNet.WebApp.Controllers
             SignInUser uSign = new SignInUser { 
                 PassportId = uPassport.PassportId, 
                 UserName = uPassport.UserName,
-                uRole = uPassport.Role,
-                uPermissions = (uPassport.RolePermissions != null) ? uPassport.RolePermissions : null 
+                Role = uPassport.Role,
+                RolePermission = (uPassport.RolePermissions != null) ? uPassport.RolePermissions : null 
             };
             UserAuthentication.SignIn(uSign);
 

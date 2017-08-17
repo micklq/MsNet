@@ -29,9 +29,7 @@
       select * from UserSecurity where PassportId = @Id;
     </sqlWrap>
     <sqlWrap sqlName="SelectWithAdminPage" supportDBType="SqlServer, MySql">
-      select PassportId, UserName, Email, Mobile, PassportStatus, CreatedTime,LastModifiedTime, RoleId,RoleName
-      from (select up.PassportId, up.UserName, up.Email, up.Mobile,up.PassportStatus,up.RoleId,up.RoleType,up.CreatedTime,up.LastModifiedTime,r.Name as RoleName
-      from UserPassport up  left join Role r on upRoleId = r.RoleId ) _TTT
+      select * from UserPassport 
       where RoleType=1 and (PassportStatus not in(999))
       and (PassportId not in(@ExceptIds))
       and (Mobile like @Keyword or UserName like @Keyword or Email like @Keyword)

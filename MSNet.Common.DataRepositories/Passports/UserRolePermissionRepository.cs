@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using M2SA.AppGenome.Data.SqlMap;
 
-namespace MSNet.Common.Passports.DataRepositories
+namespace MSNet.Common.DataRepositories
 {
     /// <summary>
     /// 

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using M2SA.AppGenome;
 using M2SA.AppGenome.Data;
-using MSNet.Common.Passports.DataRepositories;
-namespace MSNet.Common.Passports
+using MSNet.Common.DataRepositories;
+namespace MSNet.Common
 {
     /// <summary>
     /// RolePermission

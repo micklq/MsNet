@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MSNet.Common.Util;
-using MSNet.Common.Passports;
+using MSNet.Common.Security;
 namespace MSNet.Common.Web
 {
     public class BaseController : Controller

@@ -8,7 +8,7 @@ using M2SA.AppGenome.Data;
 using MSNet.Common.Util;
 using MSNet.Common.Web;
 using MSNet.Common.Web.Pager;
-using MSNet.Common.Passports;
+using MSNet.Common;
 
 namespace MSNet.WebApp.Controllers
 {

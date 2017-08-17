@@ -1,9 +1,9 @@
 ﻿using System;
 using M2SA.AppGenome;
 using M2SA.AppGenome.Data;
-using MSNet.Common.Passports.DataRepositories;
+using MSNet.Common.DataRepositories;
 
-namespace MSNet.Common.Passports
+namespace MSNet.Common
 {
     /// <summary>
     /// 

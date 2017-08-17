@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MSNet.Common.Passports.Security
+namespace MSNet.Common.Security
 {
     /// <summary>
     /// 

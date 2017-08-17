@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using M2SA.AppGenome.Reflection;
-using MSNet.Common.Passports.Security;
+using MSNet.Common.Security;
 
 
 namespace MSNet.Common

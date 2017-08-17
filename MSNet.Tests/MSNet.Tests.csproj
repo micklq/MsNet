@@ -74,6 +74,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MSNet.Common.DataRepositories\MSNet.Common.DataRepositories.csproj">
+      <Project>{ed77bc60-25db-4aa6-943f-0ea1b5d1eece}</Project>
+      <Name>MSNet.Common.DataRepositories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MSNet.Common\MSNet.Common.csproj">
       <Project>{2bd2de63-afbc-4b8d-b469-b9337bd4b3ee}</Project>
       <Name>MSNet.Common</Name>

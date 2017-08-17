@@ -8,7 +8,7 @@ using M2SA.AppGenome.Reflection;
 using M2SA.AppGenome.Data;
 using M2SA.AppGenome;
 using System.Text.RegularExpressions;
-using MSNet.Common.Passports;
+using MSNet.Common;
 using MSNet.Common.Web;
 using MSNet.Common.Util;
 namespace MSNet.Tests

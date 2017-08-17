@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using M2SA.AppGenome.Data;
 
-namespace MSNet.Common.Articles.DataRepositories
+namespace MSNet.Common.DataRepositories
 {
     public interface IArticlesRepository : IRepository<Articles, long>
     {

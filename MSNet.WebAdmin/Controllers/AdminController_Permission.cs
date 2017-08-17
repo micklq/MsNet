@@ -9,10 +9,10 @@ using M2SA.AppGenome.Data;
 using MSNet.Common.Web;
 using MSNet.Common.Util;
 using MSNet.Common.Web.Pager;
-using MSNet.Common.Passports;
+using MSNet.Common;
 namespace MSNet.WebAdmin.Controllers
 {
-    public partial class AdminController : AuthBaseController
+    public partial class AdminController : Controller
     {       
 
         public ActionResult Permissions()

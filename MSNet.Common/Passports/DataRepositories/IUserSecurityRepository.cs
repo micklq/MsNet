@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using M2SA.AppGenome.Data;
 
-namespace MSNet.Common.Passports.DataRepositories
+namespace MSNet.Common.DataRepositories
 {
     /// <summary>
     /// 

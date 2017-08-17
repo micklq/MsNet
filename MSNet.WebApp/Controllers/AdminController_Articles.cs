@@ -7,8 +7,9 @@ using M2SA.AppGenome;
 using M2SA.AppGenome.Data;
 using MSNet.Common.Util;
 using MSNet.Common.Web;
+using MSNet.Common;
 using MSNet.Common.Web.Pager;
-using MSNet.Common.Articles;
+using MSNet.Common.DataRepositories;
 namespace MSNet.WebApp.Controllers
 {
     public partial class AdminController : AuthBaseController

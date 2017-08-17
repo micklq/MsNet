@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using MSNet.Common.Util;
 
-namespace MSNet.Common.Passports
+namespace MSNet.Common
 {
     /// <summary>
     /// 

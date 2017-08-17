@@ -8,11 +8,11 @@ using M2SA.AppGenome;
 using M2SA.AppGenome.Data;
 using MSNet.Common.Web;
 using MSNet.Common.Util;
-using MSNet.Common.Passports.DataRepositories;
-using MSNet.Common.Passports.Security;
+using MSNet.Common.DataRepositories;
+using MSNet.Common.Security;
 
 
-namespace MSNet.Common.Passports
+namespace MSNet.Common
 {
     /// <summary>
     /// 

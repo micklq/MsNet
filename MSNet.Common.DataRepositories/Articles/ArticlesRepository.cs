@@ -2,7 +2,7 @@ using M2SA.AppGenome.Data;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MSNet.Common.Articles.DataRepositories
+namespace MSNet.Common.DataRepositories
 {
     /// <summary>
     /// 

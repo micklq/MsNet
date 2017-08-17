@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MSNet.Common.Passports.Security
+namespace MSNet.Common.Security
 {
     /// <summary>
     /// 

@@ -5,7 +5,7 @@ using System.Text;
 using M2SA.AppGenome;
 using M2SA.AppGenome.Data;
 
-namespace MSNet.Common.BaseCategory
+namespace MSNet.Common
 {
     /// <summary>
     /// Permission
