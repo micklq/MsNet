@@ -18,7 +18,7 @@ namespace MSNet.WebApp.Controllers
 
         public ActionResult PermissionList()
         {               
-            ViewData["PermissionList"] = Permission.FindWithAll(); 
+            ViewData["PermissionList"] = PermissionMenu.FindWithAll(); 
             return View();
         }
 
@@ -27,13 +27,13 @@ namespace MSNet.WebApp.Controllers
         {
             long id = Request["id"].ToLong(); 
            
-            ViewData["Permission"] = Permission.FindById(id); ;
+            ViewData["Permission"] = PermissionMenu.FindById(id); ;
 
             return View();
         }
 
         [HttpPost]
-        public ActionResult PermissionAction(Permission model)
+        public ActionResult PermissionAction(PermissionMenu model)
         {
 
             if (model.Name.IsNullOrEmpty())

@@ -35,12 +35,6 @@ namespace MSNet.Common.Passports.DataRepositories
         /// <param name="passportId"></param>
         /// <returns></returns>
         UserPassport FindUserSecurityById(long passportId);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="passport"></param>
-        bool ClearRole(long roleId);
     
     }
 }

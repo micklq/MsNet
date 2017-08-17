@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using M2SA.AppGenome;
+using M2SA.AppGenome.Data;
+
+using MSNet.Common;
+using MSNet.Common.Web;
+using MSNet.Common.Util;
 
 namespace MSNet.WebAdmin.Controllers
 {
-    public class ChartsController : Controller
+    public class ChartsController : AuthBaseController
     {
         //
         // GET: /Charts/

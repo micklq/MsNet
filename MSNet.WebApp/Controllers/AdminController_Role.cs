@@ -19,26 +19,26 @@ namespace MSNet.WebApp.Controllers
 
         public ActionResult RoleList()
         {   
-            ViewData["RoleList"] = Role.FindWithAll(); 
+            ViewData["RoleList"] = UserRole.FindWithAll(); 
             return View();
         }
 
         public ActionResult RoleView()
         {
             long id = Request["id"].ToLong();          
-            ViewData["Role"] = Role.FindById(id); 
-            ViewData["RolePermission"] =  RolePermission.FindByRoleId(id);  
-            ViewData["Permission"] = Permission.FindWithAll();
+            ViewData["Role"] = UserRole.FindById(id); 
+            ViewData["RolePermission"] =  UserRolePermission.FindByRoleId(id);  
+            ViewData["Permission"] = PermissionMenu.FindWithAll();
                 
             return View();
             
         }
        
         [HttpPost]
-        public ActionResult RoleAction(Role model)
+        public ActionResult RoleAction(UserRole model)
         {
 
-            var rolePermissions = model.PermissionLevel.Trim(',').Split(',').ToList();
+            var rolePermissions = model.PermissionValues.Trim(',').Split(',').ToList();
             if (model.Name.IsNullOrEmpty())
             {
                 return Json(new

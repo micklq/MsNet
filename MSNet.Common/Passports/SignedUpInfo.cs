@@ -25,11 +25,7 @@ namespace MSNet.Common.Passports
         /// 
         /// </summary>
         public string SignedUpIp { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string UtmSource { get; set; }
+       
         
         /// <summary>
         /// 
@@ -44,12 +40,18 @@ namespace MSNet.Common.Passports
         /// <summary>
         /// 
         /// </summary>
-        public string InviteCode { get; set; }
+        public string RefererDomain { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string RefererDomain { get; set; }
+        public string UtmSource { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string InviteCode { get; set; }
+
+       
 
         #region Persist Methods
 
@@ -61,16 +63,6 @@ namespace MSNet.Common.Passports
         {
             var repository = RepositoryManager.GetRepository<ISignedUpInfoRepository>(ModuleEnvironment.ModuleName);
             return repository.Save(this);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        internal bool Delete()
-        {
-            var repository = RepositoryManager.GetRepository<ISignedUpInfoRepository>(ModuleEnvironment.ModuleName);
-            return repository.Remove(this);
         }
 
         #endregion //Persist Methods

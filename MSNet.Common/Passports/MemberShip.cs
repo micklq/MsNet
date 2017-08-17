@@ -22,7 +22,7 @@ namespace MSNet.Common.Passports
         #region  用户注册
 
         /// <summary>
-        /// 
+        /// 普通用户注册
         /// </summary>
         /// <param name="email"></param>
         /// <param name="userName"></param>
@@ -30,90 +30,70 @@ namespace MSNet.Common.Passports
         /// <param name="signedUpInfo"></param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes" )]
-        public static UserPassport SignUp(string userName, string password, SignedUpInfo signedUpInfo)
-        {
-            var status = SignUpStatus.Error;
-            var passport = SignUp(null, userName, password, 0, signedUpInfo, out status);
-
-            if ( null == passport )
-                throw new Exception( status.ToString() );
-
-            return passport;
+        public static UserPassport SignUp(string mobile, string password, SignedUpInfo signedUpInfo, out SignUpStatus status)
+        {                   
+             return SignUp(mobile, password, UserRoleType.Registered, 0, signedUpInfo, out status);           
         }
-
-        public static UserPassport SignUp(string userName, string password, long roleId, SignedUpInfo signedUpInfo)
+        /// <summary>
+        /// 普通用户 老师 学生注册
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <param name="password"></param>
+        /// <param name="roleType"></param>
+        /// <param name="roleId"></param>
+        /// <param name="signedUpInfo"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public static UserPassport SignUp(string mobile, string password, UserRoleType roleType, long roleId, SignedUpInfo signedUpInfo, out SignUpStatus status)
         {
-            var status = SignUpStatus.Error;
-            var passport = SignUp(null, userName, password, roleId, signedUpInfo, out status);
+            status = SignUpStatus.None;
+            //status = CheckPassword(password); //核对密码强度 
+            //if (status != SignUpStatus.None) return null;
+
+            status = CheckMobile(mobile); //核对手机是否已注册
+            if (status != SignUpStatus.None) return null;
+
+            var passport = SignUp(mobile, password, mobile, null, roleType, roleId, signedUpInfo, out status);
 
             if (null == passport)
                 throw new Exception(status.ToString());
 
             return passport;
         }
+        
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>     
-        /// <param name="signedUpInfo"></param>
-        /// <param name="status"></param>
-        /// <returns></returns>
-        public static UserPassport SignUp(string email, string userName, string password, long roleId, SignedUpInfo signedUpInfo, out SignUpStatus status)
-        { 
-            //status = CheckPassword(password); //核对密码强度 
-            //if (status != SignUpStatus.None) return null;
-
-            return SignUp(email, null, userName, password, roleId, signedUpInfo, out status);
-        }
-
-        private static UserPassport SignUp(string email, string mobilePhone, string userName, string password, long roleId, SignedUpInfo signedUpInfo, out SignUpStatus status)
+        private static UserPassport SignUp(string userName, string password, string mobile, string email, UserRoleType roleType, long roleId, SignedUpInfo signedUpInfo, out SignUpStatus status)
         {
+            status = SignUpStatus.None;
             status = CheckUserName(userName);
-            if (status != SignUpStatus.None)
-                return null;
-
-            status = CheckEmail(email); //核对邮箱是否已注册
-            if (status != SignUpStatus.None) return null;    
-
-            status = CheckMobile(mobilePhone); //核对手机是否已注册
             if (status != SignUpStatus.None) return null;
+            //status = CheckEmail(email); //核对邮箱是否已注册
+            //if (status != SignUpStatus.None) return null;             
 
             var userPassport = new UserPassport() {
                 UserSecurity = new UserSecurity(),
                 Profile = new UserProfile()
             };
-            userPassport.Email = email;
             userPassport.UserName = userName;
-            userPassport.Mobile = mobilePhone;
+            userPassport.Mobile = mobile;
+            userPassport.Email = email;
+            userPassport.RoleType = roleType;
             userPassport.RoleId = roleId;
             userPassport.UserSecurity.Password = password;
             userPassport.Profile.NickName = userName;           
-            userPassport.Profile.Mobile = mobilePhone;
+            userPassport.Profile.Mobile = mobile;
             userPassport.Profile.CreatedTime = userPassport.CreatedTime;           
 
             status = SignUpStatus.Error;
-            if ( userPassport.SignUp( signedUpInfo ) )
+            if (userPassport.SignUp(signedUpInfo)){
                 status = SignUpStatus.Success;
+            }               
             return userPassport;
         }
 
         #endregion
         
-        #region  用户登录
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userKey"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public static bool SignIn( string userKey, string password )
-        {
-            UserPassport userPassport = null;
-            return SignIn( userKey, password, out userPassport );
-        }
+        #region  用户登录    
 
         /// <summary>
         /// 
@@ -122,13 +102,13 @@ namespace MSNet.Common.Passports
         /// <param name="password"></param>
         /// <param name="userPassport"></param>
         /// <returns></returns>
-        public static bool SignIn( string userKey, string password, out UserPassport userPassport )
+        public static bool SignIn(string userKey, string password, out UserPassport userPassport, out SignUpStatus status)
         {
-            ArgumentAssertion.IsNotNull( userKey, "userKey" );
+            ArgumentAssertion.IsNotNull(userKey, "userKey");
             ArgumentAssertion.IsNotNull( password, "password" );
 
             long passportId = 0;
-            if ( userKey.IsMatchEMail() )
+            if (userKey.IsMatchEMail())
             {
                 passportId = UserPassport.FindPassportIdByEmail(userKey);
             }
@@ -138,14 +118,25 @@ namespace MSNet.Common.Passports
             }
             else
             {
-                passportId = UserPassport.FindPassportIdByUserName( userKey );
+                passportId = UserPassport.FindPassportIdByUserName(userKey);
             }
 
             userPassport = null;
+            status = SignUpStatus.None;
             var result = false;
             if ( passportId > 0 )
             {
                 var passport = UserPassport.FindUserSecurityById( passportId );
+                //判断状态 
+                if (passport.PassportStatus == PassportStatus.Cancellation) {
+                    status = SignUpStatus.UserCancellation;
+                    return false;
+                }
+                if (passport.PassportStatus == PassportStatus.Hibernation)
+                {
+                    status = SignUpStatus.UserHibernation;
+                    return false;
+                }
                 result = PassportSecurityProvider.Verify( password, passport );
                 if (result)
                 {
@@ -153,14 +144,20 @@ namespace MSNet.Common.Passports
                 }
                 else
                 {
+                    if (passport.PassportStatus == PassportStatus.Locked)
+                    {
+                        status = SignUpStatus.UserLocked;
+                        return false;
+                    }
+
                     passport.UserSecurity.FailedPasswordAttemptCount++;                     
                     if (passport.UserSecurity.FailedPasswordAttemptCount > 5)
                     {
                         Lock(passport);                         
                     }                    
                 }
-                userPassport = passport;         
-               
+                userPassport = passport;  
+
             }
             return result;
         }
@@ -171,28 +168,21 @@ namespace MSNet.Common.Passports
         #region  用户锁定
         public static bool UnLock(UserPassport userPassport)
         {
-            var result = true;
-            if (userPassport.PassportId > 0 && userPassport.UserSecurity!=null )
-            {
-               userPassport.UserSecurity.UnLock();
-               userPassport.PassportStatus = PassportStatus.Standard;                
-               result= result && userPassport.Save();
-               result = result && userPassport.UserSecurity.Save(); 
-            }
-            return result;
+            if (userPassport.PassportId < 1 || userPassport.UserSecurity == null) return false;            
+            
+            userPassport.UserSecurity.UnLock();
+            userPassport.PassportStatus = PassportStatus.Standard;                
+            return userPassport.Save()&& userPassport.UserSecurity.Save();              
         }
 
         public static bool Lock(UserPassport userPassport)
         {
-            var result = true;
-            if (userPassport.PassportId > 0 && userPassport.UserSecurity != null)
-            {
-                userPassport.PassportStatus = PassportStatus.Locked;
-                userPassport.UserSecurity.IsLocked = true;              
-                result = result && userPassport.Save();
-                result = result && userPassport.UserSecurity.Save(); 
-            }
-            return result;
+           if(userPassport.PassportId <1 || userPassport.UserSecurity == null) return false;
+           
+            userPassport.PassportStatus = PassportStatus.Locked;
+            userPassport.UserSecurity.IsLocked = true;
+            return userPassport.Save() && userPassport.UserSecurity.Save();   
+            
         }
 
         #endregion
@@ -212,27 +202,13 @@ namespace MSNet.Common.Passports
         /// <param name="status"></param>
         /// <returns></returns>
         public static bool Add(UserPassport passport, SignedUpInfo signedUpInfo, out SignUpStatus status)
-        {
-            var result = false;
-            UserPassport user = SignUp(passport.Email, passport.Mobile, passport.UserName, passport.Password, passport.RoleId, signedUpInfo, out status);
-            if (status != SignUpStatus.None || status != SignUpStatus.Success)
-            {
-                return result;
-            }
-            user = UserPassport.FindUserSecurityById(user.PassportId);
+        {  
+            UserPassport user = SignUp(passport.UserName, passport.Password, passport.Mobile, passport.Email, passport.RoleType, passport.RoleId, signedUpInfo, out status);
             if (user == null)
             {
-                return result;
-            }
-            if (passport.PassportStatus == PassportStatus.Locked)
-            {
-                result = Lock(user);
-            }
-            if (passport.PassportStatus == PassportStatus.Standard)
-            {
-                result = UnLock(user);
+                return false;
             }           
-            return result;
+            return true;
         }
 
         /// <summary>
@@ -251,29 +227,37 @@ namespace MSNet.Common.Passports
             {               
                 return false;
             }
-            user.Email = passport.Email;
-            user.Mobile = passport.Mobile;
-            user.UserName = passport.UserName;
-            user.RoleId = passport.RoleId;
-            user.PassportStatus = passport.PassportStatus;
-            if (user.UserName.IsNullOrEmpty())
+            if (!passport.Mobile.IsNullOrEmpty()&&passport.Mobile != user.Mobile)
             {
-                user.Profile.NickName = passport.UserName;
+                user.Mobile = passport.Mobile;
             }
-            if (user.Mobile.IsNullOrEmpty())
+            if (!passport.Email.IsNullOrEmpty() && passport.Email != user.Email)
             {
-                user.Profile.Mobile = passport.Mobile;
+                user.Email = passport.Email; 
             }
-            result = result && user.Save();
-            result = result && user.Profile.Save();
-            if (user.PassportStatus == PassportStatus.Locked)
+            if (passport.RoleId != user.RoleId)
             {
-                result = result && Lock(user);
+                user.RoleId = passport.RoleId;
             }
-            if (user.PassportStatus == PassportStatus.Standard)
+            if (!user.Mobile.IsNullOrEmpty() && user.Mobile != user.Profile.Mobile)
             {
-                result = result && UnLock(user);
+                user.Profile.Mobile = user.Mobile;
             }
+            result = user.Profile.Save(); //更新profile 
+            if (passport.PassportStatus != user.PassportStatus)
+            {
+                if (passport.PassportStatus == PassportStatus.Locked)
+                {
+                    result = Lock(user);
+                }
+                if (passport.PassportStatus == PassportStatus.Standard)
+                {
+                    result = UnLock(user);
+                }
+                user.PassportStatus = passport.PassportStatus;
+            }            
+            result = user.Save();    
+
             return result;
         }
 
@@ -284,7 +268,7 @@ namespace MSNet.Common.Passports
         /// <param name="oPassword">旧密码</param>
         /// <param name="nPasspword">新密码</param>
         /// <returns></returns>
-        public static bool ChangePassword(long passportId, string oPassword, string nPasspword)
+        public static bool ModifyPassword(long passportId, string oPassword, string nPasspword)
         {
             var result = false;
             if (passportId > 0)
@@ -293,7 +277,7 @@ namespace MSNet.Common.Passports
                 if (passport == null) {
                     return false;
                 }
-                result = PassportSecurityProvider.Verify(oPassword, passport);
+                result = passport.CheckPassword(oPassword);                
                 if (result)
                 {
                     result = passport.ChangePassword(nPasspword);
@@ -306,7 +290,7 @@ namespace MSNet.Common.Passports
 
         #region  Check
 
-        private static SignUpStatus CheckPassword(string password)
+        private static SignUpStatus CheckPasswordStrength(string password)
         {
             ArgumentAssertion.IsNotNull(password, "password");
 
@@ -345,7 +329,7 @@ namespace MSNet.Common.Passports
             else
             {
                 //Todo: FindUserIdByMonilePhone
-                var passportId = UserPassport.FindPassportIdByEmail( mobile );
+                var passportId = UserPassport.FindPassportIdByMobile( mobile );
                 if ( passportId > 0 )
                     signUpStatus = SignUpStatus.DuplicateMobilePhone;
             }
@@ -355,18 +339,18 @@ namespace MSNet.Common.Passports
 
         public static SignUpStatus CheckUserName( string userName )
         {
-            var signUpStatus = SignUpStatus.None;
+            var signUpStatus = SignUpStatus.Error;
 
             if ( string.IsNullOrEmpty( userName ) )
                 return signUpStatus;
 
             var pat = ModuleEnvironment.UserNamePattern;
 
-            if ( HttpContext.Current != null && HttpContext.Current.Items.Contains( "UserNamePattern" ) )
-                pat = HttpContext.Current.Items["UserNamePattern"] as string;
+            //if ( HttpContext.Current != null && HttpContext.Current.Items.Contains( "UserNamePattern" ) )
+            //    pat = HttpContext.Current.Items["UserNamePattern"] as string;
 
-            if ( string.IsNullOrEmpty(pat) )
-                pat = ModuleEnvironment.UserNamePattern;
+            //if ( string.IsNullOrEmpty(pat) )
+            //    pat = ModuleEnvironment.UserNamePattern;
 
             if ( false == Regex.IsMatch( userName, pat ) )
                 signUpStatus = SignUpStatus.InvalidUserName;

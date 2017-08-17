@@ -95,37 +95,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Articles\ArticlesCategory.cs" />
-    <Compile Include="Articles\DataRepositories\ArticlesRepository.cs" />
     <Compile Include="Articles\DataRepositories\IArticlesCategoryRepository.cs" />
-    <Compile Include="Articles\DataRepositories\ArticleCategoryRepository.cs" />
     <Compile Include="Articles\Articles.cs" />
     <Compile Include="Articles\DataRepositories\IArticlesRepository.cs" />
-    <Compile Include="Data\IBaseCategoryRepository.cs" />
-    <Compile Include="Data\BaseCategoryRepository.cs" />
-    <Compile Include="Data\BaseRepositoryFactory.cs" />
+    <Compile Include="BaseCategory\BaseCategoryRepository.cs" />
+    <Compile Include="RepositoryFactory.cs" />
+    <Compile Include="BaseCategory\IBaseCategoryRepository.cs" />
     <Compile Include="ModuleEnvironment.cs" />
-    <Compile Include="Passports\DataRepositories\IPermissionRepository.cs" />
-    <Compile Include="Passports\DataRepositories\IRolePermissionRepository.cs" />
-    <Compile Include="Passports\DataRepositories\IRoleRepository.cs" />
+    <Compile Include="Passports\DataRepositories\IPermissionMenuRepository.cs" />
+    <Compile Include="Passports\DataRepositories\IUserRolePermissionRepository.cs" />
+    <Compile Include="Passports\DataRepositories\IUserRoleRepository.cs" />
     <Compile Include="Passports\DataRepositories\ISignedUpInfoRepository.cs" />
     <Compile Include="Passports\DataRepositories\IUserPassportRepository.cs" />
     <Compile Include="Passports\DataRepositories\IUserProfileRepository.cs" />
     <Compile Include="Passports\DataRepositories\IUserSecurityRepository.cs" />
-    <Compile Include="Passports\DataRepositories\PermissionRepository.cs" />
-    <Compile Include="Passports\DataRepositories\RolePermissionRepository.cs" />
-    <Compile Include="Passports\DataRepositories\RoleRepository.cs" />
-    <Compile Include="Passports\DataRepositories\SignedUpInfoRepository.cs" />
-    <Compile Include="Passports\DataRepositories\UserPassportRepository.cs" />
-    <Compile Include="Passports\DataRepositories\UserProfileRepository.cs" />
-    <Compile Include="Passports\DataRepositories\UserSecurityRepository.cs" />
     <Compile Include="Passports\MemberShip.cs" />
     <Compile Include="Passports\PassportStatus.cs" />
-    <Compile Include="Data\BaseCategory.cs" />
-    <Compile Include="Passports\Permission.cs" />
-    <Compile Include="Passports\PermissionType.cs" />
-    <Compile Include="Passports\RoleType.cs" />
-    <Compile Include="Passports\Role.cs" />
-    <Compile Include="Passports\RolePermission.cs" />
+    <Compile Include="BaseCategory\BaseCategory.cs" />
+    <Compile Include="Passports\PermissionMenu.cs" />
+    <Compile Include="Passports\PermissionValue.cs" />
+    <Compile Include="Passports\UserRoleType.cs" />
+    <Compile Include="Passports\UserRole.cs" />
+    <Compile Include="Passports\UserRolePermission.cs" />
     <Compile Include="Passports\SignedUpInfo.cs" />
     <Compile Include="Passports\SignUpStatus.cs" />
     <Compile Include="Passports\UserPassport.cs" />
@@ -168,39 +159,6 @@
     <Compile Include="Web\UserAuthentication.cs" />
     <Compile Include="Web\SignInUser.cs" />
     <Compile Include="Web\VerifyCodeHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="sqlmap\articles\ArticlesCategoryRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlmap\articles\ArticlesRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlmap\passports\PermissionRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlmap\passports\RolePermissionRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlmap\passports\RoleRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlmap\passports\SignedUpInfoRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlmap\passports\UserPassportRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlmap\passports\UserProfileRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="sqlmap\passports\UserRoleRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlmap\passports\UserSecurityRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

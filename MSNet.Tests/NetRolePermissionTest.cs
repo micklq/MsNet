@@ -30,7 +30,7 @@ namespace MSNet.Tests
             //    }
             //}
             //FindWithAll
-            var list =  Permission.FindWithAll();
+            var list =  PermissionMenu.FindWithAll();
             //long id = 0;
             foreach(var o in list){
             //    if(id==0){
@@ -81,8 +81,8 @@ namespace MSNet.Tests
             //    Assert.IsTrue(result);
             //}            
             //角色权限
-            IList<Permission> permissions = Permission.FindWithAll();
-            IList<Role> roles = Role.FindWithAll();
+            IList<PermissionMenu> permissions = PermissionMenu.FindWithAll();
+            IList<UserRole> roles = UserRole.FindWithAll();
             //if (permissions != null && permissions.Count > 0 && roles != null && roles.Count > 0)
             //{
             //    foreach (var o in permissions)
@@ -109,15 +109,15 @@ namespace MSNet.Tests
         [Test]
         public void RoleDelTest()
         {
-            new Role() { RoleId=2 }.Remove();           
+            new UserRole() { RoleId=2 }.Remove();           
         }
 
         [Test]
         public void PermissionDelTest()
         {
-            if (Permission.ExistChildCategory(11) == 0)
+            if (PermissionMenu.ExistChildCategory(11) == 0)
             {
-                new Permission() { PermissionId = 11 }.Remove();
+                new PermissionMenu() { PermissionId = 11 }.Remove();
             }
             else {
                 Console.WriteLine("exist Child node");

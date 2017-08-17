@@ -45,7 +45,10 @@ namespace MSNet.Tests
         [Test]
         public void SignUpTest()
         {
-            var result = MemberShip.SignUp("admin1", "123456",0, new SignedUpInfo() { SignedUpTime = DateTime.Now, SignedUpIp = "127.0.0.1", HttpUserAgent = "nunit.framework.test" });
+            
+            SignedUpInfo signedUpInfo=new SignedUpInfo() { SignedUpTime = DateTime.Now, SignedUpIp = "127.0.0.1", HttpUserAgent = "nunit.framework.test" };
+            SignUpStatus status = SignUpStatus.None;
+            var result = MemberShip.SignUp("admin1", "123456",signedUpInfo,out status);
             Assert.IsNotNull(result);            
         }
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+	<module moduleName="UserRoleRepository" dbName="MSNet.MySql">
+    <sqlWrap  sqlName="Insert"  supportDBType="MySql,SqlServer">
+      insert into UserRole(Name,Description,CreatedTime, LastModifiedTime)
+      values(@Name,@Description,@CreatedTime,@LastModifiedTime);
+      select @@identity
+    </sqlWrap>
+    <sqlWrap sqlName="Update" supportDBType="SqlServer, MySql">
+      update UserRole set Name=@Name,Description=@Description,LastModifiedTime=@LastModifiedTime where RoleId = @Id
+    </sqlWrap>
+    <sqlWrap  sqlName="DeleteById"  supportDBType="MySql,SqlServer">
+      update UserPassport set RoleId=0  where RoleId = @Id;
+      delete from UserRolePermission where RoleId = @Id;
+      delete from UserRole where RoleId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectById"  supportDBType="MySql,SqlServer">
+      select *  from UserRole  where RoleId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectAll"  supportDBType="MySql,SqlServer">
+      select *  from UserRole;
+    </sqlWrap>
+  </module>
+</root>
+

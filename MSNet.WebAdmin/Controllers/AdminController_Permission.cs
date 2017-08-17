@@ -12,25 +12,25 @@ using MSNet.Common.Web.Pager;
 using MSNet.Common.Passports;
 namespace MSNet.WebAdmin.Controllers
 {
-    public partial class AdminController : Controller //AuthBaseController
+    public partial class AdminController : AuthBaseController
     {       
 
         public ActionResult Permissions()
         {
-            ViewData["Permissions"] = Permission.FindWithAll(); 
+            ViewData["Permissions"] = PermissionMenu.FindWithAll(); 
             return View();
         }
 
         public ActionResult PermissionView()
         {
             long id = Request["id"].ToLong();
-            ViewData["PermissionRoot"] = Permission.FindRoot(); 
-            ViewData["Permission"] = Permission.FindById(id);            
+            ViewData["PermissionRoot"] = PermissionMenu.FindRoot(); 
+            ViewData["Permission"] = PermissionMenu.FindById(id);            
             return View();
         }
 
         [HttpPost]
-        public ActionResult PermissionAction(Permission model)
+        public ActionResult PermissionAction(PermissionMenu model)
         {
 
             if (model.Name.IsNullOrEmpty())

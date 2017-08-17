@@ -13,7 +13,7 @@ using MSNet.Common.Articles;
 
 namespace MSNet.WebAdmin.Controllers
 {
-    public class ProductsController : Controller
+    public class ProductsController : AuthBaseController
     {
 
 

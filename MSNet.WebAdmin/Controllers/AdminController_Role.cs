@@ -12,25 +12,25 @@ using MSNet.Common.Web.Pager;
 using MSNet.Common.Passports;
 namespace MSNet.WebAdmin.Controllers
 {
-    public partial class AdminController : Controller //AuthBaseController
+    public partial class AdminController : AuthBaseController
     {       
 
         public ActionResult Roles()
         {
-            ViewData["Roles"] = Role.FindWithAll(); 
+            ViewData["Roles"] = UserRole.FindWithAll(); 
             return View();
         }
         public ActionResult RoleView()
         {
             long id = Request["id"].ToLong();
-            ViewData["Permissions"] = Permission.FindWithAll();
-            ViewData["RolePermission"] = RolePermission.FindByRoleId(id);
-            ViewData["Role"] = Role.FindById(id);    
+            ViewData["Permissions"] = PermissionMenu.FindWithAll();
+            ViewData["RolePermission"] = UserRolePermission.FindByRoleId(id);
+            ViewData["Role"] = UserRole.FindById(id);    
             return View();
         }
 
         [HttpPost]
-        public ActionResult RoleAction(Role model)
+        public ActionResult RoleAction(UserRole model)
         {
 
             var permissionLevel = Request["PermissionLevel"].Trim(',').Split(',').ToList();
@@ -51,13 +51,13 @@ namespace MSNet.WebAdmin.Controllers
             {
                 if (permissionLevel.Count > 0)
                 {
-                    RolePermission.RemoveByRoleId(model.RoleId);
+                    UserRolePermission.RemoveByRoleId(model.RoleId);
                     foreach (var o in permissionLevel)
                     {
-                        var oo = o.Trim('-').Split('-').ToList().ToLongList(false); 
+                        var oo = o.Trim('-').Split('-').ToList().ToIntList(false); 
                         if (oo.Count == 3)
                         {
-                            rbool = rbool && new RolePermission() { RoleId = model.RoleId, ParentPermId = oo[0], PermissionId = oo[1], PermissionLevel = oo[2] }.Save();
+                            rbool = rbool && new UserRolePermission() { RoleId = model.RoleId, ParentPermissionId = oo[0], PermissionId = oo[1], PermissionValue = oo[2] }.Save();
                         }
                     }
                 }                                

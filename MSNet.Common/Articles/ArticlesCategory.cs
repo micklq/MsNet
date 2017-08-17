@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using M2SA.AppGenome;
 using M2SA.AppGenome.Data;
-using MSNet.Common.Data;
+using MSNet.Common.BaseCategory;
 using MSNet.Common.Articles.DataRepositories;
 namespace MSNet.Common.Articles
 {

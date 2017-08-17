@@ -15,7 +15,9 @@ namespace MSNet.Common.Web
             info.SignedUpIp = HttpContext.Request.ServerVariables.Get("Remote_Addr").ToString();
             info.HttpReferer = HttpContext.Request.ServerVariables.Get("Http_Referer").ToString();
             info.HttpUserAgent = HttpContext.Request.ServerVariables.Get("Http_User_Agent").ToString();            
-            info.RefererDomain = HttpContext.Request.ServerVariables.Get("Http_Host").ToString(); 
+            info.RefererDomain = HttpContext.Request.ServerVariables.Get("Http_Host").ToString();
+            info.UtmSource = HttpContext.Request.Params["UtmSource"].ToString();
+            info.InviteCode = HttpContext.Request.Params["InviteCode"].ToString();
             return info;
         }
 

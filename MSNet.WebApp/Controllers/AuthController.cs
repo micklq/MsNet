@@ -54,7 +54,8 @@ namespace MSNet.WebApp.Controllers
                 }, JsonRequestBehavior.AllowGet);
             }
             UserPassport uPassport =null;
-            var u = MemberShip.SignIn(uname, upass, out uPassport);
+            SignUpStatus status = SignUpStatus.None;
+            var u = MemberShip.SignIn(uname, upass, out uPassport,out status);
             if (uPassport!=null&&uPassport.UserSecurity.IsLocked)
             {
                 return Json(new
@@ -75,8 +76,8 @@ namespace MSNet.WebApp.Controllers
             SignInUser uSign = new SignInUser { 
                 PassportId = uPassport.PassportId, 
                 UserName = uPassport.UserName,
-                Roles = uPassport.Roles,
-                RolePermissions = (uPassport.RolePermissions != null) ? uPassport.RolePermissions : null 
+                uRole = uPassport.Role,
+                uPermissions = (uPassport.RolePermissions != null) ? uPassport.RolePermissions : null 
             };
             UserAuthentication.SignIn(uSign);
 

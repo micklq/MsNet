@@ -37,8 +37,7 @@ namespace MSNet.Common.Passports
     
         #endregion //Static Methods
 
-        private UserPassport userPassport;
-
+      
         /// <summary>
         /// 
         /// </summary>
@@ -86,26 +85,7 @@ namespace MSNet.Common.Passports
         /// 用户头像
         /// </summary>
         public string Avatar { get; set; }      
-               
-        /// <summary>
-        /// 
-        /// </summary>
-        [NonSerializedProperty]
-        public UserPassport UserPassport
-        {
-            get { return this.userPassport; }
-            set
-            {
-                this.userPassport = value;
-                if (null != this.userPassport)
-                {
-                    this.PassportId = this.userPassport.PassportId;
-                    if (this.CreatedTime <= ModuleEnvironment.EmptyDateTime)
-                        this.CreatedTime = this.userPassport.CreatedTime;
-                }
-            }
-        }
-
+        
       
         #region Persist Methods
 

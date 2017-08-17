@@ -238,7 +238,7 @@ namespace MSNet.WebAdmin.Controllers
                     message = "请输入新密码！"
                 }, JsonRequestBehavior.AllowGet);
             }
-            var rbool = MemberShip.ChangePassword(passportId, oPassword, nPasspword);
+            var rbool = MemberShip.ModifyPassword(passportId, oPassword, nPasspword);
             if (!rbool)
             {
                 return Json(new

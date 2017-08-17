@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+	<module moduleName="PermissionMenuRepository" dbName="MSNet.MySql">
+    <sqlWrap  sqlName="Insert"  supportDBType="MySql,SqlServer">
+      insert into PermissionMenu(Name,Description,ParentId,Sort,Url,CreatedTime,LastModifiedTime)
+      values(@Name,@Description,@ParentId,@Sort,@Url,@CreatedTime,@LastModifiedTime);
+      select @@IDENTITY;
+    </sqlWrap>
+    <sqlWrap  sqlName="Update"  supportDBType="MySql,SqlServer">
+      update PermissionMenu
+      set Name=@Name,Description=@Description,ParentId=@ParentId,Sort=@Sort,Url=@Url,LastModifiedTime=@LastModifiedTime
+      where PermissionId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="DeleteById"  supportDBType="MySql,SqlServer">
+      delete from PermissionMenu where PermissionId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectById"  supportDBType="MySql,SqlServer">
+      select *  from PermissionMenu  where PermissionId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectAll"  supportDBType="MySql,SqlServer">
+      select *  from PermissionMenu;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectRoot"  supportDBType="MySql,SqlServer">
+      select *  from PermissionMenu where ParentId = 0 order by Sort;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectByParentId"  supportDBType="MySql,SqlServer">
+      select *  from PermissionMenu  where  ParentId = @ParentId;
+    </sqlWrap>
+    <sqlWrap  sqlName="ExistChildCategory"  supportDBType="MySql,SqlServer">
+      select Count(*)  from PermissionMenu where  ParentId = @ParentId;
+    </sqlWrap>
+    <sqlWrap  sqlName="Move"  supportDBType="MySql,SqlServer">
+      update PermissionMenu
+      set ParentId=@ParentId
+      where PermissionId = @CategoryId;
+    </sqlWrap>
+  </module>
+</root>
+

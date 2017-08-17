@@ -34,7 +34,8 @@ namespace MSNet.Common
         /// <summary>
         /// 
         /// </summary>
-        internal static readonly string UserNamePattern = @"^[a-zA-Z]+[.-_a-zA-Z-9]{4,15}$";
+        internal static readonly string UserNamePattern = @"^[\d\w]{4,12}$"; //数字字母4-12位
+        //internal static readonly string UserNamePattern = @"^[a-zA-Z]+[.-_a-zA-Z-9]{4,15}$";
         //internal static readonly string UserNamePattern = @"^(\d{18,18}|\d{15,15}|\d{17,17}x)|(1(\d){10})$";
 
         /// <summary>

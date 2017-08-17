@@ -51,6 +51,11 @@ namespace MSNet.Common.Articles
             var repository = RepositoryManager.GetRepository<IArticlesRepository>(ModuleEnvironment.ModuleName);
             return repository.FindById(Id);           
         }
+        public static bool UpdateCategoryId(long oCategoryId, long nCategoryId)
+        {
+            var repository = RepositoryManager.GetRepository<IArticlesRepository>(ModuleEnvironment.ModuleName);
+            return repository.UpdateCategoryId(oCategoryId, nCategoryId);
+        }
         #endregion
 
         #region Persist Methods

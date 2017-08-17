@@ -10,8 +10,7 @@ namespace MSNet.Common.Passports
     /// </summary>
     [Serializable]
     public partial class UserSecurity : EntityBase<long>
-    {
-        private UserPassport userPassport;
+    {      
 
         /// <summary>
         /// 
@@ -55,24 +54,7 @@ namespace MSNet.Common.Passports
         /// <summary>
         /// 
         /// </summary>
-        public int FailedPasswordAttemptCount { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [NonSerializedProperty]
-        public UserPassport UserPassport
-        {
-            get { return this.userPassport; }
-            set
-            {
-                this.userPassport = value;
-                if (null != this.userPassport)
-                {
-                    this.PassportId = this.userPassport.PassportId;
-                }
-            }
-        }       
+        public int FailedPasswordAttemptCount { get; set; }            
       
 
         /// <summary>

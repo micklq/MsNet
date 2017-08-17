@@ -17,105 +17,9 @@ namespace MSNet.Common.Passports
     /// </summary>
     [Serializable]
     public partial class UserPassport : EntityBase<long>
-    {
-        #region Static Methods
+    {       
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
-        public static long FindPassportIdByEmail(string email)
-        {
-            ArgumentAssertion.IsNotNull(email, "email");
-
-            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
-            var userId = repository.FindPassportIdByEmail(email);
-            return userId;
-        }
-
-        public static long FindPassportIdByMobile(string mobile)
-        {
-            ArgumentAssertion.IsNotNull(mobile, "mobile");
-
-            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
-            var userId = repository.FindPassportIdByMobile(mobile);
-            return userId;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <returns></returns>
-        public static long FindPassportIdByUserName(string userName)
-        {
-            ArgumentAssertion.IsNotNull(userName, "userName");
-            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
-            return repository.FindPassportIdByUserName(userName);
-           
-        }
-
-
-        public static IList<UserPassport> FindWithAdminPage(string keyword, IList<long> exceptIds, Pagination page)
-        {
-            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
-            return repository.FindWithAdminPage(keyword, exceptIds, page);
-        }
-
-
-        public static UserPassport FindByKeyword(string keyword)
-        {
-            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
-            return repository.FindByKeyword(keyword);
-            
-        }
-
-        public static bool ClearRole(long roleId)
-        {
-            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
-            return repository.ClearRole(roleId);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="passportId"></param>
-        /// <returns></returns>
-        public static UserPassport FindById( long passportId )
-        {
-            if ( passportId < 1 )
-                return null;
-
-            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
-            var passport = repository.FindById( passportId );
-            return passport;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="passportId"></param>
-        /// <returns></returns>
-        public static UserPassport FindUserSecurityById( long passportId )
-        {
-            if ( passportId < 1 )
-                return null;
-
-            var repository = RepositoryManager.GetRepository<IUserPassportRepository>( ModuleEnvironment.ModuleName );
-            var passport = repository.FindUserSecurityById( passportId );
-            return passport;
-        }
-
-      
-
-       
-
-        #endregion //Static Methods
-
-        #region Instance Properties
-
-       
+        #region Instance Properties      
 
         /// <summary>
         /// 
@@ -164,7 +68,7 @@ namespace MSNet.Common.Passports
             set;
         }
 
-        public long RoleType
+        public UserRoleType RoleType
         {
             get;
             set;
@@ -187,11 +91,9 @@ namespace MSNet.Common.Passports
             set;
         }
 
-
         [NonSerialized]
         private UserSecurity userSecurity;
 
-        private UserProfile profile;
         /// <summary>
         /// 
         /// </summary>
@@ -202,13 +104,12 @@ namespace MSNet.Common.Passports
             {
                 return this.userSecurity;
             }
-            set
-            {
-                this.userSecurity = value;
-                if (null != this.userSecurity)
-                    this.userSecurity.UserPassport = this;
-            }
+            set { this.userSecurity = value; }
         }
+
+        [NonSerialized]
+        private UserProfile profile;
+
         /// <summary>
         /// 
         /// </summary>
@@ -219,66 +120,31 @@ namespace MSNet.Common.Passports
             {
                 return this.LoadProfile();
             }
-            set
-            {
-                this.profile = value;
-                if (null != this.profile)
-                    this.profile.UserPassport = this;
-            }
+            set { this.profile = value; }
+           
         }
 
-        private Role roles;
-        public Role Roles
+        private UserRole role;
+
+        public UserRole Role
         {
             get
             {
-                return this.LoadRoles();
+                return this.LoadRole();
             }
-            set
-            {
-                this.roles = value;
-            }
+            set { this.role = value; }
         }
 
-        private IList<RolePermission> rolePermissions;
-        public IList<RolePermission> RolePermissions
+        private IList<UserRolePermission> rolePermissions;   
+     
+        public IList<UserRolePermission> RolePermissions
         {
             get
             {
                 return this.LoadRolePermissions();
             }
-            set
-            {
-                this.rolePermissions = value;
-            }
+            set { this.rolePermissions = value; }
         } 
-
-        #endregion
-
-        #region Private Properties Methods
-        private Role LoadRoles()
-        {
-            if (null != this.roles)
-                return this.roles;
-            if (this.RoleId == 0)
-                return null;
-
-            this.roles = Role.FindById(this.RoleId);
-
-            return this.roles;
-        }
-
-        private IList<RolePermission> LoadRolePermissions()
-        {
-            if (null != this.rolePermissions)
-                return this.rolePermissions;
-            if (this.RoleId == 0)
-                return null;
-
-            this.rolePermissions = RolePermission.FindByRoleId(this.RoleId);
-
-            return this.rolePermissions;
-        }
 
         #endregion
 
@@ -290,6 +156,136 @@ namespace MSNet.Common.Passports
             this.CreatedTime = DateTime.Now;
             this.LastModifiedTime = this.CreatedTime;
         }
+
+
+        #region Private Properties Methods
+
+        private UserProfile LoadProfile()
+        {
+            if (null != this.profile) {
+                return this.profile;
+            }
+            if (this.PassportId == 0) {
+                return null;
+            }
+            this.profile = UserProfile.FindById(this.PassportId);
+           
+            return this.profile;
+        }
+
+
+        private UserRole LoadRole()
+        {
+            if (null != this.role){
+                return this.role;
+            }
+            if (this.RoleId == 0){
+                return null;
+            }
+
+            this.role = UserRole.FindById(this.RoleId);
+
+            return this.role;
+        }
+
+        private IList<UserRolePermission> LoadRolePermissions()
+        {
+            if (null != this.rolePermissions){
+                return this.rolePermissions;
+            }
+            if (this.RoleId == 0){
+                return null;
+            } 
+
+            this.rolePermissions = UserRolePermission.FindByRoleId(this.RoleId);
+
+            return this.rolePermissions;
+        }
+
+        #endregion
+
+       
+
+
+        #region Static Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static long FindPassportIdByEmail(string email)
+        {
+            ArgumentAssertion.IsNotNull(email, "email");
+            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
+            return repository.FindPassportIdByEmail(email);            
+        }
+
+        public static long FindPassportIdByMobile(string mobile)
+        {
+            ArgumentAssertion.IsNotNull(mobile, "mobile");
+            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
+            return repository.FindPassportIdByMobile(mobile);           
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public static long FindPassportIdByUserName(string userName)
+        {
+            ArgumentAssertion.IsNotNull(userName, "userName");
+            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
+            return repository.FindPassportIdByUserName(userName);
+
+        }
+
+
+        public static IList<UserPassport> FindWithAdminPage(string keyword, IList<long> exceptIds, Pagination page)
+        {
+            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
+            return repository.FindWithAdminPage(keyword, exceptIds, page);
+        }
+
+
+        public static UserPassport FindByKeyword(string keyword)
+        {
+            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
+            return repository.FindByKeyword(keyword);
+
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="passportId"></param>
+        /// <returns></returns>
+        public static UserPassport FindById(long passportId)
+        {
+            if (passportId < 1)
+                return null;
+
+            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
+            var passport = repository.FindById(passportId);
+            return passport;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="passportId"></param>
+        /// <returns></returns>
+        public static UserPassport FindUserSecurityById(long passportId)
+        {
+            if (passportId < 1)
+                return null;
+
+            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
+            var passport = repository.FindUserSecurityById(passportId);
+            return passport;
+        }
+
+        #endregion 
+
 
         #region Persist Methods
       
@@ -320,8 +316,7 @@ namespace MSNet.Common.Passports
                         {
                             this.Profile.PassportId = this.PassportId;
                             result = this.Profile.Save();
-
-                        }
+                        }                        
                       
                     }
                     //transactionScope.Complete();
@@ -345,7 +340,7 @@ namespace MSNet.Common.Passports
         }
 
         /// <summary>
-        /// 
+        /// 修改密码 可激活锁定休眠废弃用户
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
@@ -355,7 +350,8 @@ namespace MSNet.Common.Passports
             this.UserSecurity.Password = this.HashPassword( password );
             this.UserSecurity.LastPasswordChangedTime = DateTime.Now;
             this.UserSecurity.UnLock();
-            var result = this.UserSecurity.Save();
+            this.PassportStatus = PassportStatus.Standard;
+            var result = this.Save()&&this.UserSecurity.Save();
             return result;
         }      
 
@@ -406,22 +402,9 @@ namespace MSNet.Common.Passports
 
    
 
-        #endregion //SignUp & SignIn
+        #endregion 
 
-        private UserProfile LoadProfile()
-        {
-            if ( null != this.profile )
-                return this.profile;
-            if ( this.PassportId == 0 )
-                return null;
-
-
-            this.profile = UserProfile.FindById( this.PassportId );
-
-            if ( null != this.profile )
-                this.profile.UserPassport = this;
-            return this.profile;
-        }
+       
 
         /// <summary>
         /// 

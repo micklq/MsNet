@@ -19,10 +19,10 @@ namespace MSNet.Common.Web
        /// <summary>
        /// 用户角色
        /// </summary>
-       public Role Roles { get; set; }
+       public UserRole uRole { get; set; }
        /// <summary>
        /// 角色权限
        /// </summary>
-       public IList<RolePermission> RolePermissions { get; set; }
+       public IList<UserRolePermission> uPermissions { get; set; }
     }
 }
