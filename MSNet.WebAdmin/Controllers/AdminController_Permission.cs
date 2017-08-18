@@ -35,30 +35,36 @@ namespace MSNet.WebAdmin.Controllers
 
             if (model.Name.IsNullOrEmpty())
             {
-                return Json(new
-                {
-                    success = false,
-                    message = "请输入名称！"
-                }, JsonRequestBehavior.AllowGet);
+                return JsonFail("请输入菜单名称！");               
             }
             if (model.PermissionId > 0) {
                 model.PersistentState = PersistentState.Persistent;
             }         
             var rbool = model.Save();
-            if (!rbool)
+            if (rbool)
             {
-                return Json(new
-                {
-                    success = false,
-                    message = "系统异常,请稍后重试！"
-                }, JsonRequestBehavior.AllowGet);
-
+                return JsonSuccess("操作成功！");  
             }
-            return Json(new
+            return JsonFail("系统异常,请稍后重试！");                     
+            
+        }
+
+
+        [HttpPost]
+        public ActionResult PermissionRemove()
+        {
+            var id = Request["permissionId"].ToLong();
+
+            if (id > 0)
             {
-                success = true,
-                message = "操作成功！"
-            }, JsonRequestBehavior.AllowGet);
+                var rbool = new PermissionMenu { PermissionId = id }.Remove();
+                if (rbool)
+                {
+                    return JsonSuccess("操作成功！");
+                }
+            }
+            return JsonFail("删除失败！");
+
         }
     }
 }

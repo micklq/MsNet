@@ -17,9 +17,13 @@ namespace MSNet.Common.Web
        /// </summary>
        public string UserName { get; set; }
        /// <summary>
-       /// 用户角色
+       /// 角色Id
        /// </summary>
-       public UserRole Role { get; set; }
+       public long RoleId { get; set; }
+       /// <summary>
+       /// 角色名称
+       /// </summary>
+       public string RoleName { get; set; }         
        /// <summary>
        /// 角色权限
        /// </summary>

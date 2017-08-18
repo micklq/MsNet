@@ -36,11 +36,7 @@ namespace MSNet.WebAdmin.Controllers
             var permissionValues = Request["PermissionValue"].Trim(',').Split(',').ToList();
             if (model.Name.IsNullOrEmpty())
             {
-                return Json(new
-                {
-                    success = false,
-                    message = "请输入名称！"
-                }, JsonRequestBehavior.AllowGet);
+                return JsonFail("请输入角色名称！");                
             }
             if (model.RoleId > 0)
             {
@@ -54,29 +50,40 @@ namespace MSNet.WebAdmin.Controllers
                     UserRolePermission.RemoveByRoleId(model.RoleId);
                     foreach (var o in permissionValues)
                     {
-                        var oo = o.Trim('-').Split('-').ToList().ToIntList(false); 
+                        var oo = o.Trim('-').Split('-').ToList().ToLongList(false); 
                         if (oo.Count == 3)
                         {
-                            rbool = rbool && new UserRolePermission() { RoleId = model.RoleId, ParentPermissionId = oo[0], PermissionId = oo[1], PermissionValue = oo[2] }.Save();
+                            UserRolePermission rolePermissoin = new UserRolePermission{ RoleId = model.RoleId, ParentPermissionId = oo[0], PermissionId = oo[1], PermissionValue = oo[2] };
+                            rbool = rbool && rolePermissoin.Insert();
                         }
                     }
                 }                                
             }
             if (rbool)
             {
-                return Json(new
-                {
-                    success = true,
-                    message = "添加成功！"
-                }, JsonRequestBehavior.AllowGet);
+                return JsonSuccess("操作成功！");               
             }
-            return Json(new
-            {
-                success = false,
-                message = "系统异常,请稍后重试！"
-            }, JsonRequestBehavior.AllowGet);
+            return JsonFail("系统异常,请稍后重试！");
 
         }
+
+        [HttpPost]
+        public ActionResult RoleRemove()
+        {
+            var id = Request["roleId"].ToLong();
+
+            if (id > 0) {
+
+                var rbool = new UserRole { RoleId = id }.Remove();
+
+                if(rbool){
+                    return JsonSuccess("操作成功！");
+                }
+            }
+            return JsonFail("删除失败！");           
+           
+        }
+
 
     }
 }

@@ -10,10 +10,21 @@ namespace MSNet.WebAdmin.Controllers
 {
     public class AuthController : Controller
     {
+        public JsonResult JsonSuccess(String message = "")
+        {
+            return Json(AjaxResult.Success(message), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult JsonFail(String message)
+        {
+            return Json(AjaxResult.Fail(message), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult VCode()
         {
             return Content(VerifyCodeHelper.Create(new VerifyCodeHelper.VerifyCodeImageArg()));
         }
+
         //
         // GET: /Auth/
 
@@ -29,31 +40,29 @@ namespace MSNet.WebAdmin.Controllers
                       upass = Request["uPass"].ToString();
             if (uname.IsNullOrEmpty() || upass.IsNullOrEmpty())
             {
-                return Json(AjaxResult.Fail("请输入用户名或密码！"),JsonRequestBehavior.AllowGet);
+                return JsonFail("请输入用户名或密码！");   
             }
             var vcode = Request["Vcode"].ToString();
             if (vcode.IsNullOrEmpty())
             {
-                return Json(AjaxResult.Fail("请输入验证码！"), JsonRequestBehavior.AllowGet);               
+                return JsonFail("请输入验证码！");   
             }
             if (!VerifyCodeHelper.CheckVerifyCode(vcode))
             {
-                return Json(AjaxResult.Fail("验证码错误！"), JsonRequestBehavior.AllowGet);     
-               
+                return JsonFail("验证码错误！");
             }
 
             UserPassport uPassport = null;      
             var result = MemberShip.SignIn(uname, upass, out uPassport);
             if (!result.success) {
-
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
-           
+                return JsonFail(result.message);
+            }           
           
             SignInUser uSign = new SignInUser { 
                 PassportId = uPassport.PassportId, 
                 UserName = uPassport.UserName,
-                Role = (uPassport.Role != null) ? uPassport.Role : null, 
+                RoleId = uPassport.RoleId,
+                RoleName = (uPassport.Role != null) ? uPassport.Role.Name : null, 
                 RolePermission = (uPassport.RolePermissions != null) ? uPassport.RolePermissions : null 
             };
             UserAuthentication.SignIn(uSign);
@@ -63,8 +72,8 @@ namespace MSNet.WebAdmin.Controllers
             {
                 returnUrl = "/";
             }
+            return JsonSuccess(returnUrl);   
 
-            return Json(AjaxResult.Success(returnUrl), JsonRequestBehavior.AllowGet);
         }
 
         

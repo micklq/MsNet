@@ -9,6 +9,18 @@ namespace MSNet.Common.Web
 {
     public class BaseController : Controller
     {
+
+        public  JsonResult JsonSuccess(String message = "")
+        {
+            return Json(AjaxResult.Success(message), JsonRequestBehavior.AllowGet);  
+        }
+
+        public JsonResult JsonFail(String message)
+        {
+            return Json(AjaxResult.Fail(message), JsonRequestBehavior.AllowGet);             
+        }
+
+       
         public SignedUpInfo GetSignedUpInfo()
         {
             SignedUpInfo  info = new SignedUpInfo();

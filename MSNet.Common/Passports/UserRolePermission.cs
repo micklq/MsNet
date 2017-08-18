@@ -20,7 +20,7 @@ namespace MSNet.Common
         /// <summary>
         /// 读权限=1  读写权限=1+3=4  读写删权限=1+3+5=9  读删权限=1+5=6
         /// </summary>
-        public int PermissionValue { get; set; }
+        public long PermissionValue { get; set; }
 
         #endregion
         
@@ -81,12 +81,20 @@ namespace MSNet.Common
         #endregion
 
         #region Persist Methods
-        public bool Save()
+
+        public bool Insert()
         {
-            var repository = RepositoryManager.GetRepository<IUserRolePermissionRepository>(ModuleEnvironment.ModuleName);            
-            return repository.Insert(this);
+            var repository = RepositoryManager.GetRepository<IUserRolePermissionRepository>(ModuleEnvironment.ModuleName);
+            return  repository.Insert(this);
           
-        }      
+        }
+
+        public bool Remove()
+        {
+            var repository = RepositoryManager.GetRepository<IUserRolePermissionRepository>(ModuleEnvironment.ModuleName);
+            return repository.Remove(this);
+
+        }   
         #endregion
 
     }

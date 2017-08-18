@@ -12,6 +12,7 @@
       where PermissionId = @Id;
     </sqlWrap>
     <sqlWrap  sqlName="DeleteById"  supportDBType="MySql,SqlServer">
+      delete from UserRolePermission where PermissionId = @Id;
       delete from PermissionMenu where PermissionId = @Id;
     </sqlWrap>
     <sqlWrap  sqlName="SelectById"  supportDBType="MySql,SqlServer">

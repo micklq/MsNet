@@ -599,6 +599,13 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="M:M2SA.AppGenome.Data.SimpleRepositoryBase`2.Insert(`0)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="M:M2SA.AppGenome.Data.SimpleRepositoryBase`2.Remove(`0)">
             <summary>
             

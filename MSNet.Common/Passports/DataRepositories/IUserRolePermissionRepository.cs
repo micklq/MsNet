@@ -29,8 +29,7 @@ namespace MSNet.Common.DataRepositories
         bool RemoveByRoleId(long roleId);
 
         bool UpdateParentPermissionId(long permissionId, long parentPermissionId);
-
-        bool Insert(UserRolePermission model);
+        
 
     }
 }

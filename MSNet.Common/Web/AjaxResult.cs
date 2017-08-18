@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Web.Mvc;
 namespace MSNet.Common.Web
 {
     public class AjaxResult
@@ -19,6 +19,7 @@ namespace MSNet.Common.Web
         public static AjaxResult Fail(String message)
         {
             return new AjaxResult() { success = false, message = message };    
-        }
+        }        
+
     }
 }

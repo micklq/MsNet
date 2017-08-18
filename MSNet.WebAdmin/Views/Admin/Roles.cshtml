@@ -62,14 +62,20 @@
             layer.confirm('角色删除须谨慎，确认要删除吗？', function (index) {
                 $.ajax({
                     type: 'POST',
-                    url: '',
+                    url: '@Url.Action("RoleRemove")?roleId=' + id,
                     dataType: 'json',
                     success: function (data) {
-                        $(obj).parents("tr").remove();
-                        layer.msg('已删除!', { icon: 1, time: 1000 });
+                        if (data.success) {
+                            $(obj).parents("tr").remove();
+                            layer.msg(data.message, { icon: 1, time: 1000 });
+                        }
+                        else {
+                            layer.msg(data.message, { icon: 1, time: 1000 });
+                        }
+                        
                     },
                     error: function (data) {
-                        console.log(data.msg);
+                        console.log(data.message);
                     },
                 });
             });

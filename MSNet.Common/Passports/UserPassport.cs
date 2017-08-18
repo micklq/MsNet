@@ -190,13 +190,14 @@ namespace MSNet.Common
 
         private IList<UserRolePermission> LoadRolePermissions()
         {
-            if (null != this.rolePermissions){
+            if (null != this.rolePermissions)
+            {
                 return this.rolePermissions;
             }
-            if (this.RoleId == 0){
+            if (this.RoleId == 0)
+            {
                 return null;
-            } 
-
+            }
             this.rolePermissions = UserRolePermission.FindByRoleId(this.RoleId);
 
             return this.rolePermissions;

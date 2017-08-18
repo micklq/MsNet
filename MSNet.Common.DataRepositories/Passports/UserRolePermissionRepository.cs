@@ -49,12 +49,7 @@ namespace MSNet.Common.DataRepositories
             return idValue.Convert<int>(0) > 0;
           
         }
-
-        public bool Insert(UserRolePermission model)
-        {
-            model.PersistentState = PersistentState.Transient;
-            return base.Save(model); 
-        }
+        
 
         public bool RemoveByRoleId(long roleId)
         {

@@ -18,6 +18,13 @@ namespace MSNet.Common.Web
             string enyTicket = FormsAuthentication.Encrypt(ticket);
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, enyTicket);
             HttpContext.Current.Response.Cookies.Add(cookie);
+
+            //var  dd = FormsAuthentication.Decrypt(enyTicket);
+            //var ff = dd.UserData;
+            //var userdd= HttpContext.Current.User.Identity;
+            //var bbb = HttpContext.Current.User.Identity.IsAuthenticated; 
+           
+
         }
 
         public static void SignOut()

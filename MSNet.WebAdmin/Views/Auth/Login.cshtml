@@ -30,7 +30,6 @@
     </style>    
 </head>
 <body>
-<input type="hidden" id="TenantId" name="TenantId" value="" />
 <div class="header"></div>
 <div class="loginWraper">
     <div id="loginform" class="loginBox">
@@ -72,7 +71,7 @@
     $(function () {
         $("#vcodeImg,#kanbuq").click(function () {
             $("#vcodeImg").attr("src", "@Url.Action("VCode")?t="+Math.random());
-        });      
+        });
 
         $("#form-login").validate({
             rules: {
@@ -83,12 +82,12 @@
                 },
                 uPass: {
                     required: true,
-                },               
+                },
                 Vcode: {
                     required: true,
                     digits: true,
-                    
-                },                
+
+                },
             },
             onkeyup: false,
             focusCleanup: true,
@@ -97,10 +96,10 @@
                 $("#btnLogin").attr("disabled", true);
                 $(form).ajaxSubmit({
                     type: 'post',
-                    url: "/Auth/SignIn",
+                    url: "@Url.Action("SignIn")",
                     success: function (data) {
                         if (data.success) {
-                            location.href = "/";
+                            location.href = "/home/index";
                         }
                         else
                         {
@@ -112,9 +111,9 @@
                     error: function (XmlHttpRequest, textStatus, errorThrown) {
                         $("#btnLogin").attr("disabled", false);
                         $("#vcodeImg").click();
-                        $.Huimodalalert('网络超时,请检查网络连接！', 2000);                        
+                        $.Huimodalalert('网络超时,请检查网络连接！', 2000);
                     }
-                });                
+                });
             }
         });
     });

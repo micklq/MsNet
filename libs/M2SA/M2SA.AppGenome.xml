@@ -1063,6 +1063,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:M2SA.AppGenome.Data.IRepository`2.Insert(`0)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="M:M2SA.AppGenome.Data.IRepository`2.Save(`0)">
             <summary>
             

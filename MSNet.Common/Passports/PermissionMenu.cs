@@ -72,12 +72,8 @@ namespace MSNet.Common
         }
         public bool Remove()
         {
-            var repository = RepositoryManager.GetRepository<IPermissionMenuRepository>(ModuleEnvironment.ModuleName);
-            bool result = repository.Remove(this);
-            //删除权限下关联角色
-            result = result &&(UserRolePermission.RemoveByPermissionId(this.Id));    
-       
-            return result;
+            var repository = RepositoryManager.GetRepository<IPermissionMenuRepository>(ModuleEnvironment.ModuleName);            
+            return repository.Remove(this);            
         }
         #endregion
 
