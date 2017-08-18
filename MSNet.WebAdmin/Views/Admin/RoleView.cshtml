@@ -1,10 +1,10 @@
 ﻿@{
     Layout = null;
-    var list = ViewData["Permissions"] as List<Permission>;
-    var rlist = ViewData["RolePermission"] as List<RolePermission>;
-    if (rlist == null) { rlist = new List<RolePermission>(); }
-    var p = ViewData["Role"] as Role;
-    if (p == null) { p = new Role(); }
+    var list = ViewData["Permissions"] as List<PermissionMenu>;
+    var rlist = ViewData["RolePermission"] as List<UserRolePermission>;
+    if (rlist == null) { rlist = new List<UserRolePermission>(); }
+    var p = ViewData["Role"] as UserRole;
+    if (p == null) { p = new UserRole(); }
     
 }
 <!DOCTYPE html>
@@ -52,11 +52,11 @@
                                             </label>
                                         </dt>
                                         <dd>
-                                            @foreach (var po in EnumHelper.GetItems<PermissionType>())
+                                            @foreach (var po in EnumHelper.GetItems<PermissionValue>())
                                             {
-                                                bool ck = rlist.Where(e => e.PermissionId.Equals(oo.PermissionId) && e.PermissionLevel.Equals(EnumHelper.GetValue<PermissionType>(po.Name))).Count() > 0;
+                                                bool ck = rlist.Where(e => e.PermissionId.Equals(oo.PermissionId) && e.PermissionValue.Equals(EnumHelper.GetValue<PermissionValue>(po.Name))).Count() > 0;
                                                 
-                                              <label><input type="checkbox"  @(ck?"checked":"") value="@(o.PermissionId)-@(oo.PermissionId)-@(EnumHelper.GetValue<PermissionType>(po.Name))" name="PermissionLevel" id="PermissionLevel-@(oo.PermissionId)">@(po.Description)</label>
+                                              <label><input type="checkbox" @(ck ? "checked" : "") value="@(o.PermissionId)-@(oo.PermissionId)-@(EnumHelper.GetValue<PermissionValue>(po.Name))" name="PermissionValue" id="PermissionValue-@(oo.PermissionId)">@(po.Description)</label>
                                             }
                                                                                        
                                         </dd>

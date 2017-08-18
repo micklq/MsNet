@@ -12,7 +12,7 @@
          <Members>
           <Member Name="#AppendSysInfo(M2SA.AppGenome.Diagnostics.SystemInfo,System.String,System.String)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message Id="ex" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2017-08-02 04:23:58Z" FixCategory="NonBreaking">
+            <Message Id="ex" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2017-08-18 02:30:18Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="Warning" Path="f:\51aspx\M2SA.AppGenome-master\src\AppGenome\M2SA.AppGenome\Diagnostics" File="SystemInfo.cs" Line="94">'SystemInfo.AppendSysInfo(SystemInfo, string, string)' 声明类型为 'Exception' 的变量 'ex'，但从未使用过该变量或只对它进行过赋值。请使用此变量或将它移除。</Issue>
             </Message>
            </Messages>
@@ -27,7 +27,7 @@
          <Members>
           <Member Name="#WriteLine(M2SA.AppGenome.Logging.LogLevel,System.String,System.Object[])" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="2" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-08-02 04:23:58Z" FixCategory="DependsOnFix">
+            <Message Id="2" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-08-18 02:30:18Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="f:\51aspx\M2SA.AppGenome-master\src\AppGenome\M2SA.AppGenome\Logging" File="SystemLogger.cs" Line="44">在外部可见方法 'SystemLogger.WriteLine(LogLevel, string, params object[])' 中，请在使用参数“args”之前先对其进行验证。</Issue>
             </Message>
            </Messages>

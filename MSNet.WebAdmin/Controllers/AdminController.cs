@@ -12,7 +12,7 @@ using MSNet.Common.Web.Pager;
 using MSNet.Common;
 namespace MSNet.WebAdmin.Controllers
 {
-    public partial class AdminController : Controller
+    public partial class AdminController : AuthBaseController
     {
         //
         // GET: /Admin/

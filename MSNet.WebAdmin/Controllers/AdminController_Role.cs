@@ -12,7 +12,7 @@ using MSNet.Common.Web.Pager;
 using MSNet.Common;
 namespace MSNet.WebAdmin.Controllers
 {
-    public partial class AdminController : Controller
+    public partial class AdminController : AuthBaseController
     {       
 
         public ActionResult Roles()
@@ -33,7 +33,7 @@ namespace MSNet.WebAdmin.Controllers
         public ActionResult RoleAction(UserRole model)
         {
 
-            var permissionLevel = Request["PermissionLevel"].Trim(',').Split(',').ToList();
+            var permissionValues = Request["PermissionValue"].Trim(',').Split(',').ToList();
             if (model.Name.IsNullOrEmpty())
             {
                 return Json(new
@@ -49,10 +49,10 @@ namespace MSNet.WebAdmin.Controllers
             var rbool = model.Save();
             if (rbool)   //添加权限
             {
-                if (permissionLevel.Count > 0)
+                if (permissionValues.Count > 0)
                 {
                     UserRolePermission.RemoveByRoleId(model.RoleId);
-                    foreach (var o in permissionLevel)
+                    foreach (var o in permissionValues)
                     {
                         var oo = o.Trim('-').Split('-').ToList().ToIntList(false); 
                         if (oo.Count == 3)

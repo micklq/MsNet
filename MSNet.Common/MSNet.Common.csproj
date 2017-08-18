@@ -137,10 +137,11 @@
     <Compile Include="Util\EnumHelper.cs" />
     <Compile Include="Util\IOExtension.cs" />
     <Compile Include="Util\JsonExtension.cs" />
-    <Compile Include="Util\RequestValidatorDisabled.cs" />
+    <Compile Include="Web\RequestValidatorDisabled.cs" />
     <Compile Include="Util\SerializationHelper.cs" />
     <Compile Include="Util\StringExtension.cs" />
     <Compile Include="Util\ZipFile.cs" />
+    <Compile Include="Web\AjaxResult.cs" />
     <Compile Include="Web\BaseController.cs" />
     <Compile Include="Web\AuthBaseController.cs" />
     <Compile Include="Web\Http\AppClient.cs" />

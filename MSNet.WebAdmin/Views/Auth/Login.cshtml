@@ -24,36 +24,39 @@
     <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <title>后台登陆</title>      
+    <title>后台登陆</title>  
+    <style type="text/css">
+     label.error { right:300px; top:10px;}
+    </style>    
 </head>
 <body>
 <input type="hidden" id="TenantId" name="TenantId" value="" />
 <div class="header"></div>
 <div class="loginWraper">
     <div id="loginform" class="loginBox">
-        <form class="form form-horizontal" action="index.html" method="post">
+        <form class="form form-horizontal" id="form-login" name="form-login" method="post">
             <div class="row cl">
                 <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
                 <div class="formControls col-xs-8">
-                    <input id="" name="" type="text" placeholder="账户" class="input-text size-L">
+                    <input id="uName" name="uName" type="text" placeholder="账户" class="input-text size-L">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
                 <div class="formControls col-xs-8">
-                    <input id="" name="" type="password" placeholder="密码" class="input-text size-L">
+                    <input id="uPass" name="uPass" type="password" placeholder="密码" class="input-text size-L">
                 </div>
             </div>
             <div class="row cl">
                 <div class="formControls col-xs-8 col-xs-offset-3">
-                    <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
-                    <img src="@Url.Action("VCode")"> <a id="kanbuq" href="javascript:;">看不清，换一张</a>
+                    <input class="input-text size-L" id="Vcode" name="Vcode" type="text" placeholder="验证码"  value="" style="width:150px;">
+                    <img src="@Url.Action("VCode")" id="vcodeImg" /> <a id="kanbuq" href="javascript:;">看不清，换一张</a>
                 </div>
-            </div>           
+            </div>
             <div class="row cl">
                 <div class="formControls col-xs-8 col-xs-offset-3">
-                    <input name="" type="submit" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
-                    <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
+                    <input name="btnLogin" type="submit" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+                    <input name="btnReset" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
                 </div>
             </div>
         </form>
@@ -62,5 +65,59 @@
 <div class="footer">Copyright 你的公司名称 by H-ui.admin v3.1</div>
     <script type="text/javascript" src="/Hui/lib/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="/Hui/static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="/Hui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="/Hui/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+    <script type="text/javascript" src="/Hui/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+    <script type="text/javascript">
+    $(function () {
+        $("#vcodeImg,#kanbuq").click(function () {
+            $("#vcodeImg").attr("src", "@Url.Action("VCode")?t="+Math.random());
+        });      
+
+        $("#form-login").validate({
+            rules: {
+                uName: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 16
+                },
+                uPass: {
+                    required: true,
+                },               
+                Vcode: {
+                    required: true,
+                    digits: true,
+                    
+                },                
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+                $("#btnLogin").attr("disabled", true);
+                $(form).ajaxSubmit({
+                    type: 'post',
+                    url: "/Auth/SignIn",
+                    success: function (data) {
+                        if (data.success) {
+                            location.href = "/";
+                        }
+                        else
+                        {
+                            $("#btnLogin").attr("disabled", false);
+                            $("#vcodeImg").click();
+                            $.Huimodalalert(data.message, 3000);
+                        }
+                    },
+                    error: function (XmlHttpRequest, textStatus, errorThrown) {
+                        $("#btnLogin").attr("disabled", false);
+                        $("#vcodeImg").click();
+                        $.Huimodalalert('网络超时,请检查网络连接！', 2000);                        
+                    }
+                });                
+            }
+        });
+    });
+    </script> 
 </body>
 </html>

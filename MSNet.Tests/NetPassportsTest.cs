@@ -16,7 +16,32 @@ namespace MSNet.Tests
     public class NetPassportsTest : TestBase
     {
         #region User Test
+        [Test]
+        public void SignUpTest()
+        {
 
+            SignedUpInfo signedUpInfo = new SignedUpInfo() { SignedUpTime = DateTime.Now, SignedUpIp = "127.0.0.1", HttpUserAgent = "nunit.framework.test" };
+            UserPassport uPassport = new UserPassport() { UserName = "admin3", Password = "123456", Mobile="13683205265",  RoleType = UserRoleType.Adminstrator, RoleId=1 };
+            UserPassport status = null ;
+            //var result = MemberShip.Add(uPassport, signedUpInfo, out status);    
+
+            var result = MemberShip.SignUp("13683205266","123456", signedUpInfo, out status);    
+            Assert.IsTrue(result.success);
+            Console.WriteLine(status.ToJson());
+        }
+        [Test]
+        public void SignInTest()
+        {
+           
+                UserPassport uPassport = null;
+                var result = MemberShip.SignIn("13683205266", "123456", out uPassport);
+                Console.WriteLine(result.ToJson());
+                Assert.IsTrue(result.success);
+                Console.WriteLine(uPassport.ToJson());            
+           
+           
+           
+        }
 
         [Test]
         public void UserPassportAdminPageTest()
@@ -24,62 +49,16 @@ namespace MSNet.Tests
 
             var result = UserPassport.FindWithAdminPage("", new List<long> { 0 }, new Pagination { PageIndex=1, PageSize=10 });
             Assert.IsNotNull(result);
-            //if (result)
+            if (result.Count>0)
             {
-                Console.WriteLine(result.ToJson());
+                foreach (var o in result) {                   
+                    Console.WriteLine(o.ToJson());
+                }
+                
             }
         }
 
-        [Test]
-        public void UserPassportTest()
-        {
-
-            var result = UserPassport.FindPassportIdByUserName("admin");
-            Assert.IsNotNull(result);
-            //if (result)
-            {
-                Console.WriteLine(result.ToJson());
-            }
-        }
-
-        [Test]
-        public void SignUpTest()
-        {
-            
-            SignedUpInfo signedUpInfo=new SignedUpInfo() { SignedUpTime = DateTime.Now, SignedUpIp = "127.0.0.1", HttpUserAgent = "nunit.framework.test" };
-            SignUpStatus status = SignUpStatus.None;
-            var result = MemberShip.SignUp("admin1", "123456",signedUpInfo,out status);
-            Assert.IsNotNull(result);            
-        }
-
-        public void SignedUpInfoTest()
-        {
-
-            var result = new SignedUpInfo() { PassportId = 1, SignedUpTime = DateTime.Now, SignedUpIp = "127.0.0.1",  HttpUserAgent = "nunit" }.Save();
-            Assert.IsNotNull(result);           
-            Console.WriteLine(result.ToJson());
-           
-        }
-
-        //[Test]
-        //public void SignInTest()
-        //{
-        //   var result= Users.SignIn("admin","123456".ToMD5());
-        //   Assert.IsNotNull(result);
-        //   if (result != null)
-        //   {
-        //       Console.WriteLine(result.ToJson());
-        //   }
-        //}
-        //public void FindByUserIdTest()
-        //{
-        //    var result = Users.FindByUserId("DA8C8C9B-BDF8-45C5-9772-AF8151940A98".ToGuid());
-        //    Assert.IsNotNull(result);
-        //    if (result != null)
-        //    {
-        //        Console.WriteLine(result.ToJson());
-        //    }
-        //}
+     
 
         //public void EditUserPasswordTest()
         //{

@@ -12,7 +12,7 @@
          <Members>
           <Member Name="#LoadSqlModules(System.String,System.String)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
            <Messages>
-            <Message Id="moduleMap" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2017-08-02 04:24:06Z" FixCategory="NonBreaking">
+            <Message Id="moduleMap" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Active" Created="2017-08-18 02:30:27Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="Warning" Path="f:\51aspx\M2SA.AppGenome-master\src\Data\M2SA.AppGenome.Data\SqlMap" File="SqlMappingLoader.cs" Line="210">'SqlMappingLoader.LoadSqlModules(string, string)' 声明类型为 'Dictionary&lt;string, SqlModule&gt;' 的变量 'moduleMap'，但从未使用过该变量或只对它进行过赋值。请使用此变量或将它移除。</Issue>
             </Message>
            </Messages>
@@ -23,7 +23,7 @@
          <Members>
           <Member Name="#AddSqlWrap(M2SA.AppGenome.Data.SqlMap.SqlWrap)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="0" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-08-02 04:24:06Z" FixCategory="DependsOnFix">
+            <Message Id="0" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-08-18 02:30:27Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="f:\51aspx\M2SA.AppGenome-master\src\Data\M2SA.AppGenome.Data\SqlMap" File="SqlModule.cs" Line="72">在外部可见方法 'SqlModule.AddSqlWrap(SqlWrap)' 中，请在使用参数“sqlWrap”之前先对其进行验证。</Issue>
             </Message>
            </Messages>
@@ -34,7 +34,7 @@
          <Members>
           <Member Name="#.ctor(M2SA.AppGenome.Data.SqlMap.SqlModule)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="0" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-08-02 04:24:06Z" FixCategory="DependsOnFix">
+            <Message Id="0" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-08-18 02:30:27Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="f:\51aspx\M2SA.AppGenome-master\src\Data\M2SA.AppGenome.Data\SqlMap" File="SqlWrap.cs" Line="87">在外部可见方法 'SqlWrap.SqlWrap(SqlModule)' 中，请在使用参数“sqlModule”之前先对其进行验证。</Issue>
             </Message>
            </Messages>

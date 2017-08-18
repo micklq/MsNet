@@ -2,8 +2,8 @@
 <root xmlns="http://m2sa.net/Schema/SqlMapping">
   <module moduleName="SignedUpInfoRepository" dbName="MSNet.MySql">
     <sqlWrap sqlName="Insert" supportDBType="SqlServer,MySql">
-      insert into SignedUpInfo (PassportId, SignedUpTime, SignedUpIP, UtmSource, HttpUserAgent, RefererDomain, HttpReferer, InviteCode, RefererDomain)
-      values (@PassportId, @SignedUpTime, @SignedUpIP, @UtmSource, @HttpUserAgent, @RefererDomain, @HttpReferer, @InviteCode, @RefererDomain);
+      insert into SignedUpInfo (PassportId,SignedUpTime, SignedUpIP,HttpUserAgent,HttpReferer,RefererDomain,UtmSource,InviteCode,CreatedTime,LastModifiedTime )
+      values (@PassportId, @SignedUpTime, @SignedUpIP, @HttpUserAgent, @HttpReferer, @RefererDomain, @UtmSource, @InviteCode, @CreatedTime, @LastModifiedTime);
     </sqlWrap>
   </module>
 </root>

@@ -8,16 +8,16 @@ namespace MSNet.Common.Web
 {
     public class AuthBaseController : BaseController
     {
-      
-        //protected override void OnAuthorization(AuthorizationContext filterContext)
-        //{
-        //    base.OnAuthorization(filterContext);          
-        //    if (!UserAuthentication.IsAuthenticated)
-        //    {
-        //        filterContext.Result = new RedirectResult(UserAuthentication.LoginUrl + "?returnUrl=" + filterContext.HttpContext.Request.Url.ToString().UrlEncode());
-        //        return;
-        //    }          
-        //}
+
+        protected override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            base.OnAuthorization(filterContext);
+            if (!UserAuthentication.IsAuthenticated)
+            {
+                filterContext.Result = new RedirectResult(UserAuthentication.LoginUrl + "?returnUrl=" + filterContext.HttpContext.Request.Url.ToString().UrlEncode());
+                return;
+            }
+        }
         public SignInUser CurrentUser
         {
             get

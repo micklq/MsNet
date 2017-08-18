@@ -99,7 +99,7 @@ namespace MSNet.Common
         {
             this.IsLocked = false;
             this.FailedPasswordAttemptCount = 0;
-            this.LastLockedTime = ModuleEnvironment.EmptyDateTime;
+            //this.LastLockedTime = ModuleEnvironment.EmptyDateTime;
         }
     }
 }

@@ -55,7 +55,7 @@ namespace MSNet.Common.Web
 
                     using (LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, image.Width, image.Height), arg.Color, arg.Color, 1.2f, true))
                     {
-                        graphics.DrawString(s, font, brush, (float)2f, (float)2f);
+                        graphics.DrawString(s, font, brush, (float)5f, (float)5f);
                     }
 
                     HttpContext.Current.Response.ClearContent();
@@ -110,7 +110,7 @@ namespace MSNet.Common.Web
                 }
             }
 
-            string _SessionName = "_VerifyCode_";
+            string _SessionName = "_Admin_VCode_SecurityCode_";
             /// <summary>
             /// Session名称
             /// </summary>
@@ -126,7 +126,7 @@ namespace MSNet.Common.Web
                 }
             }
 
-            int _Width = 50;
+            int _Width = 70;
             /// <summary>
             /// 图片宽度
             /// </summary>
@@ -142,7 +142,7 @@ namespace MSNet.Common.Web
                 }
             }
 
-            int _Height = 0x16;
+            int _Height = 34;
             /// <summary>
             /// 图片高度
             /// </summary>
@@ -158,7 +158,7 @@ namespace MSNet.Common.Web
                 }
             }
 
-            Font _Font = new Font("Arial", 12f, FontStyle.Bold);
+            Font _Font = new Font("Arial", 16f, FontStyle.Bold);
             /// <summary>
             /// 字体
             /// </summary>
@@ -216,7 +216,7 @@ namespace MSNet.Common.Web
 
         public static bool CheckVerifyCode(string vcode)
         {
-            string sessionName = "_VerifyCode_";
+            string sessionName = "_Admin_VCode_SecurityCode_";
 
             return CheckVerifyCode(vcode, sessionName);
         }

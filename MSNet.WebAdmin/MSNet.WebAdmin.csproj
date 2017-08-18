@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2B9ACF5C-6886-4422-BF5E-3E2823452776}</ProjectGuid>
+    <ProjectGuid>{7E154AB4-8622-4997-9B6E-C750B8EBD44E}</ProjectGuid>
     <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -29,7 +29,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,19 +39,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FredCK.FCKeditorV2">
-      <HintPath>..\libs\FredCK.FCKeditorV2.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\libs\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="M2SA.AppGenome">
+    <Reference Include="M2SA.AppGenome, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\M2SA\M2SA.AppGenome.dll</HintPath>
     </Reference>
     <Reference Include="M2SA.AppGenome.Cache">
       <HintPath>..\libs\M2SA\M2SA.AppGenome.Cache.dll</HintPath>
     </Reference>
-    <Reference Include="M2SA.AppGenome.Data">
+    <Reference Include="M2SA.AppGenome.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\M2SA\M2SA.AppGenome.Data.dll</HintPath>
     </Reference>
     <Reference Include="M2SA.AppGenome.Logging">
@@ -66,16 +61,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\M2SA\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\libs\M2SA\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -90,7 +77,6 @@
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -100,6 +86,9 @@
     <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
@@ -122,9 +111,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Optimization">
-      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
@@ -141,41 +127,22 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.2.0.30506.0\lib\net40\Microsoft.Web.WebPages.OAuth.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.OData, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.4.0.30506\lib\net40\System.Web.Http.OData.dll</HintPath>
-    </Reference>
-    <Reference Include="WebGrease">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.3.0\lib\WebGrease.dll</HintPath>
-    </Reference>
-    <Reference Include="Antlr3.Runtime">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.3.0\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminController_Permission.cs" />
     <Compile Include="Controllers\AdminController_Role.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\ChartsController.cs" />
-    <Compile Include="Controllers\SystemController.cs" />
-    <Compile Include="Controllers\MembersController.cs" />
-    <Compile Include="Controllers\CommentController.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="Controllers\PicturesController.cs" />
-    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\ChartsController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\PicturesController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PubController.cs" />
+    <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -190,6 +157,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Hui\404.html" />
@@ -1309,34 +1279,13 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Admin\List.cshtml" />
-    <Content Include="Views\Admin\Permissions.cshtml" />
-    <Content Include="Views\Admin\Roles.cshtml" />
-    <Content Include="Views\Articles\List.cshtml" />
-    <Content Include="Views\Articles\Add.cshtml" />
-    <Content Include="Views\Auth\Login.cshtml" />
-    <Content Include="Views\Home\Index.cshtml">
-      <SubType>
-      </SubType>
-    </Content>
-    <Content Include="Views\Pub\ErrorMsg.cshtml" />
-    <Content Include="Views\Shared\_Admin_Layout.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Charts\Index.cshtml" />
+    <Folder Include="logs\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MSNet.Common.DataRepositories\MSNet.Common.DataRepositories.csproj">
-      <Project>{ed77bc60-25db-4aa6-943f-0ea1b5d1eece}</Project>
-      <Name>MSNet.Common.DataRepositories</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MSNet.Common\MSNet.Common.csproj">
-      <Project>{2bd2de63-afbc-4b8d-b469-b9337bd4b3ee}</Project>
-      <Name>MSNet.Common</Name>
-    </ProjectReference>
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Hui\H-ui前端框架官方网站.URL" />
@@ -1375,106 +1324,67 @@
     <Content Include="Hui\temp\Thumbs.db" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="appgenome.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MSNet.Common.DataRepositories\MSNet.Common.DataRepositories.csproj">
+      <Project>{ed77bc60-25db-4aa6-943f-0ea1b5d1eece}</Project>
+      <Name>MSNet.Common.DataRepositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSNet.Common\MSNet.Common.csproj">
+      <Project>{2bd2de63-afbc-4b8d-b469-b9337bd4b3ee}</Project>
+      <Name>MSNet.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\Home\Welcome.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_Admin_Menu.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_Admin_Footer.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_Admin_Header.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_Admin_Meta.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Feedback\List.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Pictures\List.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Products\List.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Products\Brand.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Products\Category.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Comment\List.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Members\List.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Members\Del.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Members\ScoreOperation.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Members\RecordDownload.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Members\RecordBrowse.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Members\Level.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Members\RecordShare.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\System\Logs.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\System\Shielding.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\System\Base.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\System\Category.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\System\Data.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Charts\Charts1.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Charts\Charts2.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Charts\Charts7.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Charts\Charts6.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Charts\Charts5.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Charts\Charts4.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Charts\Charts3.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="appgenome.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Views\Admin\List.cshtml" />
+    <Content Include="Views\Admin\Permissions.cshtml" />
     <Content Include="Views\Admin\PermissionView.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Views\Admin\Roles.cshtml" />
     <Content Include="Views\Admin\RoleView.cshtml" />
+    <Content Include="Views\Articles\Add.cshtml" />
+    <Content Include="Views\Articles\List.cshtml" />
+    <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Charts\Charts1.cshtml" />
+    <Content Include="Views\Charts\Charts2.cshtml" />
+    <Content Include="Views\Charts\Charts3.cshtml" />
+    <Content Include="Views\Charts\Charts4.cshtml" />
+    <Content Include="Views\Charts\Charts5.cshtml" />
+    <Content Include="Views\Charts\Charts6.cshtml" />
+    <Content Include="Views\Charts\Charts7.cshtml" />
+    <Content Include="Views\Charts\Index.cshtml" />
+    <Content Include="Views\Comment\List.cshtml" />
+    <Content Include="Views\Feedback\List.cshtml" />
+    <Content Include="Views\Members\Del.cshtml" />
+    <Content Include="Views\Members\Level.cshtml" />
+    <Content Include="Views\Members\List.cshtml" />
+    <Content Include="Views\Members\RecordBrowse.cshtml" />
+    <Content Include="Views\Members\RecordDownload.cshtml" />
+    <Content Include="Views\Members\RecordShare.cshtml" />
+    <Content Include="Views\Members\ScoreOperation.cshtml" />
+    <Content Include="Views\Pictures\List.cshtml" />
+    <Content Include="Views\Products\Brand.cshtml" />
+    <Content Include="Views\Products\Category.cshtml" />
+    <Content Include="Views\Products\List.cshtml" />
+    <Content Include="Views\Pub\ErrorMsg.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Admin_Footer.cshtml" />
+    <Content Include="Views\Shared\_Admin_Header.cshtml" />
+    <Content Include="Views\Shared\_Admin_Layout.cshtml" />
+    <Content Include="Views\Shared\_Admin_Menu.cshtml" />
+    <Content Include="Views\Shared\_Admin_Meta.cshtml" />
+    <Content Include="Views\System\Base.cshtml" />
+    <Content Include="Views\System\Category.cshtml" />
+    <Content Include="Views\System\Data.cshtml" />
+    <Content Include="Views\System\Logs.cshtml" />
+    <Content Include="Views\System\Shielding.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1492,7 +1402,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>2542</DevelopmentServerPort>
+          <DevelopmentServerPort>2691</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:2542/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

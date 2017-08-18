@@ -12,7 +12,7 @@
          <Members>
           <Member Name="#WriteMessage(M2SA.AppGenome.Logging.ILogEntry)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="0" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-08-02 04:24:03Z" FixCategory="DependsOnFix">
+            <Message Id="0" TypeName="验证公共方法的参数" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2017-08-18 02:30:24Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="f:\51aspx\M2SA.AppGenome-master\src\Logging\M2SA.AppGenome.Logging\Listeners" File="ConsoleListener.cs" Line="31">在外部可见方法 'ConsoleListener.WriteMessage(ILogEntry)' 中，请在使用参数“entry”之前先对其进行验证。</Issue>
             </Message>
            </Messages>

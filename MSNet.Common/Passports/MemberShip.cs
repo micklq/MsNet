@@ -30,9 +30,9 @@ namespace MSNet.Common
         /// <param name="signedUpInfo"></param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes" )]
-        public static UserPassport SignUp(string mobile, string password, SignedUpInfo signedUpInfo, out SignUpStatus status)
-        {                   
-             return SignUp(mobile, password, UserRoleType.Registered, 0, signedUpInfo, out status);           
+        public static AjaxResult SignUp(string mobile, string password, SignedUpInfo signedUpInfo, out UserPassport passport)
+        {
+            return SignUp(mobile, password, UserRoleType.Registered, 0, signedUpInfo, out passport);           
         }
         /// <summary>
         /// 普通用户 老师 学生注册
@@ -44,29 +44,24 @@ namespace MSNet.Common
         /// <param name="signedUpInfo"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public static UserPassport SignUp(string mobile, string password, UserRoleType roleType, long roleId, SignedUpInfo signedUpInfo, out SignUpStatus status)
-        {
-            status = SignUpStatus.None;
-            //status = CheckPassword(password); //核对密码强度 
-            //if (status != SignUpStatus.None) return null;
-
-            status = CheckMobile(mobile); //核对手机是否已注册
-            if (status != SignUpStatus.None) return null;
-
-            var passport = SignUp(mobile, password, mobile, null, roleType, roleId, signedUpInfo, out status);
-
-            if (null == passport)
-                throw new Exception(status.ToString());
-
-            return passport;
+        public static AjaxResult SignUp(string mobile, string password, UserRoleType roleType, long roleId, SignedUpInfo signedUpInfo, out UserPassport passport)
+        {  
+             AjaxResult ajaxResult = CheckMobile(mobile); //核对手机是否已注册
+             if (!ajaxResult.success){
+                 passport = null;
+                 return ajaxResult;
+             }
+             return SignUp(mobile, password, mobile, null, roleType, roleId, signedUpInfo, out passport);
+            
         }
-        
 
-        private static UserPassport SignUp(string userName, string password, string mobile, string email, UserRoleType roleType, long roleId, SignedUpInfo signedUpInfo, out SignUpStatus status)
+        private static AjaxResult SignUp(string userName, string password, string mobile, string email, UserRoleType roleType, long roleId, SignedUpInfo signedUpInfo, out UserPassport passport)
         {
-            status = SignUpStatus.None;
-            status = CheckUserName(userName);
-            if (status != SignUpStatus.None) return null;
+            AjaxResult ajaxResult =  CheckUserName(userName);
+            if (!ajaxResult.success) {
+                passport = null;
+                return ajaxResult;
+            }            
             //status = CheckEmail(email); //核对邮箱是否已注册
             //if (status != SignUpStatus.None) return null;             
 
@@ -82,13 +77,15 @@ namespace MSNet.Common
             userPassport.UserSecurity.Password = password;
             userPassport.Profile.NickName = userName;           
             userPassport.Profile.Mobile = mobile;
-            userPassport.Profile.CreatedTime = userPassport.CreatedTime;           
-
-            status = SignUpStatus.Error;
-            if (userPassport.SignUp(signedUpInfo)){
-                status = SignUpStatus.Success;
-            }               
-            return userPassport;
+            userPassport.Profile.CreatedTime = userPassport.CreatedTime;
+            ajaxResult.success = false; 
+            ajaxResult.message = "系统异常";
+            if (userPassport.SignUp(signedUpInfo)){                
+                ajaxResult.success = true; 
+                ajaxResult.message = "注册成功";                
+            }
+            passport = userPassport;
+            return ajaxResult;
         }
 
         #endregion
@@ -102,12 +99,13 @@ namespace MSNet.Common
         /// <param name="password"></param>
         /// <param name="userPassport"></param>
         /// <returns></returns>
-        public static bool SignIn(string userKey, string password, out UserPassport userPassport, out SignUpStatus status)
+        public static AjaxResult SignIn(string userKey, string password, out UserPassport userPassport)
         {
             ArgumentAssertion.IsNotNull(userKey, "userKey");
             ArgumentAssertion.IsNotNull( password, "password" );
 
             long passportId = 0;
+            userPassport = null;
             if (userKey.IsMatchEMail())
             {
                 passportId = UserPassport.FindPassportIdByEmail(userKey);
@@ -119,47 +117,45 @@ namespace MSNet.Common
             else
             {
                 passportId = UserPassport.FindPassportIdByUserName(userKey);
-            }
-
-            userPassport = null;
-            status = SignUpStatus.None;
-            var result = false;
+            }            
             if ( passportId > 0 )
             {
-                var passport = UserPassport.FindUserSecurityById( passportId );
+                userPassport = UserPassport.FindUserSecurityById(passportId);
                 //判断状态 
-                if (passport.PassportStatus == PassportStatus.Cancellation) {
-                    status = SignUpStatus.UserCancellation;
-                    return false;
-                }
-                if (passport.PassportStatus == PassportStatus.Hibernation)
+                if (userPassport.PassportStatus == PassportStatus.Cancellation)
                 {
-                    status = SignUpStatus.UserHibernation;
-                    return false;
+                    return new AjaxResult { success = false, message = "账号已废弃" };                   
                 }
-                result = PassportSecurityProvider.Verify( password, passport );
-                if (result)
+                if (userPassport.PassportStatus == PassportStatus.Hibernation)
                 {
-                    UnLock(passport);   
+                    return new AjaxResult { success = false, message = "账号已休眠,请于管理员联系" }; 
+                }
+                var ckResult =  PassportSecurityProvider.Verify(password, userPassport);
+                if (ckResult)
+                {
+                    if (userPassport.PassportStatus == PassportStatus.Locked) {
+                        UnLock(userPassport);
+                    }                    
+                   return new AjaxResult { success = true, message = "登录成功" }; 
                 }
                 else
                 {
-                    if (passport.PassportStatus == PassportStatus.Locked)
+                    if (userPassport.PassportStatus == PassportStatus.Locked)
                     {
-                        status = SignUpStatus.UserLocked;
-                        return false;
+                        return new AjaxResult { success = false, message = "账号已锁定,请于管理员联系" }; 
                     }
 
-                    passport.UserSecurity.FailedPasswordAttemptCount++;                     
-                    if (passport.UserSecurity.FailedPasswordAttemptCount > 5)
-                    {
-                        Lock(passport);                         
-                    }                    
+                    userPassport.UserSecurity.FailedPasswordAttemptCount++;                  
+                    if (userPassport.UserSecurity.FailedPasswordAttemptCount > 5)
+                    {                        
+                        Lock(userPassport);
+                        return new AjaxResult { success = false, message = "5次密码输入错误,账号已锁定" };                        
+                    }
+                    userPassport.UserSecurity.Save(); //保存错误次数
+                    return new AjaxResult { success = false, message = "用户密码错误！" };  
                 }
-                userPassport = passport;  
-
             }
-            return result;
+            return new AjaxResult { success = false, message = "用户不存在" };  
         }
 
 
@@ -181,6 +177,7 @@ namespace MSNet.Common
            
             userPassport.PassportStatus = PassportStatus.Locked;
             userPassport.UserSecurity.IsLocked = true;
+            userPassport.UserSecurity.LastLockedTime = DateTime.Now;
             return userPassport.Save() && userPassport.UserSecurity.Save();   
             
         }
@@ -201,14 +198,9 @@ namespace MSNet.Common
         /// <param name="signedUpInfo"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public static bool Add(UserPassport passport, SignedUpInfo signedUpInfo, out SignUpStatus status)
-        {  
-            UserPassport user = SignUp(passport.UserName, passport.Password, passport.Mobile, passport.Email, passport.RoleType, passport.RoleId, signedUpInfo, out status);
-            if (user == null)
-            {
-                return false;
-            }           
-            return true;
+        public static AjaxResult Add(UserPassport passport, SignedUpInfo signedUpInfo, out UserPassport uPassport)
+        {
+            return SignUp(passport.UserName, passport.Password, passport.Mobile, passport.Email, passport.RoleType, passport.RoleId, signedUpInfo, out uPassport);            
         }
 
         /// <summary>
@@ -302,66 +294,69 @@ namespace MSNet.Common
             return signUpStatus;
         }
 
-        private static SignUpStatus CheckEmail( string email )
-        {
-            ArgumentAssertion.IsNotNull( email, "email" );
-
-            var signUpStatus = SignUpStatus.None;
-            if ( false == email.IsMatchEMail() )
-                signUpStatus = SignUpStatus.InvalidEmail;
+        private static AjaxResult CheckEmail(string email)
+        {           
+            if (string.IsNullOrEmpty(email))
+            {
+                return new AjaxResult { success = false, message = "邮箱不能为空！" };
+            } 
+          
+            if ( false == email.IsMatchEMail() ){
+                return new AjaxResult { success = false, message = "邮箱格式错误！" };
+            }            
             else
             {
                 var passportId = UserPassport.FindPassportIdByEmail( email );
                 if ( passportId > 0 )
-                    signUpStatus = SignUpStatus.DuplicateEmail;
+                    return new AjaxResult() { success = false, message = "当前邮箱已存在！" };
             }
-            return signUpStatus;
+            return new AjaxResult() { success = true, message = "" };
         }
 
-        private static SignUpStatus CheckMobile( string mobile )
+        private static AjaxResult CheckMobile(string mobile)
         {
-            ArgumentAssertion.IsNotNull( mobile, "mobile" );
+            if (string.IsNullOrEmpty(mobile))
+            {
+                return new AjaxResult { success = false, message = "手机号不能为空！" };
+            } 
 
-            var signUpStatus = SignUpStatus.None;
-
-            if ( false == mobile.IsMatchInteger() )
-                signUpStatus = SignUpStatus.InvalidMobilePhone;
+            if ( false == mobile.IsMatchInteger() ){
+                return new AjaxResult { success = false, message = "手机号格式错误！" };
+            }                
             else
             {
                 //Todo: FindUserIdByMonilePhone
                 var passportId = UserPassport.FindPassportIdByMobile( mobile );
-                if ( passportId > 0 )
-                    signUpStatus = SignUpStatus.DuplicateMobilePhone;
+                if (passportId > 0) {
+                    return new AjaxResult() { success = false, message = "当前手机号已存在！" };
+                }                  
             }
-            return signUpStatus;
+            return new AjaxResult() { success = true, message = "" };
         }
 
 
-        public static SignUpStatus CheckUserName( string userName )
+        public static AjaxResult CheckUserName(string userName)
         {
-            var signUpStatus = SignUpStatus.Error;
-
-            if ( string.IsNullOrEmpty( userName ) )
-                return signUpStatus;
+            if (string.IsNullOrEmpty(userName)){
+                return new AjaxResult { success = false, message = "用户名不能为空！" };
+            }           
 
             var pat = ModuleEnvironment.UserNamePattern;
-
             //if ( HttpContext.Current != null && HttpContext.Current.Items.Contains( "UserNamePattern" ) )
             //    pat = HttpContext.Current.Items["UserNamePattern"] as string;
-
             //if ( string.IsNullOrEmpty(pat) )
             //    pat = ModuleEnvironment.UserNamePattern;
-
-            if ( false == Regex.IsMatch( userName, pat ) )
-                signUpStatus = SignUpStatus.InvalidUserName;
+            if ( false == Regex.IsMatch( userName, pat ) ){
+                return new AjaxResult() { success = false, message = "请输入4到16数字或字母组合！" };             
+            }                
             else
             {
                 var passportId = UserPassport.FindPassportIdByUserName(userName);
-                if ( passportId > 0 )
-                    signUpStatus = SignUpStatus.DuplicateUserName;
+                if (passportId > 0) {
+                    return new AjaxResult() { success = false, message = "当前用户名已存在！" };
+                }                
             }
-
-            return signUpStatus;
+            return new AjaxResult() { success = true ,message="" };
         }
 
         #endregion

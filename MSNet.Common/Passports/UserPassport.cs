@@ -386,7 +386,6 @@ namespace MSNet.Common
             {
                
                 var result = this.Save();
-
                 //var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
 
                 if ( null != signedUpInfo )
@@ -395,7 +394,6 @@ namespace MSNet.Common
                     signedUpInfo.PassportId = this.PassportId;
                     signedUpInfo.Save();
                 }
-
                 return result;
             }
         }

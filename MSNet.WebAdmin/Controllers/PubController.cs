@@ -21,10 +21,10 @@ namespace MSNet.WebAdmin.Controllers
         {
             return View();
         }
-        public ActionResult VCode()
-        {
-            return Content(VerifyCodeHelper.Create(new VerifyCodeHelper.VerifyCodeImageArg() { SessionName = "_Admin_VCode_SecurityCode_" }));
-        }
+        //public ActionResult VCode()
+        //{
+        //    return Content(VerifyCodeHelper.Create(new VerifyCodeHelper.VerifyCodeImageArg() { SessionName = "_Admin_VCode_SecurityCode_" }));
+        //}
 
         //[ValidateInput(false)]
         //[HttpPost]
