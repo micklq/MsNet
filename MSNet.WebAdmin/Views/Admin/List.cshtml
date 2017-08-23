@@ -45,10 +45,10 @@
                          <td>@(u.PassportId)</td>
                          <td>@(u.UserName)</td>
                          <td>@(u.Mobile)</td>
-                         <td>@(u.Email)</td>
-                         <td>@(u.RoleId)</td>
+                         <td>@(u.Email.IsNullOrEmpty()?"无":u.Email)</td>
+                         <td>@(u.Role.Name)</td>
                          <td>@(u.CreatedTime)</td>
-                         <td class="td-status"><span class="label label-success radius">@(u.PassportStatus)</span></td>
+                         <td class="td-status"><span class="label label-success radius">@(EnumHelper.GetDescription<PassportStatus>(u.PassportStatus))</span></td>
                         <td class="td-manage">
                             <a style="text-decoration:none" onclick="admin_status(this, '10001')" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a> 
                             <a title="编辑" href="javascript:;" onclick="    admin_action('管理员编辑', 'admin-add.html', '1', '800', '500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> 

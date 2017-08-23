@@ -16,13 +16,11 @@ namespace MSNet.Common.Web
             String name = String.Format("{0}_{1}", user.PassportId, user.UserName);
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, name, DateTime.Now, DateTime.Now.AddMinutes(FormsAuthentication.Timeout.Minutes), false, userData);
             string enyTicket = FormsAuthentication.Encrypt(ticket);
-            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, enyTicket);
-            HttpContext.Current.Response.Cookies.Add(cookie);
+            FormsAuthentication.SetAuthCookie(FormsAuthentication.FormsCookieName, false);
+            //HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, enyTicket);
+            //HttpContext.Current.Response.Cookies.Add(cookie);
 
-            //var  dd = FormsAuthentication.Decrypt(enyTicket);
-            //var ff = dd.UserData;
-            //var userdd= HttpContext.Current.User.Identity;
-            //var bbb = HttpContext.Current.User.Identity.IsAuthenticated; 
+          
            
 
         }

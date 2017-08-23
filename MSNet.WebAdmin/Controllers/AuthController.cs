@@ -40,12 +40,12 @@ namespace MSNet.WebAdmin.Controllers
                       upass = Request["uPass"].ToString();
             if (uname.IsNullOrEmpty() || upass.IsNullOrEmpty())
             {
-                return JsonFail("请输入用户名或密码！");   
+                return JsonFail("请输入用户名或密码！");
             }
             var vcode = Request["Vcode"].ToString();
             if (vcode.IsNullOrEmpty())
             {
-                return JsonFail("请输入验证码！");   
+                return JsonFail("请输入验证码！");
             }
             if (!VerifyCodeHelper.CheckVerifyCode(vcode))
             {

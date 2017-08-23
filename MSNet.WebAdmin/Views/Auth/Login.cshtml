@@ -99,7 +99,7 @@
                     url: "@Url.Action("SignIn")",
                     success: function (data) {
                         if (data.success) {
-                            location.href = "/home/index";
+                            location.href = data.message;
                         }
                         else
                         {
