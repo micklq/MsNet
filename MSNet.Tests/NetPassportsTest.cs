@@ -21,11 +21,11 @@ namespace MSNet.Tests
         {
 
             SignedUpInfo signedUpInfo = new SignedUpInfo() { SignedUpTime = DateTime.Now, SignedUpIp = "127.0.0.1", HttpUserAgent = "nunit.framework.test" };
-            UserPassport uPassport = new UserPassport() { UserName = "admin3", Password = "123456", Mobile="13683205265",  RoleType = UserRoleType.Adminstrator, RoleId=1 };
+            UserPassport uPassport = new UserPassport() { UserName = "admin2", Password = "123456", Mobile="13683205268",  RoleType = UserRoleType.Adminstrator, RoleId=1 };
             UserPassport status = null ;
-            //var result = MemberShip.Add(uPassport, signedUpInfo, out status);    
+            var result = MemberShip.Add(uPassport, signedUpInfo, out status);    
 
-            var result = MemberShip.SignUp("13683205266","123456", signedUpInfo, out status);    
+            //var result = MemberShip.SignUp("13683205266","123456", signedUpInfo, out status);    
             Assert.IsTrue(result.success);
             Console.WriteLine(status.ToJson());
         }
@@ -124,48 +124,7 @@ namespace MSNet.Tests
 
         #endregion
 
-        #region UserGroup Test
-        //public void UserGroupFindByIdTest()
-        //{
-        //    var result = UserGroup.FindById("CA0D94E3-A1E2-4858-ACDE-A6021F062077".ToGuid());
-        //    Assert.IsNotNull(result);
-        //    if (result != null) {
-        //        Console.WriteLine(result.ToJson());
-        //    }
-            
-        //}
-
-        //public void UserGroupFindWithAllTest()
-        //{
-        //    var result = UserGroup.FindWithAll();
-        //    Assert.IsNotNull(result);
-        //    if (result != null)
-        //    {
-        //        Console.WriteLine(result.ToJson());
-        //    }
-        //}
-        //public void UserGroupSaveTest()
-        //{
-        //    var u = new UserGroup { GroupId = Guid.NewGuid(), GroupName = "管理员", GroupPermission = "***", GroupCreatedTime = DateTime.Now };            
-        //    var result = u.Save();
-        //    Assert.IsTrue(result);
-        //    if (result)
-        //    {
-        //        Console.WriteLine(u.ToJson());
-        //        //u.GroupStopTime = DateTime.Now.AddYears(1);
-        //        //u.Save();
-        //    }            
-        //}
-
-        //public void UserGroupRemoveTest()
-        //{
-        //    var u = new UserGroup { GroupId = "B76955E2-47BA-4CA0-98A9-9F5E29875EE7".ToGuid() };
-        //    var result = u.Remove();
-        //    Assert.IsTrue(result);
-        //    Console.WriteLine(result);
-        //}
-        #endregion
-
+      
         #region News Test
         //public void NewsFindForPaginationByWheres()
         //{

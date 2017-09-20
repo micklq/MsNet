@@ -8,17 +8,8 @@ using MSNet.Common.Util;
 using MSNet.Common.Web;
 namespace MSNet.WebAdmin.Controllers
 {
-    public class AuthController : Controller
-    {
-        public JsonResult JsonSuccess(String message = "")
-        {
-            return Json(AjaxResult.Success(message), JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult JsonFail(String message)
-        {
-            return Json(AjaxResult.Fail(message), JsonRequestBehavior.AllowGet);
-        }
+    public class AuthController : BaseController
+    {       
 
         public ActionResult VCode()
         {

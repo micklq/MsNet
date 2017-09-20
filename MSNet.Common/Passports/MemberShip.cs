@@ -122,6 +122,11 @@ namespace MSNet.Common
             {
                 userPassport = UserPassport.FindUserSecurityById(passportId);
                 //判断状态 
+                if ((int)userPassport.RoleType==0)
+                {
+                    return new AjaxResult { success = false, message = "用户无访问权限" };
+                }
+
                 if (userPassport.PassportStatus == PassportStatus.Cancellation)
                 {
                     return new AjaxResult { success = false, message = "账号已废弃" };                   
@@ -211,13 +216,12 @@ namespace MSNet.Common
         /// <param name="isLock"></param>
         /// <param name="signedUpInfo"></param>      
         /// <returns></returns>
-        public static bool Update(UserPassport passport, SignedUpInfo signedUpInfo)
-        {
-            bool result = true;            
+        public static AjaxResult Update(UserPassport passport, SignedUpInfo signedUpInfo)
+        {                       
             UserPassport user = UserPassport.FindUserSecurityById(passport.PassportId);
             if (user == null)
-            {               
-                return false;
+            {
+                return  AjaxResult.Fail("用户数据异常！"); 
             }
             if (!passport.Mobile.IsNullOrEmpty()&&passport.Mobile != user.Mobile)
             {
@@ -235,22 +239,42 @@ namespace MSNet.Common
             {
                 user.Profile.Mobile = user.Mobile;
             }
-            result = user.Profile.Save(); //更新profile 
+            if (!user.Profile.Save()) //更新profile
+            {
+                return AjaxResult.Fail("用户资料更新失败！");
+            }
+            if (!passport.Password.IsNullOrEmpty())
+            {
+                if (!user.ChangePassword(passport.Password))
+                {
+                    return AjaxResult.Fail("密码更新失败！");
+                }
+            } 
+
             if (passport.PassportStatus != user.PassportStatus)
             {
                 if (passport.PassportStatus == PassportStatus.Locked)
                 {
-                    result = Lock(user);
+                    if (!Lock(user)) 
+                    {
+                        return AjaxResult.Fail("锁定用户失败！"); 
+                    }
                 }
                 if (passport.PassportStatus == PassportStatus.Standard)
                 {
-                    result = UnLock(user);
+                    if (!UnLock(user))
+                    {
+                        return AjaxResult.Fail("解锁用户失败！");
+                    }                    
                 }
                 user.PassportStatus = passport.PassportStatus;
-            }            
-            result = user.Save();    
-
-            return result;
+            }
+            if (!user.Save()) {
+                return AjaxResult.Fail("数据更新失败！"); 
+            }
+           
+            return AjaxResult.Success();          
+            
         }
 
         /// <summary>
@@ -260,22 +284,26 @@ namespace MSNet.Common
         /// <param name="oPassword">旧密码</param>
         /// <param name="nPasspword">新密码</param>
         /// <returns></returns>
-        public static bool ModifyPassword(long passportId, string oPassword, string nPasspword)
-        {
-            var result = false;
-            if (passportId > 0)
+        public static AjaxResult ModifyPassword(long passportId, string oPassword, string nPasspword)
+        {            
+            if (passportId<1)
             {
-                var passport = UserPassport.FindUserSecurityById(passportId);
-                if (passport == null) {
-                    return false;
-                }
-                result = passport.CheckPassword(oPassword);                
-                if (result)
-                {
-                    result = passport.ChangePassword(nPasspword);
-                }
+                return AjaxResult.Fail("参数错误！");
             }
-            return result;
+            var passport = UserPassport.FindUserSecurityById(passportId);
+            if (passport == null)
+            {
+                return AjaxResult.Fail("用户数据异常！"); 
+            }
+            if(!passport.CheckPassword(oPassword))
+            {
+                return AjaxResult.Fail("旧密码错误！"); 
+            }
+            if (!passport.ChangePassword(nPasspword))
+            {
+                return AjaxResult.Fail("更新密码失败！");
+            }           
+            return AjaxResult.Success();
         }
 
         #endregion

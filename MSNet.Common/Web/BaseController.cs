@@ -24,12 +24,12 @@ namespace MSNet.Common.Web
         public SignedUpInfo GetSignedUpInfo()
         {
             SignedUpInfo  info = new SignedUpInfo();
-            info.SignedUpIp = HttpContext.Request.ServerVariables.Get("Remote_Addr").ToString();
-            info.HttpReferer = HttpContext.Request.ServerVariables.Get("Http_Referer").ToString();
-            info.HttpUserAgent = HttpContext.Request.ServerVariables.Get("Http_User_Agent").ToString();            
-            info.RefererDomain = HttpContext.Request.ServerVariables.Get("Http_Host").ToString();
-            info.UtmSource = HttpContext.Request.Params["UtmSource"].ToString();
-            info.InviteCode = HttpContext.Request.Params["InviteCode"].ToString();
+            info.SignedUpIp = HttpContext.Request.ServerVariables.Get("Remote_Addr");
+            info.HttpReferer = HttpContext.Request.ServerVariables.Get("Http_Referer");
+            info.HttpUserAgent = HttpContext.Request.ServerVariables.Get("Http_User_Agent");            
+            info.RefererDomain = HttpContext.Request.ServerVariables.Get("Http_Host");
+            info.UtmSource = HttpContext.Request.Params["UtmSource"];
+            info.InviteCode = HttpContext.Request.Params["InviteCode"];
             return info;
         }
 

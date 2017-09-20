@@ -1,0 +1,89 @@
+﻿@{
+    Layout = null;
+       var p = MSNet.Common.Web.UserAuthentication.CurrentUser;
+       if (p == null) { p = new SignInUser(); }
+}
+<!DOCTYPE html>
+<html>
+<head>
+@Html.Partial("_Admin_Meta")
+<title>修改密码</title>
+</head>
+<body>
+    <div class="page-container">
+        <form action="/Admin/ModifyCurrUserPsw" method="post" class="form form-horizontal" id="form-submit">           
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">
+                    <span class="c-red">*</span>
+                    密码：
+                </label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <input type="text" class="input-text" id="oPassword" name="oPassword" value="" placeholder="请输入旧密码">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">
+                    <span class="c-red">*</span>
+                    新密码：
+                </label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <input type="text" class="input-text" id="nPasspword" name="nPasspword" value="" placeholder="请输入新密码">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-2">
+                    <span class="c-red">*</span>
+                    确认密码：
+                </label>
+                <div class="formControls col-xs-6 col-sm-6">
+                    <input type="text" class="input-text" id="ckPasspword" name="ckPasspword" value="" placeholder="请输入确认密码">
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-9 col-offset-2">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--_footer 作为公共模版分离出去-->
+      @Html.Partial("_Admin_Footer") <!--/_footer 作为公共模版分离出去-->
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="/Hui/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+    <script type="text/javascript" src="/Hui/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+    <script type="text/javascript" src="/Hui/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+    <script type="text/javascript">
+        $(function () { 
+            $("#form-submit").validate({
+                rules: {
+                    oPassword: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 16
+                    },
+                    nPasspword: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 16
+                    },
+                    ckPasspword: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 16,
+                        equalTo: "#nPasspword"
+                    },
+                },
+                onkeyup: false,
+                focusCleanup: true,
+                success: "valid",
+                submitHandler: function (form) {
+                    $(form).ajaxSubmit();
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.location.reload();
+                    parent.layer.close(index);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

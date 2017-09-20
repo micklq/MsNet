@@ -42,216 +42,78 @@ namespace MSNet.WebAdmin.Controllers
             return View();
         }
 
-
-        [HttpPost]
-        public ActionResult AdminAction(UserPassport model)
+        public ActionResult AdminView()
         {
-            //if (model.UserName.IsNullOrEmpty())
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "请输入用户名！"
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            //var rbool = true;
-            //if (model.PassportId < 1)
-            //{
-            //    if (model.Password.IsNullOrEmpty())
-            //    {
-            //        return Json(new
-            //        {
-            //            success = false,
-            //            message = "请输入密码！"
-            //        }, JsonRequestBehavior.AllowGet);
-            //    }
-
-            //    SignUpStatus status;
-            //    rbool = MemberShip.Add(model, GetSignedUpInfo(), out status);
-            //    if (!rbool)
-            //    {
-            //        if (status == SignUpStatus.None || status == SignUpStatus.Error)
-            //        {
-            //            return Json(new
-            //            {
-            //                success = false,
-            //                message = "系统异常,请稍后重试！"
-            //            }, JsonRequestBehavior.AllowGet);
-            //        }
-            //        if (status == SignUpStatus.InvalidUserName)
-            //        {
-            //            return Json(new
-            //            {
-            //                success = false,
-            //                message = "用户名格式错误！"
-            //            }, JsonRequestBehavior.AllowGet);
-            //        }
-            //        if (status == SignUpStatus.InvalidEmail)
-            //        {
-            //            return Json(new
-            //            {
-            //                success = false,
-            //                message = "邮箱格式错误！"
-            //            }, JsonRequestBehavior.AllowGet);
-            //        }
-
-            //        if (status == SignUpStatus.InvalidMobilePhone)
-            //        {
-            //            return Json(new
-            //            {
-            //                success = false,
-            //                message = "手机格式错误！"
-            //            }, JsonRequestBehavior.AllowGet);
-            //        }
-            //        if (status == SignUpStatus.DuplicateUserName)
-            //        {
-            //            return Json(new
-            //            {
-            //                success = false,
-            //                message = "用户名已存在！"
-            //            }, JsonRequestBehavior.AllowGet);
-            //        }
-
-            //        if (status == SignUpStatus.DuplicateEmail)
-            //        {
-            //            return Json(new
-            //            {
-            //                success = false,
-            //                message = "邮箱已存在！"
-            //            }, JsonRequestBehavior.AllowGet);
-            //        }
-            //        if (status == SignUpStatus.DuplicateMobilePhone)
-            //        {
-            //            return Json(new
-            //            {
-            //                success = false,
-            //                message = "手机号码已存在！"
-            //            }, JsonRequestBehavior.AllowGet);
-            //        }
-            //    }
-
-            //    return Json(new
-            //    {
-            //        success = true,
-            //        message = "添加成功！"
-            //    }, JsonRequestBehavior.AllowGet);
-
-            //}
-
-            //var u = UserPassport.FindUserSecurityById(model.PassportId);
-            //if (u == null)
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "用户数据不存在！"
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            //var existUserName = UserPassport.FindPassportIdByUserName(model.UserName);
-            //if (existUserName > 0 && existUserName != model.PassportId)
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "用户名已存在！"
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            //var existEmail = UserPassport.FindPassportIdByEmail(model.Email);
-            //if (existEmail > 0 && existEmail != model.PassportId)
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "邮箱已存在！"
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            //var existMobile = UserPassport.FindPassportIdByMobile(model.Mobile);
-            //if (existMobile > 0 && existMobile != model.PassportId)
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "手机已存在！"
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            //rbool = MemberShip.Update(model, GetSignedUpInfo());
-            //if (!rbool)
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "系统异常,请稍后重试！"
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            return Json(new
-            {
-                success = true,
-                message = "操作成功！"
-            }, JsonRequestBehavior.AllowGet);
-
-        }
-
-
-
-        public ActionResult ModifyPassword()
-        {
-            //if (this.CurrentUser.PassportId == 0)
-            //{
-            //    return Redirect("/pub/ErrorMsg?returnUrl=/admin/list");
-            //}
-            //var users = UserPassport.FindById(this.CurrentUser.PassportId);
-            //if (users == null)
-            //{
-            //    return Redirect("/pub/ErrorMsg?returnUrl=/admin/list");
-            //}
-            //ViewData["Users"] = users;
+            long id = Request["id"].ToLong();
+            ViewData["UserRole"] = UserRole.FindWithAll();
+            ViewData["UserPassport"] = UserPassport.FindById(id);
             return View();
         }
 
         [HttpPost]
-        public ActionResult ModifyCurrUserPassword()
+        public ActionResult AdminAction(UserPassport model)
         {
-            //long passportId = this.CurrentUser.PassportId;
-            //string oPassword = Request["oPassword"].ToString(),
-            //    nPasspword = Request["nPasspword"].ToString();
-            //if (passportId < 1)
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "参数错误！"
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            //if (oPassword.IsNullOrEmpty())
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "请输入旧密码！"
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            //if (nPasspword.IsNullOrEmpty())
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "请输入新密码！"
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            //var rbool = MemberShip.ModifyPassword(passportId, oPassword, nPasspword);
-            //if (!rbool)
-            //{
-            //    return Json(new
-            //    {
-            //        success = false,
-            //        message = "系统异常,请稍后重试！"
-            //    }, JsonRequestBehavior.AllowGet);
-            //}
-            return Json(new
+            if (model.UserName.IsNullOrEmpty())
             {
-                success = true,
-                message = "修改成功！"
-            }, JsonRequestBehavior.AllowGet);
+                return JsonFail("请输入用户名！"); 
+            }
+            if (model.PassportId < 1)
+            {
+                if (model.Password.IsNullOrEmpty())
+                {
+                    return JsonFail("请输入密码！");
+                }
+                UserPassport status = null;
+                model.RoleType = UserRoleType.Adminstrator;
+                var result = MemberShip.Add(model, GetSignedUpInfo(), out status);
+                if (!result.success)
+                {
+                    return JsonFail(result.message);
+                }   
+            }
+            else 
+            {
+                var result = MemberShip.Update(model, GetSignedUpInfo());
+                if (!result.success)
+                {
+                    return JsonFail(result.message);
+                }               
+            }
+            return JsonSuccess("操作成功！");
+        }
+
+
+        public ActionResult ModifyPswView()
+        {
+            long id = Request["id"].ToLong();
+            ViewData["UserPassport"] = UserPassport.FindById(id);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ModifyCurrUserPsw()
+        {
+            long passportId = this.CurrentUser.PassportId;
+            string oPassword = Request["oPassword"].ToString(),
+                nPasspword = Request["nPasspword"].ToString();
+            if (passportId < 1)
+            {
+                return JsonFail("参数错误！"); 
+            }
+            if (oPassword.IsNullOrEmpty())
+            {
+                return JsonFail("请输入旧密码！");               
+            }
+            if (nPasspword.IsNullOrEmpty())
+            {
+                return JsonFail("请输入新密码！");  
+            }
+            var result = MemberShip.ModifyPassword(passportId, oPassword, nPasspword);
+            if (!result.success)
+            {
+                return JsonFail(result.message);                  
+            }
+            return JsonSuccess("操作成功！");           
 
         }
 
