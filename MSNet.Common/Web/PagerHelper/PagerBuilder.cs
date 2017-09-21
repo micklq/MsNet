@@ -427,7 +427,8 @@
             {
                 return null;
             }
-            var raw = "http://{0}{1}".StringFormat( this._html.ViewContext.HttpContext.Request.Url.Host, this._html.ViewContext.HttpContext.Request.RawUrl );
+            var port = this._html.ViewContext.HttpContext.Request.Url.Port;
+            var raw = "http://{0}{1}{2}".StringFormat(this._html.ViewContext.HttpContext.Request.Url.Host,(port!= 80 ? ":{0}".StringFormat(port):""), this._html.ViewContext.HttpContext.Request.RawUrl);
             var rawUrl = new Uri( raw );//http://www.juxian.com/jobs/20,30/?page=3
 
             //var path = rawUrl.PathAndQuery.IndexOf( '?' ) > 0 ? rawUrl.PathAndQuery.Substring( 0, rawUrl.PathAndQuery.IndexOf( '?' ) ) : rawUrl.PathAndQuery;// /jobs/20,30/

@@ -54,13 +54,7 @@
 
         /// <summary>
         /// 根据当前请求的原始Url进行页码替换，默认false,  devid 2012-09-27
-        /// 设置为true时
-        ///     请求：http://www1.juxian.com/jobs/jin-rong/
-        ///     第2页分页地址：http://www1.juxian.com/jobs/jin-rong/?page=2 
-        /// 为false时，则使用mvc路由规则按实际url进行处理
-        ///     请求：http://www1.juxian.com/jobs/jin-rong/
-        ///     实际地址：http://www1.juxian.com/jobs?industry=xxxxxxxxxxxxxxxxxxxxxxx
-        ///     第2页分页地址：http://www1.juxian.com/jobs?industry=xxxxxxxxxxxxxxxxxxxxxxx&page=2 
+        /// 设置为true时      
         /// </summary>
         public bool ByRawUrl
         {

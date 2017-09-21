@@ -23,10 +23,8 @@ namespace MSNet.Common.Web
        /// <summary>
        /// 角色名称
        /// </summary>
-       public string RoleName { get; set; }         
-       /// <summary>
-       /// 角色权限
-       /// </summary>
-       public IList<UserRolePermission> RolePermission { get; set; }
+       public string RoleName { get; set; }   
+
     }
+ 
 }

@@ -18,12 +18,16 @@ namespace MSNet.Common
 
         public long ParentPermissionId { get; set; }
         /// <summary>
-        /// ¶ÁÈ¨ÏÞ=1  ¶ÁÐ´È¨ÏÞ=1+3=4  ¶ÁÐ´É¾È¨ÏÞ=1+3+5=9  ¶ÁÉ¾È¨ÏÞ=1+5=6
+        /// Ìí¼Ó=1  ÐÞ¸Ä=2 É¾³ý=3 Read=4  ¶ÁÉóÉ¾È¨ÏÞ=1+3+7=11 ¶ÁÐ´É¾È¨ÏÞ=1+5+7=13
         /// </summary>
         public long PermissionValue { get; set; }
 
         #endregion
-        
+        public UserRolePermission()
+        {
+            this.CreatedTime = DateTime.Now;
+            this.LastModifiedTime = this.CreatedTime;
+        }
 
         #region Static Methods   
        

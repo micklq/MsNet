@@ -19,7 +19,6 @@ namespace MSNet.Common.Web
         {
             return Json(AjaxResult.Fail(message), JsonRequestBehavior.AllowGet);             
         }
-
        
         public SignedUpInfo GetSignedUpInfo()
         {

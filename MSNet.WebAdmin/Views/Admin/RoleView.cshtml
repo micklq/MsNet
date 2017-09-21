@@ -15,7 +15,7 @@
 </head>
 <body>
     <article class="page-container">
-        <form action="/Admin/RoleAction" method="post" class="form form-horizontal" id="form-admin-role-action">
+        <form method="post" class="form form-horizontal" id="form-admin-role-action">
             <input type="hidden" id="RoleId" name="RoleId" value="@(p.RoleId)">
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
@@ -112,10 +112,23 @@
             focusCleanup: true,
             success: "valid",
             submitHandler: function (form) {
-                $(form).ajaxSubmit();
-                var index = parent.layer.getFrameIndex(window.name);                
-                parent.location.reload();
-                parent.layer.close(index);
+                $(form).ajaxSubmit({
+                    type: 'post',
+                    url: "/Admin/RoleAction",
+                    success: function (data) {
+                        if (data.success) {
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.location.reload();
+                            parent.layer.close(index);
+                        }
+                        else {
+                            $.Huimodalalert(data.message, 3000);
+                        }
+                    },
+                    error: function (XmlHttpRequest, textStatus, errorThrown) {
+                        $.Huimodalalert('网络超时,请检查网络连接！', 2000);
+                    }
+                });                
             }
         });
     });

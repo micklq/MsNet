@@ -71,7 +71,7 @@ namespace MSNet.Common.Util
             {
                 Formatting = Formatting.None,
                 DateTimeZoneHandling = DateTimeZoneHandling.Local,
-                NullValueHandling = NullValueHandling.Ignore
+                NullValueHandling = NullValueHandling.Ignore                
 
             };
             serializerSettings.Converters.Add(new DateTimeConvertor());            

@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="page-container">
-        <form action="/Admin/PermissionAction" method="post" class="form form-horizontal" id="form-submit">
+        <form method="post" class="form form-horizontal" id="form-submit">
             <input type="hidden" id="PermissionId" name="PermissionId" value="@(p.PermissionId)">
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-2">
@@ -99,10 +99,23 @@
                 focusCleanup: true,
                 success: "valid",
                 submitHandler: function (form) {
-                    $(form).ajaxSubmit();
-                    var index = parent.layer.getFrameIndex(window.name);
-                    parent.location.reload();
-                    parent.layer.close(index);
+                    $(form).ajaxSubmit({
+                        type: 'post',
+                        url: "/Admin/PermissionAction",
+                        success: function (data) {
+                            if (data.success) {
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.location.reload();
+                                parent.layer.close(index);
+                            }
+                            else {
+                                $.Huimodalalert(data.message, 3000);
+                            }
+                        },
+                        error: function (XmlHttpRequest, textStatus, errorThrown) {
+                            $.Huimodalalert('网络超时,请检查网络连接！', 2000);
+                        }
+                    });                    
                 }
             });
         });

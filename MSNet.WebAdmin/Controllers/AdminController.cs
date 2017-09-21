@@ -29,7 +29,7 @@ namespace MSNet.WebAdmin.Controllers
             {
                 keyword = Request["uname"];
             }
-            var exceptIds = new List<long> { (long)0 };
+            var exceptIds = new List<long> { this.CurrentUser.PassportId };
             IList<UserPassport> ulist = UserPassport.FindWithAdminPage(keyword, exceptIds, page); //排除自己;
 
             PagedList<UserPassport> plist = null;

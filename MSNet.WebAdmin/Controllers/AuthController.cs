@@ -48,13 +48,11 @@ namespace MSNet.WebAdmin.Controllers
             if (!result.success) {
                 return JsonFail(result.message);
             }           
-          
             SignInUser uSign = new SignInUser { 
                 PassportId = uPassport.PassportId, 
                 UserName = uPassport.UserName,
                 RoleId = uPassport.RoleId,
-                RoleName = (uPassport.Role != null) ? uPassport.Role.Name : null, 
-                RolePermission = (uPassport.RolePermissions != null) ? uPassport.RolePermissions : null 
+                RoleName = (uPassport.Role != null) ? uPassport.Role.Name : null               
             };
             UserAuthentication.SignIn(uSign);
 
@@ -65,6 +63,12 @@ namespace MSNet.WebAdmin.Controllers
             }
             return JsonSuccess(returnUrl);   
 
+        }
+
+        public ActionResult SignOut()
+        {
+            UserAuthentication.SignOut();
+            return Redirect(UserAuthentication.LoginUrl);
         }
 
         

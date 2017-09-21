@@ -12,16 +12,15 @@ namespace MSNet.Common.Web
     {      
         public static void SignIn(SignInUser user)
         {            
-            String userData = user.ToJson();
-            String name = String.Format("{0}_{1}", user.PassportId, user.UserName);
+            string userData = user.ToJson();
+            string name = String.Format("{0}_{1}", user.PassportId, user.UserName);
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, name, DateTime.Now, DateTime.Now.AddMinutes(FormsAuthentication.Timeout.Minutes), false, userData);
             string enyTicket = FormsAuthentication.Encrypt(ticket);
+            string ticketCookieName = String.Format("{0}.Ticket", FormsAuthentication.FormsCookieName);
+            HttpCookie cookie = new HttpCookie(ticketCookieName, enyTicket);
+            cookie.HttpOnly = true;
+            HttpContext.Current.Response.Cookies.Add(cookie);
             FormsAuthentication.SetAuthCookie(FormsAuthentication.FormsCookieName, false);
-            //HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, enyTicket);
-            //HttpContext.Current.Response.Cookies.Add(cookie);
-
-          
-           
 
         }
 
@@ -34,7 +33,12 @@ namespace MSNet.Common.Web
             get
             {
                 if (HttpContext.Current.User.Identity.IsAuthenticated) {
-                    string userData = ((FormsIdentity)(HttpContext.Current.User.Identity)).Ticket.UserData;
+                    //string userData = ((FormsIdentity)(HttpContext.Current.User.Identity)).Ticket.UserData;
+                    string ticketCookieName = String.Format("{0}.Ticket", FormsAuthentication.FormsCookieName);
+                    var cookie = HttpContext.Current.Request.Cookies[ticketCookieName];
+                    var ticket = FormsAuthentication.Decrypt(cookie.Value);
+                    string userData = ticket.UserData;
+                    //string userData = FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies[ticketCookieName].Value).UserData; 
                     return userData.ConvertEntity<SignInUser>(); 
                 }
                 return null;
