@@ -32,6 +32,16 @@ namespace MSNet.Common.Web
             return info;
         }
 
+        public Systemlogs GetSystemlogs()
+        {
+            Systemlogs logs = new Systemlogs();
+            logs.ClientIp = HttpContext.Request.ServerVariables.Get("Remote_Addr");
+            logs.HttpReferer = HttpContext.Request.ServerVariables.Get("Http_Referer");
+            logs.HttpUserAgent = HttpContext.Request.ServerVariables.Get("Http_User_Agent");
+            logs.RefererDomain = HttpContext.Request.ServerVariables.Get("Http_Host");
+            return logs;
+        }
+
         public string Upload(int maxLength, string path, IList<string> fileExt, string fileName = "")
         {            
             var UploadPath = path;

@@ -86,7 +86,9 @@
     <Content Include="sqlmap\passports\PermissionMenuRepository.sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="sqlmap\passports\SystemlogsRepository.sql.xml" />
+    <Content Include="sqlmap\passports\SystemlogsRepository.sql.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="sqlmap\passports\UserRolePermissionRepository.sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
