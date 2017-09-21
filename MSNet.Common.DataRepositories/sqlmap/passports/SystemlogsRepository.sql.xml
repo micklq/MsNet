@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+	<module moduleName="SystemlogsRepository" dbName="hzdb">
+    <sqlWrap  sqlName="Insert"  supportDBType="MySql,SqlServer">
+      insert into Systemlogs(PassportId,UserName,UserAction,ClientIp,HttpUserAgent,HttpReferer,RefererDomain,CreatedTime,LastModifiedTime)
+      values(@PassportId,@UserName,@UserAction,@ClientIp,@HttpUserAgent,@HttpReferer,@RefererDomain,@CreatedTime,@LastModifiedTime);
+      select @@IDENTITY;
+    </sqlWrap>   
+    <sqlWrap  sqlName="SelectAll"  supportDBType="MySql,SqlServer">
+      select *  from Systemlogs;
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithPage" supportDBType="MySql,SqlServer">
+      select * from Systemlogs
+      where 1=1
+      and (if(isnull(@Keyword),"1=1",(UserName like @Keyword or UserAction like @Keyword)))
+      and (if(isnull(@BeginTime),"1=1",(CreatedTime > @BeginTime)))
+      and (if(isnull(@EndTime),"1=1",(CreatedTime  @EndTime)))
+      order by Id desc; 
+    </sqlWrap>
+  </module>
+</root>
+

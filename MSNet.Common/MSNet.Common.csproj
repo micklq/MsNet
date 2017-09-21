@@ -99,6 +99,8 @@
     <Compile Include="Articles\Articles.cs" />
     <Compile Include="Articles\DataRepositories\IArticlesRepository.cs" />
     <Compile Include="BaseCategory\BaseCategoryRepository.cs" />
+    <Compile Include="Passports\DataRepositories\ISystemlogsRepository.cs" />
+    <Compile Include="Passports\Systemlogs.cs" />
     <Compile Include="RepositoryFactory.cs" />
     <Compile Include="BaseCategory\IBaseCategoryRepository.cs" />
     <Compile Include="ModuleEnvironment.cs" />

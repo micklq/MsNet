@@ -61,6 +61,7 @@
     <Compile Include="Articles\ArticleCategoryRepository.cs" />
     <Compile Include="Articles\ArticlesRepository.cs" />
     <Compile Include="Passports\PermissionMenuRepository.cs" />
+    <Compile Include="Passports\SystemlogsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Passports\UserRolePermissionRepository.cs" />
     <Compile Include="Passports\UserRoleRepository.cs" />
@@ -85,6 +86,7 @@
     <Content Include="sqlmap\passports\PermissionMenuRepository.sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="sqlmap\passports\SystemlogsRepository.sql.xml" />
     <Content Include="sqlmap\passports\UserRolePermissionRepository.sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
