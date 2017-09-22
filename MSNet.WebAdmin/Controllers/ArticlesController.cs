@@ -5,11 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using M2SA.AppGenome;
 using M2SA.AppGenome.Data;
-
-using MSNet.Common;
 using MSNet.Common.Web;
 using MSNet.Common.Util;
-using MSNet.Common.DataRepositories;
+using MSNet.Common.Web.Pager;
+using MSNet.Common;
+
 
 namespace MSNet.WebAdmin.Controllers
 {
@@ -18,26 +18,70 @@ namespace MSNet.WebAdmin.Controllers
         
 
         public ActionResult List()
-        {          
-            //ViewData["TopList"] = Articles.FindWithPage(new Pagination
-            //{
-            //    PageIndex = 1,
-            //    PageSize = 5
-            //});
-            //ViewData["NewsList"] = Articles.FindWithPage(new Pagination
-            //{
-            //    PageIndex = 1,
-            //    PageSize = 12
-            //});
+        {
+            var page = new Pagination
+            {
+                PageIndex = Request["page"].ToInt(1),
+                PageSize = 10
+            };
+            string keyword = null;
+            if (!Request["keyword"].IsNullOrEmpty())
+            {
+                keyword = Request["keyword"];
+            }
+
+            long CategoryId = 0;
+            if (Request["CategoryId"].ToLong(0)>0)
+            {
+                CategoryId = Request["CategoryId"].ToLong(0);
+            }
+
+            IList<Articles> list = Articles.FindWithPage(keyword, CategoryId, page); 
+
+            PagedList<Articles> plist = null;
+            if (list != null)
+            {
+                plist = new PagedList<Articles>(list.ToList(), page.PageIndex, page.PageSize, page.TotalCount);
+            }
+
+            ViewData["ArticleList"] = plist;
+
+            ViewData["ArticlesCategory"] = ArticlesCategory.FindWithAll(); 
+           
+            return View();
+        }
+        public ActionResult ArticleView()
+        {
+            long id = Request["id"].ToLong();
+            ViewData["Article"] = Articles.FindById(id);
             return View();
         }
 
-        public ActionResult Add()
+
+        public ActionResult ArticleAction(Articles model)
         {
-           //var Id = Request["id"].ToInt();
-           //var news = Articles.FindById(Id);
-           //ViewData["News"] = news ?? new Articles();
-          return View();
+
+            if (model.Title.IsNullOrEmpty())
+            {
+                return JsonFail("请输入资讯标题！");
+            }
+            if (model.Contents.IsNullOrEmpty())
+            {
+                return JsonFail("请输入资讯内容！");
+            }
+            var actionStr = "添加资讯";
+            if (model.ArticleId > 0)
+            {
+                actionStr = "修改资讯";
+                model.PersistentState = PersistentState.Persistent;
+            }
+            var rbool = model.Save();
+            WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, actionStr, model.Title); // 写入日志 
+            if (rbool)
+            {
+                return JsonSuccess("操作成功！");
+            }
+            return JsonFail("系统异常,请稍后重试！");  
         }
     }
 }

@@ -76,7 +76,7 @@ namespace MSNet.Common
         /// <summary>
         /// 
         /// </summary>
-        public PassportStatus PassportStatus
+        public int PassportStatus
         {
             get;
             set;
@@ -351,7 +351,7 @@ namespace MSNet.Common
             this.UserSecurity.Password = this.HashPassword( password );
             this.UserSecurity.LastPasswordChangedTime = DateTime.Now;
             this.UserSecurity.UnLock();
-            this.PassportStatus = PassportStatus.Standard;
+            this.PassportStatus = (int)MSNet.Common.PassportStatus.Standard;
             var result = this.Save()&&this.UserSecurity.Save();
             return result;
         }      

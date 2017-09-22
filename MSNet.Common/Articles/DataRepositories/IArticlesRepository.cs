@@ -8,10 +8,11 @@ namespace MSNet.Common.DataRepositories
 {
     public interface IArticlesRepository : IRepository<Articles, long>
     {
-        IList<Articles> FindWithPage(Pagination page);
-        IList<Articles> FindByKeyword(string keyword, long CategoryId, Pagination page);
+        IList<Articles> FindWithPage(string keyword, long CategoryId, Pagination page);
 
         bool UpdateCategoryId(long oCategoryId, long nCategoryId);
+
+        bool UpdateBrowse(long ArticleId);
     }
 }
  

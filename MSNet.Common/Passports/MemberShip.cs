@@ -127,25 +127,26 @@ namespace MSNet.Common
                     return new AjaxResult { success = false, message = "用户无访问权限" };
                 }
 
-                if (userPassport.PassportStatus == PassportStatus.Cancellation)
+                if (userPassport.PassportStatus == (int)PassportStatus.Cancellation)
                 {
                     return new AjaxResult { success = false, message = "账号已废弃" };                   
                 }
-                if (userPassport.PassportStatus == PassportStatus.Hibernation)
+                if (userPassport.PassportStatus == (int)PassportStatus.Hibernation)
                 {
                     return new AjaxResult { success = false, message = "账号已休眠,请于管理员联系" }; 
                 }
                 var ckResult =  PassportSecurityProvider.Verify(password, userPassport);
                 if (ckResult)
                 {
-                    if (userPassport.PassportStatus == PassportStatus.Locked) {
+                    if (userPassport.PassportStatus == (int)PassportStatus.Locked)
+                    {
                         UnLock(userPassport);
                     }                    
                    return new AjaxResult { success = true, message = "登录成功" }; 
                 }
                 else
                 {
-                    if (userPassport.PassportStatus == PassportStatus.Locked)
+                    if (userPassport.PassportStatus == (int)PassportStatus.Locked)
                     {
                         return new AjaxResult { success = false, message = "账号已锁定,请于管理员联系" }; 
                     }
@@ -172,15 +173,15 @@ namespace MSNet.Common
             if (userPassport.PassportId < 1 || userPassport.UserSecurity == null) return false;            
             
             userPassport.UserSecurity.UnLock();
-            userPassport.PassportStatus = PassportStatus.Standard;                
+            userPassport.PassportStatus = (int)PassportStatus.Standard;                
             return userPassport.Save()&& userPassport.UserSecurity.Save();              
         }
 
         public static bool Lock(UserPassport userPassport)
         {
            if(userPassport.PassportId <1 || userPassport.UserSecurity == null) return false;
-           
-            userPassport.PassportStatus = PassportStatus.Locked;
+
+           userPassport.PassportStatus = (int)PassportStatus.Locked;
             userPassport.UserSecurity.IsLocked = true;
             userPassport.UserSecurity.LastLockedTime = DateTime.Now;
             return userPassport.Save() && userPassport.UserSecurity.Save();   
@@ -253,14 +254,14 @@ namespace MSNet.Common
 
             if (passport.PassportStatus != user.PassportStatus)
             {
-                if (passport.PassportStatus == PassportStatus.Locked)
+                if (passport.PassportStatus == (int)PassportStatus.Locked)
                 {
                     if (!Lock(user)) 
                     {
                         return AjaxResult.Fail("锁定用户失败！"); 
                     }
                 }
-                if (passport.PassportStatus == PassportStatus.Standard)
+                if (passport.PassportStatus == (int)PassportStatus.Standard)
                 {
                     if (!UnLock(user))
                     {
@@ -272,7 +273,7 @@ namespace MSNet.Common
             if (!user.Save()) {
                 return AjaxResult.Fail("数据更新失败！"); 
             }
-           
+
             return AjaxResult.Success();          
             
         }
@@ -302,8 +303,8 @@ namespace MSNet.Common
             if (!passport.ChangePassword(nPasspword))
             {
                 return AjaxResult.Fail("更新密码失败！");
-            }           
-            return AjaxResult.Success();
+            }
+            return AjaxResult.Success("修改密码成功");
         }
 
         #endregion

@@ -28,11 +28,11 @@
       select * from UserPassport where PassportId = @Id;
       select * from UserSecurity where PassportId = @Id;
     </sqlWrap>
-    <sqlWrap sqlName="SelectWithAdminPage" supportDBType="SqlServer, MySql">
-      select * from UserPassport 
+    <sqlWrap sqlName="SelectWithAdminPage" supportDBType="MySql">
+      select * from UserPassport
       where RoleType=1 and (PassportStatus not in(999))
       and (PassportId not in(@ExceptIds))
-      and (Mobile like @Keyword or UserName like @Keyword or Email like @Keyword)
+      and (if(isnull(@Keyword),1=1,((Mobile like @Keyword) or (UserName like @Keyword) or (Email like @Keyword))))
       order by PassportId asc
     </sqlWrap>    
     <sqlWrap sqlName="SelectByKeyword" supportDBType="SqlServer, MySql">

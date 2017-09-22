@@ -43,6 +43,7 @@ namespace MSNet.WebAdmin.Controllers
                 model.PersistentState = PersistentState.Persistent;
             }    
             var rbool = model.Save();
+            WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, "维护角色", model.Name); // 写入日志 
             if (rbool)   //添加权限
             {
                 if (permissionValues.Count > 0)
@@ -75,7 +76,7 @@ namespace MSNet.WebAdmin.Controllers
             if (id > 0) {
 
                 var rbool = new UserRole { RoleId = id }.Remove();
-
+                WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, "删除角色", "RoleId:" + id); // 写入日志 
                 if(rbool){
                     return JsonSuccess("操作成功！");
                 }

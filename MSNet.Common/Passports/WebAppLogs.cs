@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using M2SA.AppGenome;
+using M2SA.AppGenome.Threading;
 using M2SA.AppGenome.Data;
 using MSNet.Common.DataRepositories;
+
 
 namespace MSNet.Common
 {
@@ -12,9 +14,20 @@ namespace MSNet.Common
     /// 
     /// </summary>
     [Serializable]
-    public partial class Systemlogs : EntityBase<long>
+    public partial class WebAppLogs : EntityBase<long>
     {
         #region Instance Properties
+        public long LogsId
+        {
+            get
+            {
+                return this.Id;
+            }
+            set
+            {
+                this.Id = value;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -26,7 +39,10 @@ namespace MSNet.Common
         /// <summary>
         /// 
         /// </summary>
-        public string UserAction { get; set; }   
+        public string UserAction { get; set; }
+
+
+        public string Messages { get; set; }   
 
         /// <summary>
         /// 
@@ -53,33 +69,37 @@ namespace MSNet.Common
 
 
         #region Static Methods
-        public static IList<Systemlogs> FindWithAll()
+        public static IList<WebAppLogs> FindWithAll()
         {
 
-            var repository = RepositoryManager.GetRepository<ISystemlogsRepository>(ModuleEnvironment.ModuleName);
+            var repository = RepositoryManager.GetRepository<IWebAppLogsRepository>(ModuleEnvironment.ModuleName);
             var results = repository.LoadAll();
             return results;
         }
 
-        public static IList<Systemlogs> FindWithPage(string keyword, string beginTime, string endTime, Pagination page)
+        public static IList<WebAppLogs> FindWithPage(string keyword, string beginTime, string endTime, Pagination page)
         {
-            var repository = RepositoryManager.GetRepository<ISystemlogsRepository>(ModuleEnvironment.ModuleName);
+            var repository = RepositoryManager.GetRepository<IWebAppLogsRepository>(ModuleEnvironment.ModuleName);
             return repository.FindWithPage(keyword, beginTime, endTime,page);
         }
         
         #endregion
 
         #region Persist Methods
-        public bool Insert()
+        public void Insert()
         {
-            var repository = RepositoryManager.GetRepository<ISystemlogsRepository>(ModuleEnvironment.ModuleName);
-            return repository.Insert(this);
+            var repository = RepositoryManager.GetRepository<IWebAppLogsRepository>(ModuleEnvironment.ModuleName);
+            SmartThreadPool smartThreadPool = new SmartThreadPool();
+            smartThreadPool.QueueWorkItem((obj) =>
+            {
+                repository.Insert((WebAppLogs)obj);
+            }, this);            
+        }  
 
-        }
 
         public bool Remove()
         {
-            var repository = RepositoryManager.GetRepository<ISystemlogsRepository>(ModuleEnvironment.ModuleName);
+            var repository = RepositoryManager.GetRepository<IWebAppLogsRepository>(ModuleEnvironment.ModuleName);
             return repository.Remove(this);
 
         }

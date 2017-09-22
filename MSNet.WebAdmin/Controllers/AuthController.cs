@@ -43,18 +43,19 @@ namespace MSNet.WebAdmin.Controllers
                 return JsonFail("验证码错误！");
             }
 
-            UserPassport uPassport = null;      
+            UserPassport uPassport = null;          
             var result = MemberShip.SignIn(uname, upass, out uPassport);
+            WebAppLogsWrite(uPassport.PassportId, uname, "用户登录", result.message); // 写入日志      
             if (!result.success) {
                 return JsonFail(result.message);
-            }           
+            }            
             SignInUser uSign = new SignInUser { 
                 PassportId = uPassport.PassportId, 
                 UserName = uPassport.UserName,
                 RoleId = uPassport.RoleId,
                 RoleName = (uPassport.Role != null) ? uPassport.Role.Name : null               
             };
-            UserAuthentication.SignIn(uSign);
+            UserAuthentication.SignIn(uSign);   
 
             var returnUrl = (Request["returnUrl"] ?? "");
             if (returnUrl.IsNullOrEmpty())

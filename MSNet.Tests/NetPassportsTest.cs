@@ -60,17 +60,18 @@ namespace MSNet.Tests
 
 
         [Test]
-        public void SystemlogsTest()
+        public void WebAppLogsTest()
         {
-            //for (var i = 1; i < 20; i++) {
-            //    Systemlogs logs = new Systemlogs() { PassportId = 0, UserName = "UserName" + i, UserAction = "UserAction" + i, ClientIp = "127.0.0.1", HttpUserAgent = "nunit.framework.test", RefererDomain = "nunit.framework.test" };
+            //for (var i = 1; i < 10; i++)
+            //{
+            //    Systemlogs logs = new Systemlogs() { PassportId = i, UserName = "UserName" + i, UserAction = "UserAction" + i, ClientIp = "127.0.0.1", HttpUserAgent = "nunit.framework.test", RefererDomain = "nunit.framework.test" };
             //    logs.Insert();
             //}
-            Pagination p1 = new Pagination { PageIndex = 1, PageSize = 5 };
-            var logss = Systemlogs.FindWithPage("UserAction", "2017-09-21 18:30:16", "2017-09-21 18:30:16", p1);
+            Pagination p1 = new Pagination { PageIndex = 1, PageSize = 10 };
+            var logss = WebAppLogs.FindWithPage("", "", "", p1);
             foreach (var o in logss)
             {
-                Console.WriteLine("logs==>>" + o.Id + ":" + o.UserName + ":" + o.UserAction);
+                Console.WriteLine("logs==>>" + o.LogsId + ":" + o.UserName + ":" + o.UserAction);
             }          
             
 

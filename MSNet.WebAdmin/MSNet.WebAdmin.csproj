@@ -1348,7 +1348,7 @@
     <Content Include="Views\Admin\PermissionView.cshtml" />
     <Content Include="Views\Admin\Roles.cshtml" />
     <Content Include="Views\Admin\RoleView.cshtml" />
-    <Content Include="Views\Articles\Add.cshtml" />
+    <Content Include="Views\Articles\ArticleView.cshtml" />
     <Content Include="Views\Articles\List.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Charts\Charts1.cshtml" />

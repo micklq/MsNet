@@ -56,7 +56,7 @@ namespace MSNet.Common.DataRepositories
         {
             var sqlName = this.FormatSqlName("SelectWithAdminPage");
             var sqlParams = new Dictionary<string, object>(1);
-            sqlParams.Add("Keyword", keyword);
+            sqlParams.Add("Keyword", string.IsNullOrEmpty(keyword) ? null : keyword);
             sqlParams.Add("ExceptIds", exceptIds);    
             var datatable = SqlHelper.ExecutePaginationTable(sqlName, sqlParams, page);
             IList<UserPassport> list = null;

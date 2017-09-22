@@ -32,14 +32,18 @@ namespace MSNet.Common.Web
             return info;
         }
 
-        public Systemlogs GetSystemlogs()
+        public void WebAppLogsWrite(long passportId, string userName, string userAction, string messages)
         {
-            Systemlogs logs = new Systemlogs();
+            WebAppLogs logs = new WebAppLogs();
             logs.ClientIp = HttpContext.Request.ServerVariables.Get("Remote_Addr");
             logs.HttpReferer = HttpContext.Request.ServerVariables.Get("Http_Referer");
             logs.HttpUserAgent = HttpContext.Request.ServerVariables.Get("Http_User_Agent");
             logs.RefererDomain = HttpContext.Request.ServerVariables.Get("Http_Host");
-            return logs;
+            logs.PassportId = passportId;
+            logs.UserName = userName;
+            logs.UserAction = userAction;
+            logs.Messages = messages;
+            logs.Insert();
         }
 
         public string Upload(int maxLength, string path, IList<string> fileExt, string fileName = "")

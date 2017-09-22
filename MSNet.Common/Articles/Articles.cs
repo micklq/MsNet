@@ -25,8 +25,16 @@ namespace MSNet.Common
         public string Media { get; set; }
         public string Description { get; set; }
         public string Contents { get; set; }
-        public int IsTop { get; set; }        
+        public int BrowseTimes { get; set; }         
   		       
+        #endregion
+
+        #region Extends Properties
+        public string CategoryName
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Static Methods
@@ -34,27 +42,30 @@ namespace MSNet.Common
         {
             var repository = RepositoryManager.GetRepository<IArticlesRepository>(ModuleEnvironment.ModuleName);
             return repository.LoadAll();           
-        }
-        public static IList<Articles> FindWithPage(Pagination page)
-        {   
-            var repository = RepositoryManager.GetRepository<IArticlesRepository>(ModuleEnvironment.ModuleName);
-            return repository.FindWithPage(page);
-        }
+        }      
 
-        public static IList<Articles> FindByKeyword(string keyword, long CategoryId, Pagination page)
+        public static IList<Articles> FindWithPage(string keyword, long CategoryId, Pagination page)
         {
             var repository = RepositoryManager.GetRepository<IArticlesRepository>(ModuleEnvironment.ModuleName);
-            return repository.FindByKeyword(keyword,CategoryId,page);
+            return repository.FindWithPage(keyword, CategoryId, page);
         }
+
         public static Articles FindById(long Id)
         {
             var repository = RepositoryManager.GetRepository<IArticlesRepository>(ModuleEnvironment.ModuleName);
             return repository.FindById(Id);           
         }
+
         public static bool UpdateCategoryId(long oCategoryId, long nCategoryId)
         {
             var repository = RepositoryManager.GetRepository<IArticlesRepository>(ModuleEnvironment.ModuleName);
             return repository.UpdateCategoryId(oCategoryId, nCategoryId);
+        }
+
+        public static bool UpdateBrowse(long ArticleId)
+        {
+            var repository = RepositoryManager.GetRepository<IArticlesRepository>(ModuleEnvironment.ModuleName);
+            return repository.UpdateBrowse(ArticleId);
         }
         #endregion
 

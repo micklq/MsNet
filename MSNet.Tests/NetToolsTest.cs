@@ -7,6 +7,7 @@ using NUnit.Framework;
 using M2SA.AppGenome.Reflection;
 using M2SA.AppGenome.Data;
 using M2SA.AppGenome;
+using M2SA.AppGenome.Threading;
 using System.Text.RegularExpressions;
 using MSNet.Common.Web;
 using MSNet.Common.Web.Http;
@@ -15,8 +16,20 @@ namespace MSNet.Tests
 {
     public class NetToolsTest : TestBase
     {
-               
 
+        [Test]
+        public void  SmartThreadPoolTest()
+        {
+            for (var i = 1; i <= 10; i++) 
+            {
+                SmartThreadPool smartThreadPool = new SmartThreadPool();
+                smartThreadPool.QueueWorkItem((param) =>
+                {
+                    Console.WriteLine("HelloWorld" + param);
+                },i);
+            }
+            
+        }
         [Test]
         public void VerifyCodeTest()
         {

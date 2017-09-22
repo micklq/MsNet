@@ -2,14 +2,17 @@
 <root xmlns="http://m2sa.net/Schema/SqlMapping">
 	<module moduleName="ArticlesRepository" dbName="MSNet.MySql">
     <sqlWrap  sqlName="Insert"  supportDBType="MySql,SqlServer">
-      insert into Articles(CategoryId,Title,Editor,Media,Description,Contents,IsTop,CreatedTime,LastModifiedTime) 
-      values(@CategoryId,@Title,@Editor,@Media,@Description,@Contents,@IsTop,@CreatedTime,@LastModifiedTime);
+      insert into Articles(CategoryId,Title,Editor,Media,Description,Contents,BrowseTimes,CreatedTime,LastModifiedTime)
+      values(@CategoryId,@Title,@Editor,@Media,@Description,@Contents,@BrowseTimes,@CreatedTime,@LastModifiedTime);
       select @@IDENTITY;
     </sqlWrap>
     <sqlWrap  sqlName="Update"  supportDBType="MySql,SqlServer">
       update Articles
-      set CategoryId=@CategoryId,Title=@Title,Editor=@Editor,Media=@Media,Description=@Description,Contents=@Contents,IsTop=@IsTop,LastModifiedTime=@LastModifiedTime
+      set CategoryId=@CategoryId,Title=@Title,Editor=@Editor,Media=@Media,Description=@Description,Contents=@Contents,LastModifiedTime=@LastModifiedTime
       where ArticleId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="UpdateBrowse"  supportDBType="MySql,SqlServer">
+      update Articles  set BrowseTimes= BrowseTimes + 1  where ArticleId = @ArticleId;
     </sqlWrap>
     <sqlWrap  sqlName="DeleteById"  supportDBType="MySql,SqlServer">
       delete from Articles where ArticleId = @Id;
@@ -23,17 +26,14 @@
     <sqlWrap  sqlName="SelectAll"  supportDBType="MySql,SqlServer">
       select *  from Articles;
     </sqlWrap>
-    <sqlWrap sqlName="SelectWithPage" supportDBType="MySql,SqlServer">
-      select * from Articles
-      order by ArticleId desc
-    </sqlWrap>
-   <sqlWrap sqlName="SelectByKeyword" supportDBType="MySql">
-     select * from Articles
-     where (Title like @Keyword)
-     and (if(@CategoryId=0,1=1,CategoryId=@CategoryId))
-     order by ArticleId desc
+   <sqlWrap sqlName="FindWithPage" supportDBType="MySql">
+     select Articles.* ,ArticlesCategory.Name as CategoryName
+     from Articles Left Join ArticlesCategory on Articles.CategoryId=ArticlesCategory.CategoryId
+     where  1=1 and (if(isnull(@Keyword),1=1,(Articles.Title like @Keyword)))
+     and (if(@CategoryId=0,1=1,Articles.CategoryId=@CategoryId))
+     order by Articles.ArticleId desc
    </sqlWrap>-->
-    <!--<sqlWrap sqlName="SelectByKeyword" supportDBType="SqlServer">
+    <!--<sqlWrap sqlName="FindWithPage" supportDBType="SqlServer">
       select * from Articles 
       where (Title like @Keyword) and (CategoryId=isnull(nullif(@CategoryId,0),CategoryId))  
       order by ArticlesId desc

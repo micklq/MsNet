@@ -63,9 +63,10 @@ namespace MSNet.WebAdmin.Controllers
                 {
                     return JsonFail("请输入密码！");
                 }
-                UserPassport status = null;
+                UserPassport uPassport = null;
                 model.RoleType = UserRoleType.Adminstrator;
-                var result = MemberShip.Add(model, GetSignedUpInfo(), out status);
+                var result = MemberShip.Add(model, GetSignedUpInfo(), out uPassport);
+                WebAppLogsWrite(this.CurrentUser.PassportId,this.CurrentUser.UserName,"添加管理员",result.message); // 写入日志            
                 if (!result.success)
                 {
                     return JsonFail(result.message);
@@ -74,6 +75,7 @@ namespace MSNet.WebAdmin.Controllers
             else 
             {
                 var result = MemberShip.Update(model, GetSignedUpInfo());
+                WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, "更新管理员", result.message); // 写入日志 
                 if (!result.success)
                 {
                     return JsonFail(result.message);
@@ -108,11 +110,12 @@ namespace MSNet.WebAdmin.Controllers
             {
                 return JsonFail("请输入新密码！");  
             }
-            var result = MemberShip.ModifyPassword(passportId, oPassword, nPasspword);
+            var result = MemberShip.ModifyPassword(passportId, oPassword, nPasspword);           
+            WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, "更新密码", result.message); // 写入日志 
             if (!result.success)
-            {
+            {               
                 return JsonFail(result.message);                  
-            }
+            }            
             return JsonSuccess("操作成功！");           
 
         }

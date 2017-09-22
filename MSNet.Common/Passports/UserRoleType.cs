@@ -15,7 +15,7 @@ namespace MSNet.Common
         /// 系统用户
         /// </summary>
         [EnumHelper.Description("系统管理员")]
-        System = -1, 
+        System = 99999, 
 
         /// <summary>
         /// 注册用户

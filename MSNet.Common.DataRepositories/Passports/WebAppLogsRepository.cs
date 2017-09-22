@@ -7,9 +7,9 @@ namespace MSNet.Common.DataRepositories
     /// <summary>
     /// 
     /// </summary>
-    public class SystemlogsRepository : SimpleRepositoryBase<Systemlogs, long>, ISystemlogsRepository
+    public class WebAppLogsRepository : SimpleRepositoryBase<WebAppLogs, long>, IWebAppLogsRepository
     {
-        public IList<Systemlogs> FindWithPage(string keyword, string beginTime, string endTime, Pagination page)
+        public IList<WebAppLogs> FindWithPage(string keyword, string beginTime, string endTime, Pagination page)
         {
             var sqlName = this.FormatSqlName("SelectWithPage");
 
@@ -18,7 +18,7 @@ namespace MSNet.Common.DataRepositories
             sqlParams.Add("BeginTime", (string.IsNullOrEmpty(beginTime) || string.IsNullOrEmpty(endTime)) ? null : beginTime);
             sqlParams.Add("EndTime", (string.IsNullOrEmpty(beginTime) || string.IsNullOrEmpty(endTime)) ? null : endTime);
             var datatable = SqlHelper.ExecutePaginationTable(sqlName, sqlParams, page);
-            IList<Systemlogs> list = null;
+            IList<WebAppLogs> list = null;
             if (datatable.Rows.Count > 0)
             {
                 list = this.Convert(datatable);
