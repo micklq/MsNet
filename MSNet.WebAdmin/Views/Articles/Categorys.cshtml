@@ -1,0 +1,85 @@
+﻿@{   
+    Layout = null;
+    var list = ViewData["Categorys"] as List<ArticlesCategory>;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    @Html.Partial("_Admin_Meta")
+    <title>栏目管理</title>
+</head>
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 资讯管理 <span class="c-gray en">&gt;</span> 栏目管理 
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="page-container">
+        <div class="cl pd-5 bg-1 bk-gray"> <span class="l"> <a class="btn btn-primary radius" href="javascript:;" onclick="view_action('添加栏目', '/articles/categoryview', '500', '300')">
+            <i class="Hui-iconfont">&#xe600;</i> 添加栏目</a> 
+            </span> 
+        </div>
+        <table class="table table-border table-bordered table-hover table-bg">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="6">栏目管理</th>
+                </tr>
+                <tr class="text-c">                   
+                    <th width="40">ID</th>
+                    <th width="200">栏目名</th>                   
+                    <th width="300">描述</th>
+                    <th width="70">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (list != null && list.Count() > 0)
+            {
+                foreach (var o in list)
+                {
+                    <tr class="text-c">
+                        <td>@(o.CategoryId)</td>
+                        <td>@(o.Name)</td>
+                        <td>@(o.Description)</td>
+                        <td class="f-14">
+                            <a title="编辑" href="javascript:;" onclick="view_action('栏目编辑', '/articles/categoryview?id=@(o.CategoryId)', '500', '300')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> 
+                            <a title="删除" href="javascript:;" onclick="del_action(this, '@(o.CategoryId)')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                        </td>
+                    </tr>
+                }
+            }               
+            </tbody>
+        </table>
+    </div>
+    <!--_footer 作为公共模版分离出去-->
+    @Html.Partial("_Admin_Footer") <!--/_footer 作为公共模版分离出去-->
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="/Hui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        /*管理员-角色-添加-编辑*/
+        function view_action(title, url, w, h) {
+            layer_show(title, url, w, h);
+        }       
+        /*管理员-角色-删除*/
+        function del_action(obj, id) {
+            layer.confirm('删除须谨慎，确认要删除吗？', function (index) {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("CategoryRemove")?categoryId=' + id,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                            $(obj).parents("tr").remove();
+                            layer.msg(data.message, { icon: 1, time: 1000 });
+                        }
+                        else {
+                            layer.msg(data.message, { icon: 1, time: 1000 });
+                        }
+                        
+                    },
+                    error: function (data) {
+                        console.log(data.message);
+                    },
+                });
+            });
+        }
+    </script>
+</body>
+</html>

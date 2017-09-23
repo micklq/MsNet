@@ -1,0 +1,61 @@
+﻿@{
+    Layout = null;
+    var p = ViewData["WebAppLogs"] as WebAppLogs;
+    
+}
+<!DOCTYPE html>
+<html>
+<head>
+@Html.Partial("_Admin_Meta")
+<title>日志详情</title>
+</head>
+<body>
+    <div class="page-container">  
+    <table class="table table-border table-bordered table-bg table-hover">
+        <tr class="text-l">
+            <td width="120">ID：</td>
+            <td>@(p.LogsId)</td>
+        </tr>
+        <tr class="text-l">
+            <td>操作类型：</td>
+            <td>@(p.UserAction)</td>
+        </tr>
+        <tr class="text-l">
+            <td >内容：</td>
+            <td>@(p.Messages)</td>
+        </tr>
+        <tr class="text-l">
+            <td>PassportId：</td>
+            <td>@(p.PassportId)</td>
+        </tr>
+        <tr class="text-l">
+            <td>用户名：</td>
+            <td>@(p.UserName)</td>
+        </tr>
+        <tr class="text-l">
+            <td>客户端IP：</td>
+            <td>@(p.ClientIp)</td>
+        </tr>
+        <tr class="text-l">
+            <td>HttpUserAgent：</td>
+            <td>@(p.HttpUserAgent)</td>
+        </tr>
+        <tr class="text-l">
+            <td>HttpReferer：</td>
+            <td>@(p.HttpReferer)</td>
+        </tr>
+        <tr class="text-l">
+            <td>RefererDomain：</td>
+            <td>@(p.RefererDomain)</td>
+        </tr>
+        <tr class="text-l">
+            <td>操作时间：</td>
+            <td>@(p.CreatedTime)</td>
+        </tr>
+    </table> 
+</div>
+    <!--_footer 作为公共模版分离出去-->
+      @Html.Partial("_Admin_Footer") <!--/_footer 作为公共模版分离出去-->  
+    
+    </body>
+</html>

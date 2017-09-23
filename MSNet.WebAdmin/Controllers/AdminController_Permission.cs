@@ -37,11 +37,13 @@ namespace MSNet.WebAdmin.Controllers
             {
                 return JsonFail("请输入菜单名称！");               
             }
+            var actionStr = "添加菜单";
             if (model.PermissionId > 0) {
+                actionStr = "维护菜单";
                 model.PersistentState = PersistentState.Persistent;
             }         
             var rbool = model.Save();
-            WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, "维护菜单", model.Name); // 写入日志 
+            WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, actionStr, model.Name); // 写入日志 
             if (rbool)
             {
                 return JsonSuccess("操作成功！");  
@@ -58,8 +60,13 @@ namespace MSNet.WebAdmin.Controllers
 
             if (id > 0)
             {
-                var rbool = new PermissionMenu { PermissionId = id }.Remove();
-                WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, "删除菜单", "PermissionId:" + id); // 写入日志 
+                PermissionMenu item = PermissionMenu.FindById(id);
+                if (item == null)
+                {
+                    return JsonFail("参数错误");
+                }
+                var rbool = item.Remove();
+                WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, "删除菜单", item.Name); // 写入日志 
                 if (rbool)
                 {
                     return JsonSuccess("操作成功！");

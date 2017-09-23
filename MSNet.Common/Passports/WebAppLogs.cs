@@ -77,6 +77,14 @@ namespace MSNet.Common
             return results;
         }
 
+        public static WebAppLogs FindById(long Id)
+        {
+            var repository = RepositoryManager.GetRepository<IWebAppLogsRepository>(ModuleEnvironment.ModuleName);
+            var result = repository.FindById(Id);
+            return result;
+        }
+
+
         public static IList<WebAppLogs> FindWithPage(string keyword, string beginTime, string endTime, Pagination page)
         {
             var repository = RepositoryManager.GetRepository<IWebAppLogsRepository>(ModuleEnvironment.ModuleName);

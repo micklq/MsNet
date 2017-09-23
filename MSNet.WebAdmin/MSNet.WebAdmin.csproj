@@ -131,6 +131,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminController_Permission.cs" />
+    <Compile Include="Controllers\ArticlesController_Category.cs" />
     <Compile Include="Controllers\AdminController_Role.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Controllers\PicturesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PubController.cs" />
+    <Compile Include="Controllers\SystemController_Logs.cs" />
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1391,6 +1393,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\ModifyPswView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Articles\Categorys.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Articles\CategoryView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\System\LogsView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

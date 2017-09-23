@@ -2,7 +2,8 @@
     Layout = null;
     var list = ViewData["ArticleList"] as PagedList<Articles>;
     var category = ViewData["ArticlesCategory"] as IList<ArticlesCategory>;
-    long categoryId = Request["CategoryId"].ToLong(0); 
+    long categoryId = Request["CategoryId"].ToLong(0);
+    string keyword = Request["keyword"]; 
 }
 <!DOCTYPE html>
 <html>
@@ -19,7 +20,7 @@
         <span class="l">
          <span class="select-box inline">
            <select id="CategoryId" name="CategoryId" class="select">
-              <option value="0" @(categoryId == 0 ? "selected" : "")>-请选择-</option>
+              <option value="0" @(categoryId == 0 ? "selected" : "")>-全部栏目-</option>
               @if (category != null && category.Count > 0)
               {
                 foreach (var o in category)
@@ -29,8 +30,8 @@
               }
           </select>
        </span>
-        <input type="text" name="keyword" id="keyword" placeholder="资讯名称" style="width:250px" class="input-text">
-        <button name="btnSearch" id="btnSearch" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜资讯</button>
+        <input type="text" name="keyword" id="keyword" placeholder="资讯名称" value="@(keyword.IsNullOrEmpty() ? "" : keyword)" style="width:250px" class="input-text">
+        <button name="btnSearch" id="btnSearch" class="btn btn-success" type="button"><i class="Hui-iconfont">&#xe665;</i> 搜资讯</button>
        </span>
       </div>
       <div class="mt-20">
@@ -59,7 +60,9 @@
                             <td>@(o.Media)</td>
                             <td>@(o.LastModifiedTime)</td>
                             <td>@(o.BrowseTimes)</td>
-                            <td class="f-14 td-manage"><a style="text-decoration:none" class="ml-5" onclick="article_action('资讯编辑', '/articles/articleview?id=@(o.ArticleId)')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onclick="    article_del(this, '10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                            <td class="f-14 td-manage">
+                            <a style="text-decoration:none" class="ml-5" onclick="article_action('资讯编辑', '/articles/articleview?id=@(o.ArticleId)')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> 
+                            <a style="text-decoration:none" class="ml-5" onclick="article_del(this, '@(o.ArticleId)')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
                           </tr>
                         }
                     }
@@ -67,6 +70,7 @@
                    
                 </tbody>
             </table>
+          <div class="cl pd-5 bg-1 bk-gray mt-20">@Html.Pager(list)</div>    
         </div>
     </div>
     <!--_footer 作为公共模版分离出去-->
@@ -75,8 +79,12 @@
     <script type="text/javascript" src="/Hui/lib/My97DatePicker/4.8/WdatePicker.js"></script>
     <script type="text/javascript" src="/Hui/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="/Hui/lib/laypage/1.2/laypage.js"></script>
-    <script type="text/javascript">  
-
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSearch").click(function () {                
+                window.location.href = "@Url.Action("List")?CategoryId=" + $("#CategoryId").val() + "&keyword=" + $("#keyword").val();
+            })
+        })
         /*资讯-添加编辑*/
         function article_action(title, url, w, h) {
             var index = layer.open({
@@ -99,7 +107,7 @@
             layer.confirm('确认要删除吗？', function (index) {
                 $.ajax({
                     type: 'POST',
-                    url: '',
+                    url: '@Url.Action("ArticleRemove")?articleId=' + id,
                     dataType: 'json',
                     success: function (data) {
                         $(obj).parents("tr").remove();
@@ -111,6 +119,6 @@
                 });
             });
         }
-    </script>
+</script>
 </body>
 </html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+	<module moduleName="WebAppLogsRepository" dbName="MSNet.MySql">
+    <sqlWrap  sqlName="Insert"  supportDBType="MySql,SqlServer">
+      insert into WebAppLogs(PassportId,UserName,UserAction,Messages,ClientIp,HttpUserAgent,HttpReferer,RefererDomain,CreatedTime,LastModifiedTime)
+      values(@PassportId,@UserName,@UserAction,@Messages,@ClientIp,@HttpUserAgent,@HttpReferer,@RefererDomain,@CreatedTime,@LastModifiedTime);
+      select @@IDENTITY;
+    </sqlWrap>   
+    <sqlWrap  sqlName="SelectAll"  supportDBType="MySql,SqlServer">
+      select *  from WebAppLogs;
+    </sqlWrap>
+    <sqlWrap  sqlName="DeleteById"  supportDBType="MySql,SqlServer">
+      delete from WebAppLogs where LogsId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectById"  supportDBType="MySql,SqlServer">
+      select *  from WebAppLogs  where LogsId = @Id;
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithPage" supportDBType="MySql">
+      select * from WebAppLogs
+      where 1=1 and (if(isnull(@Keyword),1=1,(UserName like @Keyword or UserAction like @Keyword)))
+      and (if(isnull(@BeginTime),1=1,(CreatedTime BETWEEN @BeginTime AND DATE_ADD(@EndTime,INTERVAL 1 DAY))))
+      order by LogsId desc
+    </sqlWrap>
+  </module>
+</root>
+

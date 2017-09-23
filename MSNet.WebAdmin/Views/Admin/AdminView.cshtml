@@ -90,7 +90,7 @@
                         <select class="select" id="PassportStatus" name="PassportStatus">
                             @foreach (var o in EnumHelper.GetDescriptionsInt<PassportStatus>())
                             {
-                                <option value="@(o.Key))" @((int)p.PassportStatus == o.Key ? "selected" : "")>@(o.Value)</option>
+                                <option value="@(o.Key)" @((int)p.PassportStatus == o.Key ? "selected" : "")>@(o.Value)</option>
                             }
 
                         </select>

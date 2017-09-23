@@ -66,7 +66,7 @@ namespace MSNet.WebAdmin.Controllers
                 UserPassport uPassport = null;
                 model.RoleType = UserRoleType.Adminstrator;
                 var result = MemberShip.Add(model, GetSignedUpInfo(), out uPassport);
-                WebAppLogsWrite(this.CurrentUser.PassportId,this.CurrentUser.UserName,"添加管理员",result.message); // 写入日志            
+                WebAppLogsWrite(this.CurrentUser.PassportId,this.CurrentUser.UserName,"添加管理员",result.message.IsNullOrEmpty()?"添加成功":result.message); // 写入日志            
                 if (!result.success)
                 {
                     return JsonFail(result.message);
@@ -75,7 +75,7 @@ namespace MSNet.WebAdmin.Controllers
             else 
             {
                 var result = MemberShip.Update(model, GetSignedUpInfo());
-                WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, "更新管理员", result.message); // 写入日志 
+                WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, "更新管理员", result.message.IsNullOrEmpty() ? "更新成功" : result.message); // 写入日志 
                 if (!result.success)
                 {
                     return JsonFail(result.message);
