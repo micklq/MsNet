@@ -159,11 +159,18 @@
     <Compile Include="Web\PagerHelper\PagerItem.cs" />
     <Compile Include="Web\PagerHelper\PagerItemType.cs" />
     <Compile Include="Web\PagerHelper\PagerOptions.cs" />
+    <Compile Include="Web\UEditor\Config.cs" />
+    <Compile Include="Web\UEditor\ConfigHandler.cs" />
+    <Compile Include="Web\UEditor\CrawlerHandler.cs" />
+    <Compile Include="Web\UEditor\Handler.cs" />
+    <Compile Include="Web\UEditor\ListFileHandler.cs" />
+    <Compile Include="Web\UEditor\NotSupportedHandler.cs" />
+    <Compile Include="Web\UEditor\PathFormater.cs" />
+    <Compile Include="Web\UEditor\UploadHandler.cs" />
     <Compile Include="Web\UserAuthentication.cs" />
     <Compile Include="Web\SignInUser.cs" />
     <Compile Include="Web\VerifyCodeHelper.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

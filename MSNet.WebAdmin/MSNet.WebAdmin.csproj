@@ -141,21 +141,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\RepairController_Category.cs" />
+    <Compile Include="Controllers\RepairController.cs" />
     <Compile Include="Controllers\PubController.cs" />
     <Compile Include="Controllers\SystemController_Logs.cs" />
     <Compile Include="Controllers\SystemController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hui\lib\ueditor\1.4.3\net\App_Code\Config.cs" />
-    <Compile Include="Hui\lib\ueditor\1.4.3\net\App_Code\ConfigHandler.cs" />
-    <Compile Include="Hui\lib\ueditor\1.4.3\net\App_Code\CrawlerHandler.cs" />
-    <Compile Include="Hui\lib\ueditor\1.4.3\net\App_Code\Handler.cs" />
-    <Compile Include="Hui\lib\ueditor\1.4.3\net\App_Code\ListFileHandler.cs" />
-    <Compile Include="Hui\lib\ueditor\1.4.3\net\App_Code\NotSupportedHandler.cs" />
-    <Compile Include="Hui\lib\ueditor\1.4.3\net\App_Code\PathFormater.cs" />
-    <Compile Include="Hui\lib\ueditor\1.4.3\net\App_Code\UploadHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -435,29 +428,6 @@
     <Content Include="Hui\lib\ueditor\1.4.3\dialogs\wordimage\wordimage.html" />
     <Content Include="Hui\lib\ueditor\1.4.3\dialogs\wordimage\wordimage.js" />
     <Content Include="Hui\lib\ueditor\1.4.3\index.html" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\lib\commons-codec-1.9.jar" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\lib\commons-fileupload-1.3.1.jar" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\lib\commons-io-2.4.jar" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\lib\json.jar" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\lib\ueditor-1.1.1.jar" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\ActionEnter.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\ConfigManager.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\define\ActionMap.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\define\ActionState.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\define\AppInfo.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\define\BaseState.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\define\FileType.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\define\MIMEType.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\define\MultiState.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\define\State.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\Encoder.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\hunter\FileManager.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\hunter\ImageHunter.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\PathFormat.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\upload\Base64Uploader.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\upload\BinaryUploader.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\upload\StorageManager.java" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\src\com\baidu\ueditor\upload\Uploader.java" />
     <Content Include="Hui\lib\ueditor\1.4.3\lang\en\en.js" />
     <Content Include="Hui\lib\ueditor\1.4.3\lang\en\images\addimage.png" />
     <Content Include="Hui\lib\ueditor\1.4.3\lang\en\images\alldeletebtnhoverskin.png" />
@@ -480,7 +450,6 @@
     <Content Include="Hui\lib\ueditor\1.4.3\lang\zh-cn\images\music.png" />
     <Content Include="Hui\lib\ueditor\1.4.3\lang\zh-cn\images\upload.png" />
     <Content Include="Hui\lib\ueditor\1.4.3\lang\zh-cn\zh-cn.js" />
-    <Content Include="Hui\lib\ueditor\1.4.3\net\net.sln" />
     <Content Include="Hui\lib\ueditor\1.4.3\themes\default\css\ueditor.css" />
     <Content Include="Hui\lib\ueditor\1.4.3\themes\default\css\ueditor.min.css" />
     <Content Include="Hui\lib\ueditor\1.4.3\themes\default\dialogbase.css" />
@@ -1285,6 +1254,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="logs\" />
+    <Folder Include="upload\ueditor\image\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1298,18 +1268,6 @@
     <Content Include="Hui\lib\Hui-iconfont\1.0.8\iconfont.woff" />
     <Content Include="Hui\lib\lightbox2\2.8.1\js\lightbox-plus-jquery.min.map" />
     <Content Include="Hui\lib\lightbox2\2.8.1\js\lightbox.min.map" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\config.json" />
-    <Content Include="Hui\lib\ueditor\1.4.3\jsp\controller.jsp" />
-    <Content Include="Hui\lib\ueditor\1.4.3\net\config.json" />
-    <Content Include="Hui\lib\ueditor\1.4.3\net\controller.ashx" />
-    <Content Include="Hui\lib\ueditor\1.4.3\net\README.md" />
-    <Content Include="Hui\lib\ueditor\1.4.3\net\Web.config" />
-    <Content Include="Hui\lib\ueditor\1.4.3\php\action_crawler.php" />
-    <Content Include="Hui\lib\ueditor\1.4.3\php\action_list.php" />
-    <Content Include="Hui\lib\ueditor\1.4.3\php\action_upload.php" />
-    <Content Include="Hui\lib\ueditor\1.4.3\php\config.json" />
-    <Content Include="Hui\lib\ueditor\1.4.3\php\controller.php" />
-    <Content Include="Hui\lib\ueditor\1.4.3\php\Uploader.class.php" />
     <Content Include="Hui\lib\ueditor\1.4.3\third-party\jquery-1.10.2.min.map" />
     <Content Include="Hui\lib\ueditor\1.4.3\third-party\video-js\font\vjs.eot" />
     <Content Include="Hui\lib\ueditor\1.4.3\third-party\video-js\font\vjs.svg" />
@@ -1339,6 +1297,14 @@
     <ProjectReference Include="..\MSNet.Common\MSNet.Common.csproj">
       <Project>{2bd2de63-afbc-4b8d-b469-b9337bd4b3ee}</Project>
       <Name>MSNet.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSNet.Repair.DataRepositories\MSNet.Repair.DataRepositories.csproj">
+      <Project>{c19898e0-0084-4d47-8e3a-cc28cee5afd3}</Project>
+      <Name>MSNet.Repair.DataRepositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSNet.Repair\MSNet.Repair.csproj">
+      <Project>{bb5105b3-f4ab-4676-b1c3-8a66d3496739}</Project>
+      <Name>MSNet.Repair</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -1371,9 +1337,8 @@
     <Content Include="Views\Members\RecordShare.cshtml" />
     <Content Include="Views\Members\ScoreOperation.cshtml" />
     <Content Include="Views\Pictures\List.cshtml" />
-    <Content Include="Views\Products\Brand.cshtml" />
-    <Content Include="Views\Products\Category.cshtml" />
-    <Content Include="Views\Products\List.cshtml" />
+    <Content Include="Views\Repair\Orders.cshtml" />
+    <Content Include="Views\Repair\List.cshtml" />
     <Content Include="Views\Pub\ErrorMsg.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Admin_Footer.cshtml" />
@@ -1402,6 +1367,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\System\LogsView.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Hui\lib\ueditor\1.4.3\config.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Hui\lib\ueditor\1.4.3\controller.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Repair\Categorys.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Repair\CategoryView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

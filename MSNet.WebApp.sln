@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSNet.Common.DataRepositori
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSNet.WebAdmin", "MSNet.WebAdmin\MSNet.WebAdmin.csproj", "{7E154AB4-8622-4997-9B6E-C750B8EBD44E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSNet.Repair.DataRepositories", "MSNet.Repair.DataRepositories\MSNet.Repair.DataRepositories.csproj", "{C19898E0-0084-4D47-8E3A-CC28CEE5AFD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSNet.Repair", "MSNet.Repair\MSNet.Repair.csproj", "{BB5105B3-F4AB-4676-B1C3-8A66D3496739}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{7E154AB4-8622-4997-9B6E-C750B8EBD44E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E154AB4-8622-4997-9B6E-C750B8EBD44E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E154AB4-8622-4997-9B6E-C750B8EBD44E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C19898E0-0084-4D47-8E3A-CC28CEE5AFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C19898E0-0084-4D47-8E3A-CC28CEE5AFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C19898E0-0084-4D47-8E3A-CC28CEE5AFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C19898E0-0084-4D47-8E3A-CC28CEE5AFD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB5105B3-F4AB-4676-B1C3-8A66D3496739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB5105B3-F4AB-4676-B1C3-8A66D3496739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB5105B3-F4AB-4676-B1C3-8A66D3496739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB5105B3-F4AB-4676-B1C3-8A66D3496739}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
