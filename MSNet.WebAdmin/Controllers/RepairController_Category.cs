@@ -19,7 +19,28 @@ namespace MSNet.WebAdmin.Controllers
 
         public ActionResult Categorys()
         {
-            ViewData["Categorys"] = RepairCategory.FindWithAll(); 
+            long pId = Request["parentId"].ToLong();
+            IList<RepairCategory> list =  RepairCategory.FindWithAll(); 
+            IList<RepairCategory> plist = new List<RepairCategory>();          
+            if (pId > 0)
+            {
+                if(list.Where(q => q.ParentId.Equals(pId)).Count()>0)
+                {
+                    plist = list.Where(q => q.ParentId.Equals(pId)).ToList();
+                    foreach (var o in plist)
+                    {
+                        var oo = list.Where(p => p.CategoryId.Equals(o.ParentId)).FirstOrDefault();
+                        o.ParentName = ((oo != null) ? oo.Name : "无");
+                    }
+                }              
+            }
+            else 
+            {
+                plist = list.Where(q => q.ParentId.Equals(0)).ToList();
+            }
+
+            ViewData["Breads"] = RepairCategory.GetBreadList(pId, list);
+            ViewData["Categorys"] = plist;
             return View();
         }
 

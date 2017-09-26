@@ -82,6 +82,14 @@
       <Project>{2bd2de63-afbc-4b8d-b469-b9337bd4b3ee}</Project>
       <Name>MSNet.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MSNet.Repair.DataRepositories\MSNet.Repair.DataRepositories.csproj">
+      <Project>{c19898e0-0084-4d47-8e3a-cc28cee5afd3}</Project>
+      <Name>MSNet.Repair.DataRepositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSNet.Repair\MSNet.Repair.csproj">
+      <Project>{bb5105b3-f4ab-4676-b1c3-8a66d3496739}</Project>
+      <Name>MSNet.Repair</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

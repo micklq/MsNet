@@ -17,9 +17,8 @@ namespace MSNet.Common
         public string Description { get; set; } 
         public long ParentId { get; set; }  
 
-        #endregion   
-
-
+        #endregion           
+      
     }
 }
 

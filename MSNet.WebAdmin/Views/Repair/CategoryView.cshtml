@@ -2,6 +2,7 @@
     Layout = null;
     var p = ViewData["Category"] as RepairCategory;
     if (p == null) { p = new RepairCategory(); }
+    long parentId = Request["parentId"].ToLong(0);
     
 }
 <!DOCTYPE html>
@@ -14,6 +15,7 @@
     <article class="page-container">
         <form method="post" class="form form-horizontal" id="form-save-action">
             <input type="hidden" id="CategoryId" name="CategoryId" value="@(p.CategoryId)">
+            <input type="hidden" id="ParentId" name="ParentId" value="@((parentId > 0 && p.ParentId==0)? parentId:p.ParentId)">
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>栏目名称：</label>
                 <div class="formControls col-xs-8 col-sm-9">
