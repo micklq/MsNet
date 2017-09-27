@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C19898E0-0084-4D47-8E3A-CC28CEE5AFD3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MSNet.Repair.DataRepositories</RootNamespace>
+    <AssemblyName>MSNet.Repair.DataRepositories</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="M2SA.AppGenome">
+      <HintPath>..\libs\M2SA\M2SA.AppGenome.dll</HintPath>
+    </Reference>
+    <Reference Include="M2SA.AppGenome.Cache">
+      <HintPath>..\libs\M2SA\M2SA.AppGenome.Cache.dll</HintPath>
+    </Reference>
+    <Reference Include="M2SA.AppGenome.Data">
+      <HintPath>..\libs\M2SA\M2SA.AppGenome.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="M2SA.AppGenome.Logging">
+      <HintPath>..\libs\M2SA\M2SA.AppGenome.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="M2SA.AppGenome.Queues">
+      <HintPath>..\libs\M2SA\M2SA.AppGenome.Queues.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\M2SA\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepairOrdersRepository.cs" />
+    <Compile Include="RepairCategoryRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sqlmap\repair\RepairCategoryRepository.sql.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sqlmap\repair\RepairOrdersRepository.sql.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MSNet.Common\MSNet.Common.csproj">
+      <Project>{2bd2de63-afbc-4b8d-b469-b9337bd4b3ee}</Project>
+      <Name>MSNet.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSNet.Repair\MSNet.Repair.csproj">
+      <Project>{bb5105b3-f4ab-4676-b1c3-8a66d3496739}</Project>
+      <Name>MSNet.Repair</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

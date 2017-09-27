@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+	<module moduleName="RepairOrdersRepository" dbName="MSNet.MySql">
+    <sqlWrap  sqlName="Insert"  supportDBType="MySql,SqlServer">
+      insert into RepairOrders(CategoryIds,CategoryNames,FaultDescription,Address,Mobile,Latitude,Longitude,Precision,CreatedTime,LastModifiedTime) 
+      values(@CategoryIds,@CategoryNames,@FaultDescription,@Address,@Mobile,@Latitude,@Longitude,@Precision,@CreatedTime,@LastModifiedTime);
+      select @@IDENTITY; 
+    </sqlWrap>
+    <sqlWrap  sqlName="Update"  supportDBType="MySql,SqlServer">
+      update RepairOrders 
+      set CategoryIds=@CategoryIds,CategoryNames=@CategoryNames,FaultDescription=@FaultDescription,Address=@Address,Mobile=@Mobile,Latitude=@Latitude,Longitude=@Longitude,Precision=@Precision,LastModifiedTime=@LastModifiedTime  
+      where OrderId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="DeleteById"  supportDBType="MySql,SqlServer">
+      delete from RepairOrders where OrderId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectById"  supportDBType="MySql,SqlServer">
+      select *  from RepairOrders  where OrderId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectAll"  supportDBType="MySql,SqlServer">
+      select *  from RepairOrders;
+    </sqlWrap>
+  </module>
+</root>
+
