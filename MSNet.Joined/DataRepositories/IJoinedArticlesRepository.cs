@@ -7,7 +7,10 @@ using M2SA.AppGenome.Data;
 namespace MSNet.Joined.DataRepositories
 {
     public interface IJoinedArticlesRepository : IRepository<JoinedArticles, long>
-    {       
+    {
+        IList<JoinedArticles> FindWithPage(string keyword, Pagination page);
+
+        bool UpdateBrowse(long ArticleId);
     }
 }
  

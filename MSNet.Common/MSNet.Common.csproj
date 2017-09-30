@@ -98,6 +98,8 @@
     <Compile Include="Articles\DataRepositories\IArticlesCategoryRepository.cs" />
     <Compile Include="Articles\Articles.cs" />
     <Compile Include="Articles\DataRepositories\IArticlesRepository.cs" />
+    <Compile Include="Articles\DataRepositories\IFeedbackRepository.cs" />
+    <Compile Include="Articles\Feedback.cs" />
     <Compile Include="BaseCategory\BaseCategoryRepository.cs" />
     <Compile Include="Passports\DataRepositories\IWebAppLogsRepository.cs" />
     <Compile Include="Passports\WebAppLogs.cs" />

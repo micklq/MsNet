@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+	<module moduleName="FeedbackRepository" dbName="MSNet.MySql">
+    <sqlWrap  sqlName="Insert"  supportDBType="MySql,SqlServer">
+      insert into feedback(Contents,Email,Mobile,CreatedTime,LastModifiedTime) 
+      values(@Contents,@Email,@Mobile,@CreatedTime,@LastModifiedTime);
+      select @@IDENTITY;
+    </sqlWrap>
+    <sqlWrap  sqlName="Update"  supportDBType="MySql,SqlServer">
+      update feedback
+      set Contents=@Contents,Email=@Email,Mobile=@Mobile,LastModifiedTime=@LastModifiedTime
+      where FeedbackId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="DeleteById"  supportDBType="MySql,SqlServer">
+      delete from feedback where FeedbackId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectById"  supportDBType="MySql,SqlServer">
+      select *  from feedback
+      where FeedbackId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectAll"  supportDBType="MySql,SqlServer">
+      select * from feedback;
+    </sqlWrap>
+    <sqlWrap sqlName="FindWithPage" supportDBType="MySql">
+      select * from feedback
+      where  1=1 and (if(isnull(@Keyword),1=1,((Contents like @Keyword) or (Email like @Keyword) or (Mobile like @Keyword))))
+      order by FeedbackId desc
+    </sqlWrap>
+  </module>
+</root>
+

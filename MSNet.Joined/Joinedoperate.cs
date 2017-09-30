@@ -23,9 +23,7 @@ namespace MSNet.Joined
         public string TelPhone { get; set; } 
         public string Address { get; set; } 
         public string Zipcode { get; set; } 
-        public DateTime? CreatedTime { get; set; } 
-        public DateTime? LastModifiedTime { get; set; } 
-  		       
+      
         #endregion
 
         #region Static Methods

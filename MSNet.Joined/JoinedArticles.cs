@@ -22,13 +22,17 @@ namespace MSNet.Joined
         public string Keywords { get; set; } 
         public string Description { get; set; } 
         public string Contents { get; set; } 
-        public int? BrowseTimes { get; set; } 
-        public DateTime? CreatedTime { get; set; } 
-        public DateTime? LastModifiedTime { get; set; } 
-  		       
+        public int BrowseTimes { get; set; } 
+      
         #endregion
 
         #region Static Methods
+
+        public static IList<JoinedArticles> FindWithPage(string keyword,  Pagination page)
+        {
+            var repository = RepositoryManager.GetRepository<IJoinedArticlesRepository>(ModuleEnvironment.ModuleName);
+            return repository.FindWithPage(keyword,page);
+        }
         public static IList<JoinedArticles> FindWithAll()
         {
             
@@ -41,6 +45,12 @@ namespace MSNet.Joined
             var repository = RepositoryManager.GetRepository<IJoinedArticlesRepository>(ModuleEnvironment.ModuleName);
             var result = repository.FindById(Id);
             return result;
+        }
+
+        public static bool UpdateBrowse(long ArticleId)
+        {
+            var repository = RepositoryManager.GetRepository<IJoinedArticlesRepository>(ModuleEnvironment.ModuleName);
+            return repository.UpdateBrowse(ArticleId);
         }
         #endregion
 

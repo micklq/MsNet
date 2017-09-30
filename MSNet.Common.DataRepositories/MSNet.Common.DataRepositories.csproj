@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Articles\ArticleCategoryRepository.cs" />
     <Compile Include="Articles\ArticlesRepository.cs" />
+    <Compile Include="Articles\FeedbackRepository.cs" />
     <Compile Include="Passports\PermissionMenuRepository.cs" />
     <Compile Include="Passports\WebAppLogsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +84,7 @@
     <Content Include="sqlmap\articles\ArticlesRepository.sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="sqlmap\articles\FeedbackRepository.sql.xml" />
     <Content Include="sqlmap\passports\PermissionMenuRepository.sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

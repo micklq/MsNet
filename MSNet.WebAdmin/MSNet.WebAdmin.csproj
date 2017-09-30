@@ -131,6 +131,12 @@
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminController_Permission.cs" />
+    <Compile Include="Controllers\JoinedController_Third.cs" />
+    <Compile Include="Controllers\JoinedController_Partner.cs" />
+    <Compile Include="Controllers\JoinedController_Operate.cs" />
+    <Compile Include="Controllers\JoinedController_Firm.cs" />
+    <Compile Include="Controllers\JoinedController_Area.cs" />
+    <Compile Include="Controllers\JoinedController_Articles.cs" />
     <Compile Include="Controllers\ArticlesController_Category.cs" />
     <Compile Include="Controllers\AdminController_Role.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
@@ -1297,6 +1303,14 @@
     <ProjectReference Include="..\MSNet.Common\MSNet.Common.csproj">
       <Project>{2bd2de63-afbc-4b8d-b469-b9337bd4b3ee}</Project>
       <Name>MSNet.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSNet.Joined.DataRepositories\MSNet.Joined.DataRepositories.csproj">
+      <Project>{4f414eb3-faa6-48fa-8745-2bc1c4d4a163}</Project>
+      <Name>MSNet.Joined.DataRepositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSNet.Joined\MSNet.Joined.csproj">
+      <Project>{93b74ec8-53f1-4eae-987b-9de6e6311203}</Project>
+      <Name>MSNet.Joined</Name>
     </ProjectReference>
     <ProjectReference Include="..\MSNet.Repair.DataRepositories\MSNet.Repair.DataRepositories.csproj">
       <Project>{c19898e0-0084-4d47-8e3a-cc28cee5afd3}</Project>

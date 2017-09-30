@@ -32,7 +32,7 @@
      where  1=1 and (if(isnull(@Keyword),1=1,(Articles.Title like @Keyword)))
      and (if(@CategoryId=0,1=1,Articles.CategoryId=@CategoryId))
      order by Articles.ArticleId desc
-   </sqlWrap>-->
+   </sqlWrap>
     <!--<sqlWrap sqlName="FindWithPage" supportDBType="SqlServer">
       select * from Articles 
       where (Title like @Keyword) and (CategoryId=isnull(nullif(@CategoryId,0),CategoryId))  
