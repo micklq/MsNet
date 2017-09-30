@@ -15,6 +15,6 @@ namespace MSNet.WebAdmin.Controllers
 {
     public partial class JoinedController : AuthBaseController
     {       
-        
+         
     }
 }
