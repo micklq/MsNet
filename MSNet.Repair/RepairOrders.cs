@@ -15,7 +15,12 @@ namespace MSNet.Repair
     {
                
 
-        #region Instance Properties     
+        #region Instance Properties    
+        public long OrderId
+        {
+            get { return this.Id; }
+            set { this.Id = value; }
+        }  
           
         public String CategoryIds{ get; set; }
 

@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSNet.Repair.DataRepositori
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSNet.Repair", "MSNet.Repair\MSNet.Repair.csproj", "{BB5105B3-F4AB-4676-B1C3-8A66D3496739}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSNet.Joined", "MSNet.Joined\MSNet.Joined.csproj", "{93B74EC8-53F1-4EAE-987B-9DE6E6311203}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSNet.Joined.DataRepositories", "MSNet.Joined.DataRepositories\MSNet.Joined.DataRepositories.csproj", "{4F414EB3-FAA6-48FA-8745-2BC1C4D4A163}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{BB5105B3-F4AB-4676-B1C3-8A66D3496739}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB5105B3-F4AB-4676-B1C3-8A66D3496739}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB5105B3-F4AB-4676-B1C3-8A66D3496739}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B74EC8-53F1-4EAE-987B-9DE6E6311203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B74EC8-53F1-4EAE-987B-9DE6E6311203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B74EC8-53F1-4EAE-987B-9DE6E6311203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B74EC8-53F1-4EAE-987B-9DE6E6311203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F414EB3-FAA6-48FA-8745-2BC1C4D4A163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F414EB3-FAA6-48FA-8745-2BC1C4D4A163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F414EB3-FAA6-48FA-8745-2BC1C4D4A163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F414EB3-FAA6-48FA-8745-2BC1C4D4A163}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
