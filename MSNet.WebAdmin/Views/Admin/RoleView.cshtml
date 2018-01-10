@@ -1,6 +1,6 @@
 ﻿@{
     Layout = null;
-    var list = ViewData["Permissions"] as List<PermissionMenu>;
+    var list = ViewData["Permissions"] as List<Permissions>;
     var rlist = ViewData["RolePermission"] as List<UserRolePermission>;
     if (rlist == null) { rlist = new List<UserRolePermission>(); }
     var p = ViewData["Role"] as UserRole;

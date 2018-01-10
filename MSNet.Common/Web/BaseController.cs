@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
 using System.Web.Mvc;
 using MSNet.Common.Util;
 using MSNet.Common.Security;
+
 namespace MSNet.Common.Web
 {
     public class BaseController : Controller
@@ -126,6 +128,8 @@ namespace MSNet.Common.Web
             }
             return Upload(maxLen, path, ext, fileName);
         }
+
+         
 
     }
 }

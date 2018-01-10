@@ -1,8 +1,8 @@
 ﻿@{
     Layout = null;
-    var roots = ViewData["PermissionRoot"] as List<PermissionMenu>;
-    var p = ViewData["Permission"] as PermissionMenu;
-    if (p == null) { p = new PermissionMenu(); }
+    var roots = ViewData["PermissionRoot"] as List<Permissions>;
+    var p = ViewData["Permission"] as Permissions;
+    if (p == null) { p = new Permissions(); }
 }
 <!DOCTYPE html>
 <html>

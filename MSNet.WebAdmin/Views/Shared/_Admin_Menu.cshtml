@@ -1,5 +1,5 @@
 ﻿@{ 
-    var menus = PermissionMenu.FindWithAll();  
+    var menus = Permissions.FindWithAll();  
     var user = MSNet.Common.Web.UserAuthentication.CurrentUser;
     IList<UserRolePermission> rolePerm = null;  
     if (user != null && user.RoleId>0)

@@ -94,6 +94,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pictures\Pictures.cs" />
+    <Compile Include="Pictures\PicturesCategory.cs" />
+    <Compile Include="Pictures\DataRepositories\IPicturesCategoryRepository.cs" />
+    <Compile Include="Pictures\DataRepositories\IPicturesRepository.cs" />
     <Compile Include="Articles\ArticlesCategory.cs" />
     <Compile Include="Articles\DataRepositories\IArticlesCategoryRepository.cs" />
     <Compile Include="Articles\Articles.cs" />
