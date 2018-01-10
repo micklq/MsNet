@@ -10,7 +10,7 @@ namespace MSNet.Common
     /// <summary>
     /// Permission
     /// </summary>
-    public class PermissionMenu : BaseCategory<long>
+    public class Permissions : BaseCategory<long>
     {
 
         //private static IPermissionRepository repository = new BaseRepositoryFactory().GetRepository<PermissionRepository>();
@@ -29,36 +29,36 @@ namespace MSNet.Common
         #endregion
 
         #region Static Methods
-        public static IList<PermissionMenu> FindWithAll()
+        public static IList<Permissions> FindWithAll()
         {
-            var repository = RepositoryManager.GetRepository<IPermissionMenuRepository>(ModuleEnvironment.ModuleName);
+            var repository = RepositoryManager.GetRepository<IPermissionsRepository>(ModuleEnvironment.ModuleName);
             return repository.LoadAll();           
         }
-        public static IList<PermissionMenu> FindRoot()
+        public static IList<Permissions> FindRoot()
         {
-            var repository = RepositoryManager.GetRepository<IPermissionMenuRepository>(ModuleEnvironment.ModuleName);
+            var repository = RepositoryManager.GetRepository<IPermissionsRepository>(ModuleEnvironment.ModuleName);
             return repository.FindRoot();
         }
-        public static IList<PermissionMenu> FindByParentId(long parentId)
+        public static IList<Permissions> FindByParentId(long parentId)
         {
-            var repository = RepositoryManager.GetRepository<IPermissionMenuRepository>(ModuleEnvironment.ModuleName);
+            var repository = RepositoryManager.GetRepository<IPermissionsRepository>(ModuleEnvironment.ModuleName);
             return repository.FindByParentId(parentId);
         }
-        public static PermissionMenu FindById(long Id)
+        public static Permissions FindById(long Id)
         {
-            var repository = RepositoryManager.GetRepository<IPermissionMenuRepository>(ModuleEnvironment.ModuleName);
+            var repository = RepositoryManager.GetRepository<IPermissionsRepository>(ModuleEnvironment.ModuleName);
             return repository.FindById(Id);            
         }
 
         public static int ExistChildCategory(long categoryId)
         {
-            var repository = RepositoryManager.GetRepository<IPermissionMenuRepository>(ModuleEnvironment.ModuleName);
+            var repository = RepositoryManager.GetRepository<IPermissionsRepository>(ModuleEnvironment.ModuleName);
             return repository.ExistChildCategory(categoryId);
         }
 
         public static bool Move(long categoryId, long parentId)
         {
-            var repository = RepositoryManager.GetRepository<IPermissionMenuRepository>(ModuleEnvironment.ModuleName);
+            var repository = RepositoryManager.GetRepository<IPermissionsRepository>(ModuleEnvironment.ModuleName);
             return repository.Move(categoryId, parentId);
         }
         #endregion
@@ -67,12 +67,12 @@ namespace MSNet.Common
 
         public bool Save()
         {
-            var repository = RepositoryManager.GetRepository<IPermissionMenuRepository>(ModuleEnvironment.ModuleName);
+            var repository = RepositoryManager.GetRepository<IPermissionsRepository>(ModuleEnvironment.ModuleName);
             return repository.Save(this);          
         }
         public bool Remove()
         {
-            var repository = RepositoryManager.GetRepository<IPermissionMenuRepository>(ModuleEnvironment.ModuleName);            
+            var repository = RepositoryManager.GetRepository<IPermissionsRepository>(ModuleEnvironment.ModuleName);            
             return repository.Remove(this);            
         }
         #endregion

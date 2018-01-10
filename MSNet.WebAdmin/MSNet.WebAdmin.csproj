@@ -1326,7 +1326,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\List.cshtml" />
-    <Content Include="Views\Admin\Permissions.cshtml" />
+    <Content Include="Views\Admin\Permissionlist.cshtml" />
     <Content Include="Views\Admin\PermissionView.cshtml" />
     <Content Include="Views\Admin\Roles.cshtml" />
     <Content Include="Views\Admin\RoleView.cshtml" />

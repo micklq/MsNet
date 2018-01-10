@@ -15,22 +15,22 @@ namespace MSNet.WebAdmin.Controllers
     public partial class AdminController : AuthBaseController
     {       
 
-        public ActionResult Permissions()
+        public ActionResult Permissionlist()
         {
-            ViewData["Permissions"] = PermissionMenu.FindWithAll(); 
+            ViewData["Permissions"] =  Permissions.FindWithAll(); 
             return View();
         }
 
         public ActionResult PermissionView()
         {
             long id = Request["id"].ToLong();
-            ViewData["PermissionRoot"] = PermissionMenu.FindRoot(); 
-            ViewData["Permission"] = PermissionMenu.FindById(id);            
+            ViewData["PermissionRoot"] = Permissions.FindRoot(); 
+            ViewData["Permission"] = Permissions.FindById(id);            
             return View();
         }
 
         [HttpPost]
-        public ActionResult PermissionAction(PermissionMenu model)
+        public ActionResult PermissionAction(Permissions model)
         {
 
             if (model.Name.IsNullOrEmpty())
@@ -60,7 +60,7 @@ namespace MSNet.WebAdmin.Controllers
 
             if (id > 0)
             {
-                PermissionMenu item = PermissionMenu.FindById(id);
+                Permissions item = Permissions.FindById(id);
                 if (item == null)
                 {
                     return JsonFail("参数错误");

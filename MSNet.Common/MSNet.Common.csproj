@@ -106,7 +106,7 @@
     <Compile Include="RepositoryFactory.cs" />
     <Compile Include="BaseCategory\IBaseCategoryRepository.cs" />
     <Compile Include="ModuleEnvironment.cs" />
-    <Compile Include="Passports\DataRepositories\IPermissionMenuRepository.cs" />
+    <Compile Include="Passports\DataRepositories\IPermissionsRepository.cs" />
     <Compile Include="Passports\DataRepositories\IUserRolePermissionRepository.cs" />
     <Compile Include="Passports\DataRepositories\IUserRoleRepository.cs" />
     <Compile Include="Passports\DataRepositories\ISignedUpInfoRepository.cs" />
@@ -116,7 +116,7 @@
     <Compile Include="Passports\MemberShip.cs" />
     <Compile Include="Passports\PassportStatus.cs" />
     <Compile Include="BaseCategory\BaseCategory.cs" />
-    <Compile Include="Passports\PermissionMenu.cs" />
+    <Compile Include="Passports\Permissions.cs" />
     <Compile Include="Passports\PermissionValue.cs" />
     <Compile Include="Passports\UserRoleType.cs" />
     <Compile Include="Passports\UserRole.cs" />

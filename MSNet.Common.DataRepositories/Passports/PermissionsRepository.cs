@@ -7,7 +7,7 @@ namespace MSNet.Common.DataRepositories
     /// <summary>
     /// 
     /// </summary>
-    public class PermissionMenuRepository : BaseCategoryRepository<PermissionMenu, long>, IPermissionMenuRepository
+    public class PermissionsRepository : BaseCategoryRepository<Permissions, long>, IPermissionsRepository
     {
        
     }    

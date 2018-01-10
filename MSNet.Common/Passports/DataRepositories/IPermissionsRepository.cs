@@ -6,7 +6,7 @@ using M2SA.AppGenome.Data;
 using MSNet.Common;
 namespace MSNet.Common.DataRepositories
 {
-    public interface IPermissionMenuRepository : IBaseCategoryRepository<PermissionMenu, long>
+    public interface IPermissionsRepository : IBaseCategoryRepository<Permissions, long>
     {       
     }
 }

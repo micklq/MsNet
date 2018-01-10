@@ -21,7 +21,7 @@ namespace MSNet.Tests
         {
 
             SignedUpInfo signedUpInfo = new SignedUpInfo() { SignedUpTime = DateTime.Now, SignedUpIp = "127.0.0.1", HttpUserAgent = "nunit.framework.test" };
-            UserPassport uPassport = new UserPassport() { UserName = "admin2", Password = "123456", Mobile="13683205268",  RoleType = UserRoleType.Adminstrator, RoleId=1 };
+            UserPassport uPassport = new UserPassport() { UserName = "admin", Password = "654321", Mobile="13683205268",  RoleType = UserRoleType.Adminstrator, RoleId=1 };
             UserPassport status = null ;
             var result = MemberShip.Add(uPassport, signedUpInfo, out status);    
 

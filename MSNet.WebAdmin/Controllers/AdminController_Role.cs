@@ -23,7 +23,7 @@ namespace MSNet.WebAdmin.Controllers
         public ActionResult RoleView()
         {
             long id = Request["id"].ToLong();
-            ViewData["Permissions"] = PermissionMenu.FindWithAll();
+            ViewData["Permissions"] = Permissions.FindWithAll();
             ViewData["RolePermission"] = UserRolePermission.FindByRoleId(id);
             ViewData["Role"] = UserRole.FindById(id);    
             return View();
