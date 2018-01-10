@@ -95,34 +95,7 @@ namespace MSNet.WebAdmin.Controllers
             return JsonFail("系统异常,请稍后重试！");
         }
 
-        //[HttpPost]
-        public ActionResult UploadPhoto(HttpPostedFileBase file)
-        {
-            //保存到临时文件夹  
-            string urlPath = "/upload/images";
-            string filePathName = string.Empty;
-
-            string localPath = Path.Combine(HttpRuntime.AppDomainAppPath, "upload/images");
-            if (Request.Files.Count == 0)
-            {
-                return Json(new { status = 0, error = new { code = 102, message = "保存失败" }, id = "id" });
-            }
-
-            string ex = Path.GetExtension(file.FileName);
-            filePathName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + ex; //Guid.NewGuid().ToString("N") + ex;
-            if (!System.IO.Directory.Exists(localPath))
-            {
-                System.IO.Directory.CreateDirectory(localPath);
-            }
-            file.SaveAs(Path.Combine(localPath, filePathName));
-
-            return Json(new
-            {
-                status = 0,
-                filePath = filePathName
-            });
-
-        }
+       
         
     }
 }
