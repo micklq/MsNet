@@ -68,10 +68,16 @@ namespace MSNet.Common
             return repository.UpdateCategoryId(oCategoryId, nCategoryId);
         }
 
-        public static bool UpdateBrowse(long ArticleId)
+        public static bool UpdateBrowse(long PictureId)
         {
             var repository = RepositoryManager.GetRepository<IPicturesRepository>(ModuleEnvironment.ModuleName);
-            return repository.UpdateBrowse(ArticleId);
+            return repository.UpdateBrowse(PictureId);
+        }
+
+        public static bool RemoveByCategoryId(long categoryId)
+        {
+            var repository = RepositoryManager.GetRepository<IPicturesRepository>(ModuleEnvironment.ModuleName);
+            return repository.RemoveByCategoryId(categoryId);
         }
         #endregion
 

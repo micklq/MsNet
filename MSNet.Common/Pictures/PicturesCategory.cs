@@ -27,8 +27,16 @@ namespace MSNet.Common
         public int Month { get; set; }
         public int Day { get; set; }
 
-        public DateTime? PublicDate { get; set; }
+        public DateTime PublicDate { get; set; }
 
+        #endregion
+
+        #region Extends Properties
+        public string ImageUrls
+        {
+            get;
+            set;
+        }
         #endregion
 
         #region Static Methods
@@ -37,6 +45,12 @@ namespace MSNet.Common
         {
             var repository = RepositoryManager.GetRepository<IPicturesCategoryRepository>(ModuleEnvironment.ModuleName);
             return repository.FindWithPage(keyword, year, month, day, page);
+        }
+
+        public static PicturesCategory FindByPublicDate(int year, int month, int day)
+        {
+            var repository = RepositoryManager.GetRepository<IPicturesCategoryRepository>(ModuleEnvironment.ModuleName);
+            return repository.FindByPublicDate(year, month, day);
         }
 
         public static IList<PicturesCategory> FindWithAll()

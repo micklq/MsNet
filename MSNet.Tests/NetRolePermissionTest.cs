@@ -80,7 +80,7 @@ namespace MSNet.Tests
             //}            
             //角色权限
             IList<Permissions> permissions = Permissions.FindWithAll();
-            IList<UserRole> roles = UserRole.FindWithAll();
+            IList<Role> roles = Role.FindWithAll();
             //if (permissions != null && permissions.Count > 0 && roles != null && roles.Count > 0)
             //{
             //    foreach (var o in permissions)
@@ -107,7 +107,7 @@ namespace MSNet.Tests
         [Test]
         public void RoleDelTest()
         {
-            new UserRole() { RoleId=2 }.Remove();           
+            new Role() { RoleId=2 }.Remove();           
         }
 
         [Test]

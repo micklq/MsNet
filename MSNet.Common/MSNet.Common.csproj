@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MSNet.Common</RootNamespace>
     <AssemblyName>MSNet.Common</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -94,6 +97,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Videos\DataRepositories\IVideosCategoryRepository.cs" />
+    <Compile Include="Videos\DataRepositories\IVideosRepository.cs" />
+    <Compile Include="Videos\Videos.cs" />
+    <Compile Include="Videos\VideosCategory.cs" />
     <Compile Include="Pictures\Pictures.cs" />
     <Compile Include="Pictures\PicturesCategory.cs" />
     <Compile Include="Pictures\DataRepositories\IPicturesCategoryRepository.cs" />
@@ -111,8 +118,8 @@
     <Compile Include="BaseCategory\IBaseCategoryRepository.cs" />
     <Compile Include="ModuleEnvironment.cs" />
     <Compile Include="Passports\DataRepositories\IPermissionsRepository.cs" />
-    <Compile Include="Passports\DataRepositories\IUserRolePermissionRepository.cs" />
-    <Compile Include="Passports\DataRepositories\IUserRoleRepository.cs" />
+    <Compile Include="Passports\DataRepositories\IRolePermissionRepository.cs" />
+    <Compile Include="Passports\DataRepositories\IRoleRepository.cs" />
     <Compile Include="Passports\DataRepositories\ISignedUpInfoRepository.cs" />
     <Compile Include="Passports\DataRepositories\IUserPassportRepository.cs" />
     <Compile Include="Passports\DataRepositories\IUserProfileRepository.cs" />
@@ -123,8 +130,8 @@
     <Compile Include="Passports\Permissions.cs" />
     <Compile Include="Passports\PermissionValue.cs" />
     <Compile Include="Passports\UserRoleType.cs" />
-    <Compile Include="Passports\UserRole.cs" />
-    <Compile Include="Passports\UserRolePermission.cs" />
+    <Compile Include="Passports\Role.cs" />
+    <Compile Include="Passports\RolePermission.cs" />
     <Compile Include="Passports\SignedUpInfo.cs" />
     <Compile Include="Passports\SignUpStatus.cs" />
     <Compile Include="Passports\UserPassport.cs" />
@@ -145,6 +152,7 @@
     <Compile Include="Util\EnumHelper.cs" />
     <Compile Include="Util\IOExtension.cs" />
     <Compile Include="Util\JsonExtension.cs" />
+    <Compile Include="Web\PicturesResult.cs" />
     <Compile Include="Web\RequestValidatorDisabled.cs" />
     <Compile Include="Util\SerializationHelper.cs" />
     <Compile Include="Util\StringExtension.cs" />

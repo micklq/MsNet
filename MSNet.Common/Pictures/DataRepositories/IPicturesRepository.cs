@@ -14,7 +14,9 @@ namespace MSNet.Common.DataRepositories
 
         bool UpdateCategoryId(long oCategoryId, long nCategoryId);
 
-        bool UpdateBrowse(long ArticleId);
+        bool UpdateBrowse(long PictureId);
+
+        bool RemoveByCategoryId(long categoryId);
     }
 }
  

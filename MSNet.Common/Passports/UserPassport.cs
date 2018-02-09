@@ -124,9 +124,9 @@ namespace MSNet.Common
            
         }
 
-        private UserRole role;
+        private Role role;
 
-        public UserRole Role
+        public Role Role
         {
             get
             {
@@ -135,9 +135,9 @@ namespace MSNet.Common
             set { this.role = value; }
         }
 
-        private IList<UserRolePermission> rolePermissions;   
+        private IList<RolePermission> rolePermissions;   
      
-        public IList<UserRolePermission> RolePermissions
+        public IList<RolePermission> RolePermissions
         {
             get
             {
@@ -174,7 +174,7 @@ namespace MSNet.Common
         }
 
 
-        private UserRole LoadRole()
+        private Role LoadRole()
         {
             if (null != this.role){
                 return this.role;
@@ -183,12 +183,12 @@ namespace MSNet.Common
                 return null;
             }
 
-            this.role = UserRole.FindById(this.RoleId);
+            this.role = Role.FindById(this.RoleId);
 
             return this.role;
         }
 
-        private IList<UserRolePermission> LoadRolePermissions()
+        private IList<RolePermission> LoadRolePermissions()
         {
             if (null != this.rolePermissions)
             {
@@ -198,7 +198,7 @@ namespace MSNet.Common
             {
                 return null;
             }
-            this.rolePermissions = UserRolePermission.FindByRoleId(this.RoleId);
+            this.rolePermissions = RolePermission.FindByRoleId(this.RoleId);
 
             return this.rolePermissions;
         }

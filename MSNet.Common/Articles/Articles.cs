@@ -21,6 +21,8 @@ namespace MSNet.Common
         }      
         public long CategoryId { get; set; }
         public string Title { get; set; }
+        public string ImageUrl { get; set; }
+        
         public string Editor { get; set; }
         public string Media { get; set; }
         public string Description { get; set; }

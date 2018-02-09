@@ -12,8 +12,7 @@ using MSNet.Common.DataRepositories;
 using MSNet.Common.Web;
 using MSNet.Common;
 using MSNet.Common.Util;
-using MSNet.Repair;
-using MSNet.Repair.DataRepositories;
+
 
 namespace MSNet.Tests
 {
@@ -139,34 +138,7 @@ namespace MSNet.Tests
         
         #endregion
 
-        #region RepairCategory Test
-        [Test]
-        public void RepairCategoryTest()
-        {
-            var list = RepairCategory.FindWithAll();
-
-            var result = GetBreadList(17,list);
-            foreach (var oo in result) {
-                Console.WriteLine(oo.Id);
-            }
-        }
-        public IList<RepairCategory> GetBreadList(long pid, IList<RepairCategory> list)
-        {
-            IList<RepairCategory> bread = new List<RepairCategory>();
-            getCategoryRecursion(pid, list, bread);
-            return bread.OrderBy(o => o.ParentId).ToList();
-        }
-
-        public void getCategoryRecursion(long pid, IList<RepairCategory> list, IList<RepairCategory> bread)
-        {
-            var oo = list.Where(o => o.CategoryId == pid).FirstOrDefault();
-            if (pid != 0 && oo != null)
-            {
-                bread.Add(oo);
-                getCategoryRecursion(oo.ParentId, list, bread);
-            }
-        }
-        #endregion
+        
 
     }
 }

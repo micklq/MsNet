@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MSNet.Tests</RootNamespace>
     <AssemblyName>MSNet.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="M2SA.AppGenome">
@@ -81,14 +84,6 @@
     <ProjectReference Include="..\MSNet.Common\MSNet.Common.csproj">
       <Project>{2bd2de63-afbc-4b8d-b469-b9337bd4b3ee}</Project>
       <Name>MSNet.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MSNet.Repair.DataRepositories\MSNet.Repair.DataRepositories.csproj">
-      <Project>{c19898e0-0084-4d47-8e3a-cc28cee5afd3}</Project>
-      <Name>MSNet.Repair.DataRepositories</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MSNet.Repair\MSNet.Repair.csproj">
-      <Project>{bb5105b3-f4ab-4676-b1c3-8a66d3496739}</Project>
-      <Name>MSNet.Repair</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

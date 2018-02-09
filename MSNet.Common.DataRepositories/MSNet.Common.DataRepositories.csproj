@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MSNet.Common.DataRepositories</RootNamespace>
     <AssemblyName>MSNet.Common.DataRepositories</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="M2SA.AppGenome">
@@ -58,20 +61,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pictures\PicturesCategoryRepository.cs" />
-    <Compile Include="Pictures\PicturesRepository.cs" />
     <Compile Include="Articles\ArticlesCategoryRepository.cs" />
     <Compile Include="Articles\ArticlesRepository.cs" />
     <Compile Include="Articles\FeedbackRepository.cs" />
     <Compile Include="Passports\PermissionsRepository.cs" />
     <Compile Include="Passports\WebAppLogsRepository.cs" />
+    <Compile Include="Pictures\PicturesCategoryRepository.cs" />
+    <Compile Include="Pictures\PicturesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Passports\UserRolePermissionRepository.cs" />
-    <Compile Include="Passports\UserRoleRepository.cs" />
+    <Compile Include="Passports\RolePermissionRepository.cs" />
+    <Compile Include="Passports\RoleRepository.cs" />
     <Compile Include="Passports\SignedUpInfoRepository.cs" />
     <Compile Include="Passports\UserPassportRepository.cs" />
     <Compile Include="Passports\UserProfileRepository.cs" />
     <Compile Include="Passports\UserSecurityRepository.cs" />
+    <Compile Include="Videos\VideosCategoryRepository.cs" />
+    <Compile Include="Videos\VideosRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MSNet.Common\MSNet.Common.csproj">
@@ -80,12 +85,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sqlmap\pictures\PicturesCategoryRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlmap\pictures\PicturesRepository.sql.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="sqlmap\articles\ArticlesCategoryRepository.sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -99,7 +98,7 @@
     <Content Include="sqlmap\passports\WebAppLogsRepository.sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="sqlmap\passports\UserRolePermissionRepository.sql.xml">
+    <Content Include="sqlmap\passports\RolePermissionRepository.sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="sqlmap\passports\SignedUpInfoRepository.sql.xml">
@@ -112,12 +111,16 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="sqlmap\passports\UserRoleRepository.sql.xml">
+    <Content Include="sqlmap\passports\RoleRepository.sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="sqlmap\passports\UserSecurityRepository.sql.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="sqlmap\pictures\PicturesCategoryRepository.sql.xml" />
+    <Content Include="sqlmap\pictures\PicturesRepository.sql.xml" />
+    <Content Include="sqlmap\videos\VideosCategoryRepository.sql.xml" />
+    <Content Include="sqlmap\videos\VideosRepository.sql.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
