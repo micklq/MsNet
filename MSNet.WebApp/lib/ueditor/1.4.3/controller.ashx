@@ -5,7 +5,7 @@ using System.IO;
 using System.Collections;
 using Newtonsoft.Json;
 using MSNet.Common.Web.UEditor;
-namespace MSNet.WebAdmin
+namespace MSNet.WebApp
 {
     public class UEditorHandler : IHttpHandler
     {

@@ -10,7 +10,7 @@ using MSNet.Common.Web;
 using MSNet.Common.Util;
 using MSNet.Common.Web.Pager;
 using MSNet.Common;
-namespace MSNet.WebAdmin.Controllers
+namespace MSNet.WebApp.Controllers
 {
     public partial class AdminController : AuthBaseController
     {       

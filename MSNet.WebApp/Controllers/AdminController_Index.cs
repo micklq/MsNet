@@ -9,7 +9,7 @@ using MSNet.Common;
 using MSNet.Common.Web;
 using MSNet.Common.Util;
 using MSNet.Common.DataRepositories;
-namespace MSNet.WebAdmin.Controllers
+namespace MSNet.WebApp.Controllers
 {
     public partial class AdminController : AuthBaseController
     {

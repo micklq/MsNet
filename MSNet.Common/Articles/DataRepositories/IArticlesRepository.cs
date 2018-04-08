@@ -10,6 +10,8 @@ namespace MSNet.Common.DataRepositories
     {
         IList<Articles> FindWithPage(string keyword, long CategoryId, Pagination page);
 
+        IList<Articles> FindWithAscPage(string keyword, long CategoryId, Pagination page);
+
         bool UpdateCategoryId(long oCategoryId, long nCategoryId);
 
         bool UpdateBrowse(long ArticleId);

@@ -24,6 +24,20 @@ namespace MSNet.Common.DataRepositories
             }
             return list;
         }
+        public IList<Articles> FindWithAscPage(string keyword, long CategoryId, Pagination page)
+        {
+            var sqlName = this.FormatSqlName("FindWithAscPage");
+            var sqlParams = new Dictionary<string, object>(3);
+            sqlParams.Add("Keyword", string.IsNullOrEmpty(keyword) ? null : keyword);
+            sqlParams.Add("CategoryId", CategoryId);
+            var datatable = SqlHelper.ExecutePaginationTable(sqlName, sqlParams, page);
+            IList<Articles> list = null;
+            if (datatable.Rows.Count > 0)
+            {
+                list = this.Convert(datatable);
+            }
+            return list;
+        }
 
         public bool UpdateCategoryId(long oCategoryId, long nCategoryId)
         {

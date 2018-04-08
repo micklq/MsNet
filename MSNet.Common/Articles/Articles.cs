@@ -52,6 +52,12 @@ namespace MSNet.Common
             return repository.FindWithPage(keyword, CategoryId, page);
         }
 
+        public static IList<Articles> FindWithAscPage(string keyword, long CategoryId, Pagination page)
+        {
+            var repository = RepositoryManager.GetRepository<IArticlesRepository>(ModuleEnvironment.ModuleName);
+            return repository.FindWithAscPage(keyword, CategoryId, page);
+        }
+
         public static Articles FindById(long Id)
         {
             var repository = RepositoryManager.GetRepository<IArticlesRepository>(ModuleEnvironment.ModuleName);

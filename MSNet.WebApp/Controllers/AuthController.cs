@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using MSNet.Common;
 using MSNet.Common.Util;
 using MSNet.Common.Web;
-namespace MSNet.WebAdmin.Controllers
+namespace MSNet.WebApp.Controllers
 {
     public class AuthController : BaseController
     {       

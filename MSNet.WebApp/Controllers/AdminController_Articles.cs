@@ -11,7 +11,7 @@ using MSNet.Common.Util;
 using MSNet.Common.Web.Pager;
 using MSNet.Common;
 
-namespace MSNet.WebAdmin.Controllers
+namespace MSNet.WebApp.Controllers
 {
     public partial class AdminController : AuthBaseController
     {
@@ -51,6 +51,7 @@ namespace MSNet.WebAdmin.Controllers
 
             return View();
         }
+
         public ActionResult ArticlesView()
         {
             long id = Request["id"].ToLong();
