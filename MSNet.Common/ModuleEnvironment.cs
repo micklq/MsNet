@@ -35,6 +35,7 @@ namespace MSNet.Common
         /// 
         /// </summary>
         internal static readonly string UserNamePattern = @"^[\d\w]{4,16}$"; //数字字母4-16位
+        internal static readonly string MobilePattern = @"^1[\d]{10}$"; //手机号码
         //internal static readonly string UserNamePattern = @"^[a-zA-Z]+[.-_a-zA-Z-9]{4,15}$";
         //internal static readonly string UserNamePattern = @"^(\d{18,18}|\d{15,15}|\d{17,17}x)|(1(\d){10})$";
 

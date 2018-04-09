@@ -97,6 +97,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Passports\DataRepositories\IMasterCategoryRepository.cs" />
+    <Compile Include="Passports\MasterCategory.cs" />
     <Compile Include="Videos\DataRepositories\IVideosCategoryRepository.cs" />
     <Compile Include="Videos\DataRepositories\IVideosRepository.cs" />
     <Compile Include="Videos\Videos.cs" />

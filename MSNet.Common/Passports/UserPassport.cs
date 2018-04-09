@@ -44,6 +44,11 @@ namespace MSNet.Common
             get;
             set;
         }
+        public string UserCode
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// 
@@ -68,6 +73,12 @@ namespace MSNet.Common
             set;
         }
 
+
+        public long CategoryId
+        {
+            get;
+            set;
+        }
         public UserRoleType RoleType
         {
             get;
@@ -90,6 +101,36 @@ namespace MSNet.Common
             get;
             set;
         }
+
+        public string CategoryName
+        {
+            get;
+            set;
+        }
+        public string RealName
+        {
+            get;
+            set;
+        }
+
+        public string Gender
+        {
+            get;
+            set;
+        }
+
+        public string Avatar
+        {
+            get;
+            set;
+        }
+
+        public string Introduce
+        {
+            get;
+            set;
+        }
+
 
         [NonSerialized]
         private UserSecurity userSecurity;
@@ -242,10 +283,22 @@ namespace MSNet.Common
         }
 
 
-        public static IList<UserPassport> FindWithAdminPage(string keyword, IList<long> exceptIds, Pagination page)
+        public static IList<UserPassport> FindWithAdminPage(string keyword, long roleId, IList<long> exceptIds, Pagination page)
         {
             var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
-            return repository.FindWithAdminPage(keyword, exceptIds, page);
+            return repository.FindWithAdminPage(keyword, roleId, exceptIds, page);
+        }
+
+        public static IList<UserPassport> FindWithSysAdminPage(string keyword,  IList<long> exceptIds, Pagination page)
+        {
+            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
+            return repository.FindWithSysAdminPage(keyword, exceptIds, page);
+        }
+
+        public static IList<UserPassport> FindByRoleWithPage(string keyword, long roleId, Pagination page)
+        {
+            var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
+            return repository.FindByRoleWithPage(keyword, roleId, page);
         }
 
 

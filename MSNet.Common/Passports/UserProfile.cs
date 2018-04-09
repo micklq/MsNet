@@ -84,9 +84,10 @@ namespace MSNet.Common
         /// <summary>
         /// 用户头像
         /// </summary>
-        public string Avatar { get; set; }      
-        
-      
+        public string Avatar { get; set; }
+
+        public string Introduce { get; set; }
+
         #region Persist Methods
 
         /// <summary>

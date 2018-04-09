@@ -47,7 +47,7 @@ namespace MSNet.Tests
         public void UserPassportAdminPageTest()
         {
 
-            var result = UserPassport.FindWithAdminPage("", new List<long> { 0 }, new Pagination { PageIndex=1, PageSize=10 });
+            var result = UserPassport.FindWithAdminPage("",1, new List<long> { 0 }, new Pagination { PageIndex=1, PageSize=10 });
             Assert.IsNotNull(result);
             if (result.Count>0)
             {

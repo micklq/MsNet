@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://m2sa.net/Schema/SqlMapping">
+	<module moduleName="MasterCategoryRepository" dbName="MSNet.MySql.Write"> <!--读写分离 可配置读或写库-->
+    <sqlWrap  sqlName="Insert"  supportDBType="MySql,SqlServer">
+      insert into MasterCategory(Name,Description,ParentId,Sort,CreatedTime,LastModifiedTime)
+      values(@Name,@Description,@ParentId,@Sort,@CreatedTime,@LastModifiedTime);
+      select @@IDENTITY;
+    </sqlWrap>
+    <sqlWrap  sqlName="Update"  supportDBType="MySql,SqlServer">
+      update MasterCategory
+      set Name=@Name,Description=@Description,ParentId=@ParentId,Sort=@Sort,LastModifiedTime=@LastModifiedTime
+      where CategoryId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="DeleteById"  supportDBType="MySql,SqlServer">
+      delete from MasterCategory where CategoryId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="Move"  supportDBType="MySql,SqlServer">
+      update MasterCategory
+      set ParentId=@ParentId
+      where CategoryId = @CategoryId;
+    </sqlWrap>
+    </module>
+    <module moduleName="MasterCategoryRepository" dbName="MSNet.MySql.Read">  <!--读写分离 可配置读或写库-->
+    <sqlWrap  sqlName="SelectById"  supportDBType="MySql,SqlServer">
+      select *  from MasterCategory  where CategoryId = @Id;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectAll"  supportDBType="MySql,SqlServer">
+      select *  from MasterCategory;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectRoot"  supportDBType="MySql,SqlServer">
+      select *  from MasterCategory where ParentId = 0;
+    </sqlWrap>
+    <sqlWrap  sqlName="SelectByParentId"  supportDBType="MySql,SqlServer">
+      select *  from MasterCategory  where  ParentId = @ParentId;
+    </sqlWrap>
+    <sqlWrap  sqlName="ExistChildCategory"  supportDBType="MySql,SqlServer">
+      select Count(*)  from MasterCategory where  ParentId = @ParentId;
+    </sqlWrap> 
+     <sqlWrap sqlName="FindWithPage" supportDBType="MySql">
+       select pc.*
+       from MasterCategory pc
+       where  1=1 and (if(isnull(@Keyword),1=1,(pc.Name like @Keyword)))      
+       order by pc.CategoryId desc
+     </sqlWrap>    
+  </module>
+</root>
+

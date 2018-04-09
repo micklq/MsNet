@@ -2,12 +2,12 @@
 <root xmlns="http://m2sa.net/Schema/SqlMapping">
   <module moduleName="UserPassportRepository" dbName="MSNet.MySql">
     <sqlWrap sqlName="Insert" supportDBType="SqlServer, MySql">
-      insert into UserPassport (UserName,Email,Mobile,RoleId,RoleType,PassportStatus,CreatedTime, LastModifiedTime)
-      values (@UserName,@Email,@Mobile,@RoleId,@RoleType,@PassportStatus,@CreatedTime,@LastModifiedTime);
+      insert into UserPassport (UserName,RealName,UserCode,Email,Mobile,RoleId,CategoryId,RoleType,PassportStatus,CreatedTime, LastModifiedTime)
+      values (@UserName,@RealName,@UserCode,@Email,@Mobile,@RoleId,@CategoryId,@RoleType,@PassportStatus,@CreatedTime,@LastModifiedTime);
       select @@identity
     </sqlWrap>
     <sqlWrap sqlName="Update" supportDBType="SqlServer, MySql">
-      update UserPassport set Email=@Email,Mobile=@Mobile,RoleId=@RoleId,PassportStatus=@PassportStatus,LastModifiedTime=@LastModifiedTime where PassportId = @Id
+      update UserPassport set Email=@Email,Mobile=@Mobile,RealName=@RealName,UserCode=@UserCode,RoleId=@RoleId,CategoryId=@CategoryId,PassportStatus=@PassportStatus,LastModifiedTime=@LastModifiedTime where PassportId = @Id
     </sqlWrap>
     <sqlWrap sqlName="DeleteById" supportDBType="SqlServer, MySql">
       update UserPassport set PassportStatus=999 where PassportId = @Id
@@ -28,13 +28,28 @@
       select * from UserPassport where PassportId = @Id;
       select * from UserSecurity where PassportId = @Id;
     </sqlWrap>
+    <sqlWrap sqlName="SelectByRoleWithPage" supportDBType="MySql">
+      select * from UserPassport
+      where (PassportStatus not in(999))
+      and (RoleId  = @RoleId)
+      and (if(isnull(@Keyword),1=1,((Mobile like @Keyword) or (UserName like @Keyword) or (RealName like @Keyword) or (UserCode like @Keyword) or (Email like @Keyword))))
+      order by PassportId asc
+    </sqlWrap>
     <sqlWrap sqlName="SelectWithAdminPage" supportDBType="MySql">
+      select * from UserPassport
+      where RoleType=1 and (PassportStatus not in(999))
+      and (PassportId not in(@ExceptIds))
+      and (RoleId  = @RoleId)
+      and (if(isnull(@Keyword),1=1,((Mobile like @Keyword) or (UserName like @Keyword) or (Email like @Keyword))))
+      order by PassportId asc
+    </sqlWrap>
+    <sqlWrap sqlName="SelectWithSysAdminPage" supportDBType="MySql">
       select * from UserPassport
       where RoleType=1 and (PassportStatus not in(999))
       and (PassportId not in(@ExceptIds))
       and (if(isnull(@Keyword),1=1,((Mobile like @Keyword) or (UserName like @Keyword) or (Email like @Keyword))))
       order by PassportId asc
-    </sqlWrap>    
+    </sqlWrap>
     <sqlWrap sqlName="SelectByKeyword" supportDBType="SqlServer, MySql">
       select  *  from UserPassport where (Mobile = @Keyword or UserName = @Keyword or Email = @Keyword) 
     </sqlWrap>    

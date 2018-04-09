@@ -2,12 +2,12 @@
 <root xmlns="http://m2sa.net/Schema/SqlMapping">
   <module moduleName="UserProfileRepository" dbName="MSNet.MySql"> 
     <sqlWrap sqlName="Insert" supportDBType="SqlServer, MySql">
-      insert into UserProfile (PassportId,NickName,RealName,Gender,Avatar,Mobile,CreatedTime,LastModifiedTime)
-      values (@PassportId,@NickName,@RealName,@Gender,@Avatar,@Mobile,@CreatedTime,@LastModifiedTime);
+      insert into UserProfile(PassportId,NickName,RealName,Gender,Avatar,Mobile,Introduce,CreatedTime,LastModifiedTime)
+      values (@PassportId,@NickName,@RealName,@Gender,@Avatar,@Mobile,@Introduce,@CreatedTime,@LastModifiedTime);
       select @PassportId;
     </sqlWrap>
     <sqlWrap sqlName="Update" supportDBType="SqlServer, MySql">
-      update UserProfile set NickName=@NickName,RealName=@RealName,Gender=@Gender,Avatar=@Avatar,Mobile=@Mobile,LastModifiedTime=@LastModifiedTime
+      update UserProfile set NickName=@NickName,RealName=@RealName,Gender=@Gender,Avatar=@Avatar,Mobile=@Mobile,Introduce=@Introduce,LastModifiedTime=@LastModifiedTime
       where PassportId = @Id;
     </sqlWrap>  
     <sqlWrap sqlName="SelectById" supportDBType="SqlServer, MySql">

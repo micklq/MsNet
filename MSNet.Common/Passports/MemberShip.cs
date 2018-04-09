@@ -55,6 +55,50 @@ namespace MSNet.Common
             
         }
 
+
+        private static AjaxResult SignUp(UserPassport passport, SignedUpInfo signedUpInfo, out UserPassport uPassport)
+        {
+            AjaxResult ajaxResult = CheckUserName(passport.UserName);
+            if (!ajaxResult.success)
+            {
+                uPassport = null;
+                return ajaxResult;
+            }
+            //status = CheckEmail(email); //核对邮箱是否已注册
+            //if (status != SignUpStatus.None) return null;             
+
+            var userPassport = new UserPassport()
+            {
+                UserSecurity = new UserSecurity(),
+                Profile = new UserProfile()
+            };
+            userPassport.UserName = passport.UserName;
+            userPassport.RealName = passport.RealName;
+            userPassport.UserCode = passport.UserCode;
+            userPassport.Mobile = passport.Mobile;
+            userPassport.Email = passport.Email;
+            userPassport.RoleType = passport.RoleType;
+            userPassport.RoleId = passport.RoleId;
+            userPassport.CategoryId = passport.CategoryId;
+            userPassport.UserSecurity.Password = passport.Password;
+            userPassport.Profile.NickName = passport.UserName;
+            userPassport.Profile.RealName = passport.RealName;
+            userPassport.Profile.Gender = passport.Gender;
+            userPassport.Profile.Avatar = passport.Avatar;
+            userPassport.Profile.Mobile = passport.Mobile;
+            userPassport.Profile.Introduce = passport.Introduce;
+            userPassport.Profile.CreatedTime = userPassport.CreatedTime;
+            ajaxResult.success = false;
+            ajaxResult.message = "系统异常";
+            if (userPassport.SignUp(signedUpInfo))
+            {
+                ajaxResult.success = true;
+                ajaxResult.message = "注册成功";
+            }
+            uPassport = userPassport;
+            return ajaxResult;
+        }
+
         private static AjaxResult SignUp(string userName, string password, string mobile, string email, UserRoleType roleType, long roleId, SignedUpInfo signedUpInfo, out UserPassport passport)
         {
             AjaxResult ajaxResult =  CheckUserName(userName);
@@ -74,7 +118,7 @@ namespace MSNet.Common
             userPassport.Email = email;
             userPassport.RoleType = roleType;
             userPassport.RoleId = roleId;
-            userPassport.UserSecurity.Password = password;
+            userPassport.UserSecurity.Password = password;            
             userPassport.Profile.NickName = userName;           
             userPassport.Profile.Mobile = mobile;
             userPassport.Profile.CreatedTime = userPassport.CreatedTime;
@@ -208,7 +252,7 @@ namespace MSNet.Common
         {
             return SignUp(passport.UserName, passport.Password, passport.Mobile, passport.Email, passport.RoleType, passport.RoleId, signedUpInfo, out uPassport);            
         }
-
+       
         /// <summary>
         /// 更新用户信息
         /// 状态 角色 登录信息更新
@@ -224,21 +268,29 @@ namespace MSNet.Common
             {
                 return  AjaxResult.Fail("用户数据异常！"); 
             }
-            if (!passport.Mobile.IsNullOrEmpty()&&passport.Mobile != user.Mobile)
+            if (!passport.Mobile.IsNullOrEmpty()&&!passport.Mobile.Equals(user.Mobile))
             {
                 user.Mobile = passport.Mobile;
             }
-            if (!passport.Email.IsNullOrEmpty() && passport.Email != user.Email)
+            if (!passport.RealName.IsNullOrEmpty() && !passport.RealName.Equals(user.RealName))
+            {
+                user.RealName = passport.RealName;
+            }
+            if (!passport.UserCode.IsNullOrEmpty() && !passport.UserCode.Equals(user.UserCode))
+            {
+                user.UserCode = passport.UserCode;
+            }
+            if (!passport.Email.IsNullOrEmpty() && !passport.Email.Equals(user.Email))
             {
                 user.Email = passport.Email; 
             }
-            if (passport.RoleId != user.RoleId)
+            if (!passport.RoleId.Equals(user.RoleId))
             {
                 user.RoleId = passport.RoleId;
             }
-            if (!user.Mobile.IsNullOrEmpty() && user.Mobile != user.Profile.Mobile)
+            if (!passport.Mobile.IsNullOrEmpty() && !passport.Mobile.Equals(user.Profile.Mobile))
             {
-                user.Profile.Mobile = user.Mobile;
+                user.Profile.Mobile = passport.Mobile;
             }
             if (!user.Profile.Save()) //更新profile
             {
@@ -277,6 +329,102 @@ namespace MSNet.Common
             return AjaxResult.Success();          
             
         }
+
+        public static AjaxResult AddMember(UserPassport passport, SignedUpInfo signedUpInfo, out UserPassport uPassport)
+        {
+            return SignUp(passport, signedUpInfo, out uPassport);
+        }
+
+        public static AjaxResult UpdateMember(UserPassport passport, SignedUpInfo signedUpInfo)
+        {
+            UserPassport user = UserPassport.FindUserSecurityById(passport.PassportId);
+            if (user == null)
+            {
+                return AjaxResult.Fail("用户数据异常！");
+            }
+            if (!passport.Mobile.IsNullOrEmpty() && !passport.Mobile.Equals(user.Mobile))
+            {
+                user.Mobile = passport.Mobile;
+            }
+            if (!passport.RealName.IsNullOrEmpty() && !passport.RealName.Equals(user.RealName))
+            {
+                user.RealName = passport.RealName;
+            }
+            if (!passport.UserCode.IsNullOrEmpty() && !passport.UserCode.Equals(user.UserCode))
+            {
+                user.UserCode = passport.UserCode;
+            }
+            if (!passport.Email.IsNullOrEmpty() && !passport.Email.Equals(user.Email))
+            {
+                user.Email = passport.Email;
+            }
+            if (!passport.RoleId.Equals(user.RoleId))
+            {
+                user.RoleId = passport.RoleId;
+            }
+            if (!passport.CategoryId.Equals(user.CategoryId))
+            {
+                user.CategoryId = passport.CategoryId;
+            }
+            if (!passport.Mobile.IsNullOrEmpty() && !passport.Mobile.Equals(user.Profile.Mobile))
+            {
+                user.Profile.Mobile = passport.Mobile;
+            }
+         
+            if (!passport.RealName.IsNullOrEmpty() && !passport.RealName.Equals(user.Profile.RealName))
+            {
+                user.Profile.RealName = passport.RealName;
+            }
+            if (!passport.Gender.IsNullOrEmpty() && !passport.Gender.Equals(user.Profile.Gender))
+            {
+                user.Profile.Gender = passport.Gender;
+            }
+            if (!passport.Avatar.IsNullOrEmpty() && !passport.Avatar.Equals(user.Profile.Avatar))
+            {
+                user.Profile.Avatar = passport.Avatar;
+            }
+            if (!passport.Introduce.IsNullOrEmpty() && !passport.Introduce.Equals(user.Profile.Introduce))
+            {
+                user.Profile.Introduce = passport.Introduce;
+            }
+            if (!user.Profile.Save()) //更新profile
+            {
+                return AjaxResult.Fail("用户资料更新失败！");
+            }
+            if (!passport.Password.IsNullOrEmpty())
+            {
+                if (!user.ChangePassword(passport.Password))
+                {
+                    return AjaxResult.Fail("密码更新失败！");
+                }
+            }
+            if (passport.PassportStatus != user.PassportStatus)
+            {
+                if (passport.PassportStatus == (int)PassportStatus.Locked)
+                {
+                    if (!Lock(user))
+                    {
+                        return AjaxResult.Fail("锁定用户失败！");
+                    }
+                }
+                if (passport.PassportStatus == (int)PassportStatus.Standard)
+                {
+                    if (!UnLock(user))
+                    {
+                        return AjaxResult.Fail("解锁用户失败！");
+                    }
+                }
+                user.PassportStatus = passport.PassportStatus;
+            }
+            if (!user.Save())
+            {
+                return AjaxResult.Fail("数据更新失败！");
+            }
+
+            return AjaxResult.Success();
+
+        }
+
 
         /// <summary>
         /// 修改密码
@@ -342,14 +490,14 @@ namespace MSNet.Common
             return new AjaxResult() { success = true, message = "" };
         }
 
-        private static AjaxResult CheckMobile(string mobile)
+        public static AjaxResult CheckMobile(string mobile)
         {
             if (string.IsNullOrEmpty(mobile))
             {
                 return new AjaxResult { success = false, message = "手机号不能为空！" };
-            } 
-
-            if ( false == mobile.IsMatchInteger() ){
+            }
+            var pat = ModuleEnvironment.MobilePattern;
+            if ( false == Regex.IsMatch( mobile, pat )){
                 return new AjaxResult { success = false, message = "手机号格式错误！" };
             }                
             else

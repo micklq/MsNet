@@ -25,12 +25,19 @@ namespace MSNet.WebApp.Controllers
                 PageSize = 10
             };
             var keyword = "";
-            if (!Request["uname"].IsNullOrEmpty())
+            if (!Request["keyword"].IsNullOrEmpty())
             {
-                keyword = Request["uname"];
+                keyword = Request["keyword"];
             }
             var exceptIds = new List<long> { this.CurrentUser.PassportId };
-            IList<UserPassport> ulist = UserPassport.FindWithAdminPage(keyword, exceptIds, page); //排除自己;
+            IList<UserPassport> ulist = new List<UserPassport>();
+            var roleId =this.CurrentUser.RoleId;
+            if (roleId > 1){
+                ulist = UserPassport.FindWithAdminPage(keyword,roleId, exceptIds, page); 
+            }
+            else {
+                ulist = UserPassport.FindWithSysAdminPage(keyword, exceptIds, page); //排除自己;
+            }            
 
             PagedList<UserPassport> plist = null;
             if (ulist != null)
@@ -46,6 +53,10 @@ namespace MSNet.WebApp.Controllers
         {
             long id = Request["id"].ToLong();
             ViewData["UserRole"] = Role.FindWithAll();
+
+
+           ViewData["CurrentRoleId"] = this.CurrentUser.RoleId.ToString();
+          
             ViewData["UserPassport"] = UserPassport.FindById(id);
             return View();
         }

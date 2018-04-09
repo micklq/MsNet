@@ -52,12 +52,43 @@ namespace MSNet.Common.DataRepositories
             return idValue.Convert<long>(0);
         }
 
-        public IList<UserPassport> FindWithAdminPage(string keyword, IList<long> exceptIds, Pagination page)
+        public IList<UserPassport> FindWithAdminPage(string keyword, long roleId, IList<long> exceptIds, Pagination page)
         {
             var sqlName = this.FormatSqlName("SelectWithAdminPage");
-            var sqlParams = new Dictionary<string, object>(1);
+            var sqlParams = new Dictionary<string, object>(2);
             sqlParams.Add("Keyword", string.IsNullOrEmpty(keyword) ? null : keyword);
+            sqlParams.Add("RoleId", roleId);
             sqlParams.Add("ExceptIds", exceptIds);    
+            var datatable = SqlHelper.ExecutePaginationTable(sqlName, sqlParams, page);
+            IList<UserPassport> list = null;
+            if (datatable.Rows.Count > 0)
+            {
+                list = this.Convert(datatable);
+            }
+            return list;
+        }
+
+        public IList<UserPassport> FindWithSysAdminPage(string keyword, IList<long> exceptIds, Pagination page)
+        {
+            var sqlName = this.FormatSqlName("SelectWithSysAdminPage");
+            var sqlParams = new Dictionary<string, object>(2);
+            sqlParams.Add("Keyword", string.IsNullOrEmpty(keyword) ? null : keyword);           
+            sqlParams.Add("ExceptIds", exceptIds);
+            var datatable = SqlHelper.ExecutePaginationTable(sqlName, sqlParams, page);
+            IList<UserPassport> list = null;
+            if (datatable.Rows.Count > 0)
+            {
+                list = this.Convert(datatable);
+            }
+            return list;
+        }
+
+        public IList<UserPassport> FindByRoleWithPage(string keyword, long roleId, Pagination page)
+        {
+            var sqlName = this.FormatSqlName("SelectByRoleWithPage");
+            var sqlParams = new Dictionary<string, object>(2);
+            sqlParams.Add("Keyword", string.IsNullOrEmpty(keyword) ? null : keyword);
+            sqlParams.Add("RoleId", roleId);
             var datatable = SqlHelper.ExecutePaginationTable(sqlName, sqlParams, page);
             IList<UserPassport> list = null;
             if (datatable.Rows.Count > 0)
