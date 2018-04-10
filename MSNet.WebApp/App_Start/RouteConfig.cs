@@ -15,9 +15,14 @@ namespace MSNet.WebApp
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                url: "{controller}/{action}",
+                defaults: new { controller = "Web", action = "Index", id = UrlParameter.Optional }
             );
-        }
+            routes.MapRoute(
+               name: "XhIntro",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "Web", action = "xhintro", id = UrlParameter.Optional }
+           );
+       }
     }
 }
