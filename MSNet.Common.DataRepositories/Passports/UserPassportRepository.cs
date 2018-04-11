@@ -83,12 +83,13 @@ namespace MSNet.Common.DataRepositories
             return list;
         }
 
-        public IList<UserPassport> FindByRoleWithPage(string keyword, long roleId, Pagination page)
+        public IList<UserPassport> FindByRoleWithPage(string keyword, long roleId, long categoryId, Pagination page)
         {
             var sqlName = this.FormatSqlName("SelectByRoleWithPage");
-            var sqlParams = new Dictionary<string, object>(2);
+            var sqlParams = new Dictionary<string, object>(3);
             sqlParams.Add("Keyword", string.IsNullOrEmpty(keyword) ? null : keyword);
             sqlParams.Add("RoleId", roleId);
+            sqlParams.Add("CategoryId", categoryId);
             var datatable = SqlHelper.ExecutePaginationTable(sqlName, sqlParams, page);
             IList<UserPassport> list = null;
             if (datatable.Rows.Count > 0)

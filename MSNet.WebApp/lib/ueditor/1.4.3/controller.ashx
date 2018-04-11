@@ -1,4 +1,4 @@
-<%@ WebHandler Language="C#" Class="MSNet.WebAdmin.UEditorHandler" %>
+<%@ WebHandler Language="C#" Class="MSNet.WebApp.UEditorHandler" %>
 using System;
 using System.Web;
 using System.IO;

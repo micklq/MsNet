@@ -295,10 +295,10 @@ namespace MSNet.Common
             return repository.FindWithSysAdminPage(keyword, exceptIds, page);
         }
 
-        public static IList<UserPassport> FindByRoleWithPage(string keyword, long roleId, Pagination page)
+        public static IList<UserPassport> FindByRoleWithPage(string keyword, long roleId, long categoryId, Pagination page)
         {
             var repository = RepositoryManager.GetRepository<IUserPassportRepository>(ModuleEnvironment.ModuleName);
-            return repository.FindByRoleWithPage(keyword, roleId, page);
+            return repository.FindByRoleWithPage(keyword, roleId, categoryId, page);
         }
 
 

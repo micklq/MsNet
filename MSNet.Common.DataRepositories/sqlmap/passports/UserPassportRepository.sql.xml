@@ -32,6 +32,7 @@
       select * from UserPassport
       where (PassportStatus not in(999))
       and (RoleId  = @RoleId)
+      and (if(@CategoryId=0,1=1,CategoryId=@CategoryId))
       and (if(isnull(@Keyword),1=1,((Mobile like @Keyword) or (UserName like @Keyword) or (RealName like @Keyword) or (UserCode like @Keyword) or (Email like @Keyword))))
       order by PassportId asc
     </sqlWrap>

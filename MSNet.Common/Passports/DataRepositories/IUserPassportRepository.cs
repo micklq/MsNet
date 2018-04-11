@@ -12,8 +12,8 @@ namespace MSNet.Common.DataRepositories
         IList<UserPassport> FindWithAdminPage(string keyword, long roleId, IList<long> exceptIds, Pagination page);
 
         IList<UserPassport> FindWithSysAdminPage(string keyword, IList<long> exceptIds, Pagination page);
-        
-        IList<UserPassport> FindByRoleWithPage(string keyword, long roleId, Pagination page);
+
+        IList<UserPassport> FindByRoleWithPage(string keyword, long roleId, long categoryId, Pagination page);
 
         UserPassport FindByKeyword(string keyword);      
 

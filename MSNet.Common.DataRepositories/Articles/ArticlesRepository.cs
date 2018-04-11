@@ -24,6 +24,20 @@ namespace MSNet.Common.DataRepositories
             }
             return list;
         }
+
+        public IList<Articles> FindWithPage(long excludeCategoryId, Pagination page)
+        {
+            var sqlName = this.FormatSqlName("FindWithExcludeCategoryId");
+            var sqlParams = new Dictionary<string, object>(3);
+            sqlParams.Add("CategoryId", excludeCategoryId);
+            var datatable = SqlHelper.ExecutePaginationTable(sqlName, sqlParams, page);
+            IList<Articles> list = null;
+            if (datatable.Rows.Count > 0)
+            {
+                list = this.Convert(datatable);
+            }
+            return list;
+        }
         public IList<Articles> FindWithAscPage(string keyword, long CategoryId, Pagination page)
         {
             var sqlName = this.FormatSqlName("FindWithAscPage");
