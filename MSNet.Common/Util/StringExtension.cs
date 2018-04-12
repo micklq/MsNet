@@ -276,6 +276,11 @@ namespace MSNet.Common.Util
             return result ? time : def;
         }
 
+        public static string ParseTags(this string HtmlStr)
+        {
+            return System.Text.RegularExpressions.Regex.Replace(HtmlStr, "<[^>]*>", "");
+        }
+
         #region Check
 
         /// <summary>
