@@ -84,7 +84,9 @@ namespace MSNet.WebApp.Controllers
                 string iUrl = String.Format("/upload/images/{0}/{1}/{2}/{3}", dt.Year, String.Format("{0:00}", dt.Month), String.Format("{0:00}", dt.Day), model.ImageUrl);
                 model.ImageUrl = iUrl;
             }
-
+            if (model.ImageUrl.IsNullOrEmpty()) {
+                model.ImageUrl = "/static/images/default.jpg";
+            } 
             var rbool = model.Save();
             WebAppLogsWrite(this.CurrentUser.PassportId, this.CurrentUser.UserName, actionStr, model.Title); // 写入日志 
             if (rbool)
